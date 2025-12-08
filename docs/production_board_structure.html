@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Production Board Documentation</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --blocked: #df2f4a;
+            --lab-bulk: #ff007f;
+            --this-week: #9d50dd;
+            --next-week: #fdab3d;
+            --future: #66ccff;
+            --completed: #9cd326;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #1a1a2e;
+            color: #eee;
+        }
+
+        h1, h2, h3 { color: #fff; }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        .header h1 { margin: 0 0 10px 0; }
+        .header p { margin: 0; opacity: 0.9; }
+
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .meta-card {
+            background: #16213e;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .meta-card label {
+            font-size: 12px;
+            text-transform: uppercase;
+            opacity: 0.7;
+        }
+
+        .meta-card .value {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .section {
+            background: #16213e;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+
+        .mermaid {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #333;
+        }
+
+        th {
+            background: #0f0f23;
+            font-weight: 600;
+        }
+
+        tr:hover { background: #1f1f3a; }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .badge-status { background: #fdab3d; color: #000; }
+        .badge-mirror { background: #579bfc; color: #fff; }
+        .badge-relation { background: #9d50dd; color: #fff; }
+        .badge-numbers { background: #00c875; color: #fff; }
+        .badge-date { background: #ff6d3b; color: #fff; }
+        .badge-text { background: #c4c4c4; color: #000; }
+        .badge-file { background: #ff7575; color: #fff; }
+        .badge-link { background: #66ccff; color: #000; }
+        .badge-people { background: #bb3354; color: #fff; }
+        .badge-timeline { background: #175a63; color: #fff; }
+        .badge-formula { background: #784bd1; color: #fff; }
+        .badge-dropdown { background: #cab641; color: #000; }
+        .badge-subtasks { background: #ff007f; color: #fff; }
+        .badge-name { background: #fff; color: #000; }
+
+        .group-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+            margin-right: 8px;
+        }
+
+        .views-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .view-card {
+            background: #0f0f23;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid #667eea;
+        }
+
+        .view-card .view-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .view-card .view-type {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
+        a { color: #66ccff; }
+
+        .timestamp {
+            font-size: 12px;
+            opacity: 0.6;
+            margin-top: 30px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Production Board Documentation</h1>
+        <p>Monday.com Board Structure & Data Flow Analysis</p>
+    </div>
+
+    <!-- Board Metadata -->
+    <div class="meta-grid">
+        <div class="meta-card">
+            <label>Board ID</label>
+            <div class="value">9304930311</div>
+        </div>
+        <div class="meta-card">
+            <label>Total Items</label>
+            <div class="value">123</div>
+        </div>
+        <div class="meta-card">
+            <label>Columns</label>
+            <div class="value">36</div>
+        </div>
+        <div class="meta-card">
+            <label>Views</label>
+            <div class="value">18</div>
+        </div>
+        <div class="meta-card">
+            <label>Workspace</label>
+            <div class="value">Production</div>
+        </div>
+        <div class="meta-card">
+            <label>Last Updated</label>
+            <div class="value">Dec 5, 2025</div>
+        </div>
+    </div>
+
+    <!-- Workflow Overview -->
+    <div class="section">
+        <h2>Workflow Overview</h2>
+        <p>Items flow through groups representing production stages:</p>
+        <div class="mermaid">
+flowchart LR
+    subgraph Workflow["Production Workflow"]
+        direction LR
+        BLOCKED["BLOCKED<br/>🚫"]
+        LAB["LAB BULK<br/>🧪"]
+        THIS["THIS WEEK<br/>📅"]
+        NEXT["NEXT WEEK<br/>📆"]
+        FUTURE["FUTURE<br/>🔮"]
+        COMPLETED["COMPLETED<br/>✅"]
+    end
+
+    BLOCKED -->|"Unblocked"| LAB
+    BLOCKED -->|"Unblocked"| THIS
+    LAB -->|"Bulk Ready"| THIS
+    THIS -->|"Not Ready"| NEXT
+    NEXT -->|"Scheduled"| THIS
+    NEXT -->|"Delayed"| FUTURE
+    FUTURE -->|"Prioritized"| NEXT
+    THIS -->|"Done"| COMPLETED
+
+    style BLOCKED fill:#df2f4a,color:#fff
+    style LAB fill:#ff007f,color:#fff
+    style THIS fill:#9d50dd,color:#fff
+    style NEXT fill:#fdab3d,color:#000
+    style FUTURE fill:#66ccff,color:#000
+    style COMPLETED fill:#9cd326,color:#000
+        </div>
+    </div>
+
+    <!-- Board Relationships -->
+    <div class="section">
+        <h2>Board Relationships</h2>
+        <p>The Production board connects to several related boards via board relations and mirrors:</p>
+        <div class="mermaid">
+flowchart TB
+    subgraph Production["Production Board (9304930311)"]
+        ITEMS["Production Items<br/>123 items"]
+    end
+
+    subgraph Related["Related Boards"]
+        DEALS["Prod Deals<br/>(9384243852)"]
+        EPO["EPOs - Materials<br/>(9387127195)"]
+        BBT["BBT - Bulk Batches<br/>(8768285252)"]
+        EQUIP["Equipment<br/>(9552788836)"]
+        SUBS["Subitems Board<br/>(9420081509)"]
+    end
+
+    ITEMS -->|"link to Prod Deals"| DEALS
+    ITEMS -->|"PROD DEAL"| DEALS
+    ITEMS -->|"EPOs - Materials"| EPO
+    ITEMS -->|"BBT"| BBT
+    ITEMS -->|"Equipment"| EQUIP
+    ITEMS -->|"Subitems"| SUBS
+
+    DEALS -.->|"SHIP BY (mirror)"| ITEMS
+    DEALS -.->|"Sales Order (mirror)"| ITEMS
+    DEALS -.->|"PO(s) (mirror)"| ITEMS
+    EPO -.->|"Materials Status (mirror)"| ITEMS
+    BBT -.->|"Bulk MO (mirror)"| ITEMS
+    BBT -.->|"BULK STATUS (mirror)"| ITEMS
+    BBT -.->|"Ingredients Status (mirror)"| ITEMS
+    EQUIP -.->|"Equipment Status (mirror)"| ITEMS
+
+    style Production fill:#667eea,color:#fff
+    style DEALS fill:#00c875,color:#fff
+    style EPO fill:#ff6d3b,color:#fff
+    style BBT fill:#9d50dd,color:#fff
+    style EQUIP fill:#579bfc,color:#fff
+    style SUBS fill:#ff007f,color:#fff
+        </div>
+    </div>
+
+    <!-- Column Data Flow -->
+    <div class="section">
+        <h2>Column Data Architecture</h2>
+        <div class="mermaid">
+flowchart LR
+    subgraph Input["Input Data"]
+        NAME["Name"]
+        QTY["QTY"]
+        DAY["DAY"]
+        LINE["LINE"]
+        OWNERS["Owners"]
+    end
+
+    subgraph Calculated["Calculated/Formula"]
+        LEADTIME["Production Lead Time<br/>(QTY/7000)"]
+    end
+
+    subgraph Mirrored["Mirrored from Other Boards"]
+        SHIPBY["SHIP BY"]
+        MATSTAT["Materials Status"]
+        BULKSTAT["BULK STATUS"]
+        INGSTAT["Ingredients Status"]
+        EQUIPSTAT["Equipment Status"]
+    end
+
+    subgraph Status["Status Tracking"]
+        STATUS["STATUS"]
+        LINESTAT["Line Status"]
+    end
+
+    QTY --> LEADTIME
+
+    style Input fill:#00c875,color:#fff
+    style Calculated fill:#784bd1,color:#fff
+    style Mirrored fill:#579bfc,color:#fff
+    style Status fill:#fdab3d,color:#000
+        </div>
+    </div>
+
+    <!-- Groups Table -->
+    <div class="section">
+        <h2>Groups (6)</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Group</th>
+                    <th>ID</th>
+                    <th>Color</th>
+                    <th>Purpose</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="group-indicator" style="background:#df2f4a"></span>BLOCKED</td>
+                    <td><code>group_mkv9mjbv</code></td>
+                    <td>#df2f4a</td>
+                    <td>Items waiting on dependencies or issues</td>
+                </tr>
+                <tr>
+                    <td><span class="group-indicator" style="background:#ff007f"></span>LAB BULK</td>
+                    <td><code>group_mkv9n8vj</code></td>
+                    <td>#ff007f</td>
+                    <td>Items pending bulk/lab preparation</td>
+                </tr>
+                <tr>
+                    <td><span class="group-indicator" style="background:#9d50dd"></span>THIS WEEK</td>
+                    <td><code>topics</code></td>
+                    <td>#9d50dd</td>
+                    <td>Current week's production schedule</td>
+                </tr>
+                <tr>
+                    <td><span class="group-indicator" style="background:#fdab3d"></span>NEXT WEEK</td>
+                    <td><code>group_mkv9qnne</code></td>
+                    <td>#fdab3d</td>
+                    <td>Upcoming week's production queue</td>
+                </tr>
+                <tr>
+                    <td><span class="group-indicator" style="background:#66ccff"></span>FUTURE</td>
+                    <td><code>group_mkv9ndvr</code></td>
+                    <td>#66ccff</td>
+                    <td>Backlog and future items</td>
+                </tr>
+                <tr>
+                    <td><span class="group-indicator" style="background:#9cd326"></span>COMPLETED</td>
+                    <td><code>group_mksphjkq</code></td>
+                    <td>#9cd326</td>
+                    <td>Finished production items</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Columns Table -->
+    <div class="section">
+        <h2>Columns (36)</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Column</th>
+                    <th>ID</th>
+                    <th>Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Name</td><td><code>name</code></td><td><span class="badge badge-name">name</span></td></tr>
+                <tr><td>Subitems</td><td><code>subtasks_mks3204</code></td><td><span class="badge badge-subtasks">subtasks</span></td></tr>
+                <tr><td>SHIP BY</td><td><code>lookup_mktactct</code></td><td><span class="badge badge-mirror">mirror</span></td></tr>
+                <tr><td>QTY</td><td><code>numeric_mkt5dxv</code></td><td><span class="badge badge-numbers">numbers</span></td></tr>
+                <tr><td>PRODUCED</td><td><code>numeric_mkv99zp2</code></td><td><span class="badge badge-numbers">numbers</span></td></tr>
+                <tr><td>DAY</td><td><code>color_mkv96zgw</code></td><td><span class="badge badge-status">status</span></td></tr>
+                <tr><td>Lead Time</td><td><code>text_mktaa9r7</code></td><td><span class="badge badge-text">text</span></td></tr>
+                <tr><td>Schedule Start Date</td><td><code>date_mktanfcd</code></td><td><span class="badge badge-date">date</span></td></tr>
+                <tr><td>LINE</td><td><code>color_mksctkd7</code></td><td><span class="badge badge-status">status</span></td></tr>
+                <tr><td>Production Timeline</td><td><code>timerange_mkt5b901</code></td><td><span class="badge badge-timeline">timeline</span></td></tr>
+                <tr><td>Owners</td><td><code>multiple_person_mks7aaxh</code></td><td><span class="badge badge-people">people</span></td></tr>
+                <tr><td>STATUS</td><td><code>status</code></td><td><span class="badge badge-status">status</span></td></tr>
+                <tr><td>Sales Order - Inflow</td><td><code>lookup_mks7wk2q</code></td><td><span class="badge badge-mirror">mirror</span></td></tr>
+                <tr><td>Spec Sheet</td><td><code>file_mks9gxp7</code></td><td><span class="badge badge-file">file</span></td></tr>
+                <tr><td>MO - Finished Product</td><td><code>link_mks1q404</code></td><td><span class="badge badge-link">link</span></td></tr>
+                <tr><td>EPOs - Materials</td><td><code>board_relation_mkt2kyt</code></td><td><span class="badge badge-relation">board_relation</span></td></tr>
+                <tr><td>Materials Status</td><td><code>lookup_mkt27762</code></td><td><span class="badge badge-mirror">mirror</span></td></tr>
+                <tr><td>BBT</td><td><code>board_relation_mks3mfd6</code></td><td><span class="badge badge-relation">board_relation</span></td></tr>
+                <tr><td>Bulk MO</td><td><code>lookup_mksexytj</code></td><td><span class="badge badge-mirror">mirror</span></td></tr>
+                <tr><td>BULK STATUS</td><td><code>lookup_mks3gcj6</code></td><td><span class="badge badge-mirror">mirror</span></td></tr>
+                <tr><td>Ingredients Status</td><td><code>lookup_mksfajzk</code></td><td><span class="badge badge-mirror">mirror</span></td></tr>
+                <tr><td>Sprints</td><td><code>dropdown_mkspzmfp</code></td><td><span class="badge badge-dropdown">dropdown</span></td></tr>
+                <tr><td>PROD DEAL</td><td><code>board_relation_mkt5hkat</code></td><td><span class="badge badge-relation">board_relation</span></td></tr>
+                <tr><td>Line Status</td><td><code>color_mkscryqv</code></td><td><span class="badge badge-status">status</span></td></tr>
+                <tr><td>link to Prod Deals</td><td><code>board_relation_mks0dxd0</code></td><td><span class="badge badge-relation">board_relation</span></td></tr>
+                <tr><td>Tracking #</td><td><code>link_mks7fyk5</code></td><td><span class="badge badge-link">link</span></td></tr>
+                <tr><td>Equipment</td><td><code>board_relation_mkspevma</code></td><td><span class="badge badge-relation">board_relation</span></td></tr>
+                <tr><td>Equipment Status</td><td><code>lookup_mkspwnc</code></td><td><span class="badge badge-mirror">mirror</span></td></tr>
+                <tr><td>Equipment</td><td><code>color_mkt48tq7</code></td><td><span class="badge badge-status">status</span></td></tr>
+                <tr><td>Production Lead Time</td><td><code>formula_mkt58v25</code></td><td><span class="badge badge-formula">formula</span></td></tr>
+                <tr><td>purchasing start date</td><td><code>date_mkt5kqh6</code></td><td><span class="badge badge-date">date</span></td></tr>
+                <tr><td>unlimited mirror test</td><td><code>text_mkt61by7</code></td><td><span class="badge badge-text">text</span></td></tr>
+                <tr><td>test2</td><td><code>board_relation_mkt6ex0</code></td><td><span class="badge badge-relation">board_relation</span></td></tr>
+                <tr><td>Schedule Sheet</td><td><code>link_mktcrszw</code></td><td><span class="badge badge-link">link</span></td></tr>
+                <tr><td>QA DOCS</td><td><code>file_mktcs58s</code></td><td><span class="badge badge-file">file</span></td></tr>
+                <tr><td>PO(s)</td><td><code>lookup_mkvkmj5m</code></td><td><span class="badge badge-mirror">mirror</span></td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Views -->
+    <div class="section">
+        <h2>Views (18)</h2>
+        <div class="views-grid">
+            <div class="view-card">
+                <div class="view-name">Production Queue</div>
+                <div class="view-type">ID: 198341584 | Default View</div>
+            </div>
+            <div class="view-card">
+                <div class="view-name">Purchasing</div>
+                <div class="view-type">ID: 201345586 | Default View</div>
+            </div>
+            <div class="view-card">
+                <div class="view-name">This Sprint</div>
+                <div class="view-type">ID: 201345624 | Default View</div>
+            </div>
+            <div class="view-card">
+                <div class="view-name">Purchasing v2</div>
+                <div class="view-type">ID: 201409319 | SppBoardView</div>
+            </div>
+            <div class="view-card">
+                <div class="view-name">Workflow</div>
+                <div class="view-type">ID: 201410050 | FeatureBoardView</div>
+            </div>
+            <div class="view-card">
+                <div class="view-name">purchasing v3</div>
+                <div class="view-type">ID: 201410134 | Default View</div>
+            </div>
+            <div class="view-card">
+                <div class="view-name">Fulfillment</div>
+                <div class="view-type">ID: 202922210 | Default View</div>
+            </div>
+            <div class="view-card">
+                <div class="view-name">Line Assignments</div>
+                <div class="view-type">ID: 202926464 | Default View</div>
+            </div>
+            <div class="view-card">
+                <div class="view-name">Lines Queues</div>
+                <div class="view-type">ID: 202927428 | Default View</div>
+            </div>
+            <div class="view-card">
+                <div class="view-name">Moo Elixir Purchasing Status</div>
+                <div class="view-type">ID: 203030925 | Default View</div>
+            </div>
+            <div class="view-card">
+                <div class="view-name">Customizable view</div>
+                <div class="view-type">ID: 205128182 | Default View</div>
+            </div>
+            <div class="view-card">
+                <div class="view-name">Equipment queue</div>
+                <div class="view-type">ID: 205128369 | Default View</div>
+            </div>
+            <div class="view-card">
+                <div class="view-name">Gantt</div>
+                <div class="view-type">ID: 205288118 | Default View</div>
+            </div>
+            <div class="view-card">
+                <div class="view-name">Calendar</div>
+                <div class="view-type">ID: 205307635 | Default View</div>
+            </div>
+            <div class="view-card">
+                <div class="view-name">Production Table</div>
+                <div class="view-type">ID: 205999500 | TableBoardView</div>
+            </div>
+            <div class="view-card">
+                <div class="view-name">SCHEDULE</div>
+                <div class="view-type">ID: 207061019 | TableBoardView</div>
+            </div>
+            <div class="view-card">
+                <div class="view-name">Table</div>
+                <div class="view-type">ID: 207341504 | TableBoardView</div>
+            </div>
+            <div class="view-card">
+                <div class="view-name">Bulk MO Creation Flow</div>
+                <div class="view-type">ID: 210738821 | Default View</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Owners -->
+    <div class="section">
+        <h2>Board Owners</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>User ID</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Lucas Draney</td>
+                    <td>70403250</td>
+                    <td>lucas@pureearthlabs.com</td>
+                </tr>
+                <tr>
+                    <td>Jennifer Wright</td>
+                    <td>75105167</td>
+                    <td>jennifer@earthharbor.com</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- API Reference -->
+    <div class="section">
+        <h2>API Reference</h2>
+        <p>GraphQL query used to generate this documentation:</p>
+        <pre style="background:#0f0f23; padding:15px; border-radius:8px; overflow-x:auto;">
+query GetBoardStructure {
+  boards(ids: [9304930311]) {
+    id
+    name
+    description
+    state
+    board_kind
+    items_count
+    url
+    updated_at
+    workspace { id name }
+    groups { id title color position }
+    columns { id title type description }
+    views { id name type settings_str }
+    owners { id name email }
+  }
+}
+        </pre>
+        <p>
+            <strong>Board URL:</strong>
+            <a href="https://earthharbor.monday.com/boards/9304930311" target="_blank">
+                https://earthharbor.monday.com/boards/9304930311
+            </a>
+        </p>
+    </div>
+
+    <p class="timestamp">
+        Generated: December 8, 2025 | Board Last Updated: December 5, 2025
+    </p>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'dark',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true
+            }
+        });
+    </script>
+</body>
+</html>

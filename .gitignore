@@ -1,0 +1,12 @@
+# Environment
+.env
+.env.local
+
+# Data
+data/
+
+# OS
+.DS_Store
+
+# Claude
+.claude/

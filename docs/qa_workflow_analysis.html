@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QA Workflow Analysis - Jen's User Story</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --gap-red: #df2f4a;
+            --exists-green: #00c875;
+            --warning-orange: #fdab3d;
+            --info-blue: #579bfc;
+            --purple: #9d50dd;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #eee;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 { color: #fff; margin-top: 2em; }
+        h1 { margin-top: 0; }
+
+        .header {
+            background: linear-gradient(135deg, #9d50dd 0%, #df2f4a 100%);
+            padding: 40px;
+            border-radius: 16px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .header h1 { margin: 0 0 10px 0; font-size: 2.5em; }
+        .header .subtitle { font-size: 1.2em; opacity: 0.9; }
+        .header .date { margin-top: 15px; opacity: 0.7; font-size: 0.9em; }
+
+        .section {
+            background: #16213e;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border: 1px solid #2a2a4a;
+        }
+
+        .section h2 {
+            margin-top: 0;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #9d50dd;
+        }
+
+        .mermaid {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+
+        .user-story {
+            background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
+            border-left: 4px solid #9d50dd;
+            padding: 25px;
+            border-radius: 0 12px 12px 0;
+            font-size: 1.1em;
+        }
+
+        .user-story strong { color: #9d50dd; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #333;
+        }
+
+        th {
+            background: #0f0f23;
+            font-weight: 600;
+            color: #9d50dd;
+        }
+
+        tr:hover { background: #1f1f3a; }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-exists { background: var(--exists-green); color: #000; }
+        .status-empty { background: var(--warning-orange); color: #000; }
+        .status-missing { background: var(--gap-red); color: #fff; }
+        .status-partial { background: var(--info-blue); color: #fff; }
+
+        .workflow-step {
+            display: flex;
+            margin: 15px 0;
+            background: #0f0f23;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .step-number {
+            background: #9d50dd;
+            color: #fff;
+            padding: 20px;
+            font-size: 1.5em;
+            font-weight: bold;
+            min-width: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .step-content {
+            padding: 15px 20px;
+            flex: 1;
+        }
+
+        .step-content h4 { margin: 0 0 8px 0; color: #fff; }
+        .step-content p { margin: 0; opacity: 0.8; font-size: 0.95em; }
+
+        .step-status {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .gap-card {
+            background: linear-gradient(135deg, #df2f4a22 0%, #df2f4a11 100%);
+            border: 1px solid var(--gap-red);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .gap-card h4 {
+            color: var(--gap-red);
+            margin: 0 0 10px 0;
+        }
+
+        .exists-card {
+            background: linear-gradient(135deg, #00c87522 0%, #00c87511 100%);
+            border: 1px solid var(--exists-green);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .exists-card h4 {
+            color: var(--exists-green);
+            margin: 0 0 10px 0;
+        }
+
+        .board-card {
+            background: #0f0f23;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .board-card h4 {
+            margin: 0 0 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .board-id {
+            font-size: 0.7em;
+            opacity: 0.6;
+            font-weight: normal;
+        }
+
+        .column-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        .column-item {
+            background: #16213e;
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-size: 0.9em;
+        }
+
+        .column-item.file { border-left: 3px solid #ff7575; }
+        .column-item.status { border-left: 3px solid #fdab3d; }
+        .column-item.checkbox { border-left: 3px solid #00c875; }
+        .column-item.mirror { border-left: 3px solid #579bfc; }
+        .column-item.link { border-left: 3px solid #66ccff; }
+
+        .recommendations {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .rec-card {
+            background: #0f0f23;
+            border-radius: 12px;
+            padding: 25px;
+            border-top: 4px solid var(--purple);
+        }
+
+        .rec-card h4 {
+            margin: 0 0 15px 0;
+            color: var(--purple);
+        }
+
+        .rec-card ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .rec-card li { margin: 8px 0; }
+
+        .priority-high { border-top-color: var(--gap-red); }
+        .priority-high h4 { color: var(--gap-red); }
+
+        .priority-medium { border-top-color: var(--warning-orange); }
+        .priority-medium h4 { color: var(--warning-orange); }
+
+        code {
+            background: #0f0f23;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'SF Mono', Monaco, monospace;
+            font-size: 0.9em;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            opacity: 0.6;
+            font-size: 0.9em;
+        }
+
+        .checklist {
+            background: #0f0f23;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 10px 0;
+            border-bottom: 1px solid #2a2a4a;
+        }
+
+        .checklist-item:last-child { border-bottom: none; }
+
+        .check-box {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #9d50dd;
+            border-radius: 4px;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .check-box.checked {
+            background: #00c875;
+            border-color: #00c875;
+        }
+
+        .check-box.partial {
+            background: #fdab3d;
+            border-color: #fdab3d;
+        }
+
+        .check-box.missing {
+            background: #df2f4a;
+            border-color: #df2f4a;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>QA Workflow Analysis</h1>
+        <div class="subtitle">Mapping Jen's 13-Step QA Process to Monday.com</div>
+        <div class="date">Generated: December 8, 2025</div>
+    </div>
+
+    <!-- User Story -->
+    <div class="section">
+        <h2>User Story</h2>
+        <div class="user-story">
+            <strong>AS A</strong> QA Manager (Jen)<br><br>
+            <strong>I WANT</strong> a clear workflow with linked templates, spec sheets, and upload destinations<br><br>
+            <strong>SO THAT I CAN</strong>
+            <ul>
+                <li>Find today's run info quickly (SKU + PO/MO)</li>
+                <li>Access the correct, up-to-date spec sheet</li>
+                <li>Open a fresh "PURE EARTH LABS Spec Sheet & Inspection Report" template</li>
+                <li>Complete all 13 QA steps with proper documentation</li>
+                <li>Attach final QA docs to the Monday.com ticket</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- System Architecture -->
+    <div class="section">
+        <h2>Current System Architecture</h2>
+        <p>Four interconnected Monday.com boards handle different aspects of the production and QA process:</p>
+        <div class="mermaid">
+flowchart TB
+    subgraph Lab["Lab Workspace"]
+        FIN["<b>Finalization</b><br/>(Product Templates)<br/>ID: 8887010257<br/>137 products"]
+        BBT["<b>Bulk Batch Traceability</b><br/>(BBT)<br/>ID: 8768285252<br/>190 batches"]
+    end
+
+    subgraph Prod["Production Workspace"]
+        PROD["<b>Production</b><br/>ID: 9304930311<br/>123 items"]
+    end
+
+    subgraph External["External Systems"]
+        GDRIVE["Google Drive<br/>QA Inspection Reports"]
+        GSHEET["Google Sheets<br/>Sprint/Bulk Weekly"]
+    end
+
+    FIN -->|"Batch Record Template<br/>COA Template"| BBT
+    BBT -->|"BBT relation<br/>Bulk MO mirror<br/>Bulk Status mirror<br/>Ingredients Status mirror"| PROD
+    FIN -.->|"No direct link"| PROD
+
+    GDRIVE -.->|"Manual upload to<br/>QA DOCS column"| PROD
+    GSHEET -.->|"Should link to<br/>Schedule Sheet column"| PROD
+
+    style PROD fill:#9d50dd,color:#fff
+    style BBT fill:#007eb5,color:#fff
+    style FIN fill:#00c875,color:#fff
+    style GDRIVE fill:#fdab3d,color:#000
+    style GSHEET fill:#fdab3d,color:#000
+        </div>
+    </div>
+
+    <!-- Data Flow -->
+    <div class="section">
+        <h2>QA Documentation Flow</h2>
+        <p>How QA documentation should flow through the system:</p>
+        <div class="mermaid">
+flowchart LR
+    subgraph Templates["Templates (Source)"]
+        T1["Batch Record<br/>Template"]
+        T2["COA Template"]
+        T3["QA Inspection<br/>Report Template"]
+    end
+
+    subgraph Process["QA Process"]
+        P1["Pre-Run<br/>Checks"]
+        P2["In-Process<br/>QA"]
+        P3["End of Run<br/>Close-out"]
+    end
+
+    subgraph Output["Completed Docs"]
+        O1["Batch Record<br/>(Filled)"]
+        O2["COA<br/>(Completed)"]
+        O3["QA Inspection<br/>Report (Final)"]
+    end
+
+    subgraph Storage["Monday.com Storage"]
+        S1["BBT Board<br/>Batch Record upload<br/>COA upload"]
+        S2["Production Board<br/>QA DOCS column"]
+    end
+
+    T1 --> P1
+    T2 --> P2
+    T3 --> P1
+
+    P1 --> P2 --> P3
+
+    P3 --> O1 --> S1
+    P3 --> O2 --> S1
+    P3 --> O3 --> S2
+
+    style T3 fill:#df2f4a,color:#fff
+    style S2 fill:#fdab3d,color:#000
+        </div>
+        <p style="margin-top: 20px; padding: 15px; background: #df2f4a33; border-radius: 8px;">
+            <strong>Key Gap:</strong> The "QA Inspection Report Template" (red) has no link in Monday.com,
+            and the "QA DOCS" column (orange) is completely empty across all 7 items in QA status.
+        </p>
+    </div>
+
+    <!-- Jen's 13-Step Workflow -->
+    <div class="section">
+        <h2>Jen's 13-Step QA Workflow</h2>
+        <p>Mapping each step to Monday.com capabilities:</p>
+
+        <div class="mermaid">
+flowchart TB
+    subgraph Step0["Step 0: Preparation"]
+        S0A["Open Sprint + Bulk<br/>weekly sheet"]
+        S0B["Find today's run<br/>(SKU + PO/MO)"]
+        S0C["Open spec sheet"]
+        S0D["Open QA Inspection<br/>Report template"]
+    end
+
+    subgraph PreRun["Steps 1-6: Pre-Run"]
+        S1["1. Spec sheet at line"]
+        S2["2. Component verification"]
+        S3["3. Batch code setup"]
+        S4["4. Equipment calibration"]
+        S5["5. Line config + sanitation"]
+        S6["6. Batch record/MO verification"]
+    end
+
+    subgraph InProcess["Steps 7-11: In-Process"]
+        S7["7. Begin QA documentation"]
+        S8["8. In-process checks"]
+        S9["9. Defect classification"]
+        S10["10. Product standards check"]
+        S11["11. End of run close-out"]
+    end
+
+    subgraph Final["Steps 12-13: Final"]
+        S12["12. Save to Drive"]
+        S13["13. Attach to Monday.com"]
+    end
+
+    S0A --> S0B --> S0C --> S0D
+    S0D --> S1 --> S2 --> S3 --> S4 --> S5 --> S6
+    S6 --> S7 --> S8 --> S9 --> S10 --> S11
+    S11 --> S12 --> S13
+
+    style S0A fill:#fdab3d,color:#000
+    style S0C fill:#fdab3d,color:#000
+    style S0D fill:#df2f4a,color:#fff
+    style S13 fill:#df2f4a,color:#fff
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
+            <div class="gap-card">
+                <h4>Critical Gaps (Red)</h4>
+                <ul>
+                    <li><strong>Step 0D:</strong> No template link for QA Inspection Report</li>
+                    <li><strong>Step 13:</strong> QA DOCS column exists but is never used</li>
+                </ul>
+            </div>
+            <div class="exists-card">
+                <h4>Partially Working (Orange)</h4>
+                <ul>
+                    <li><strong>Step 0A:</strong> Schedule Sheet column exists but empty</li>
+                    <li><strong>Step 0C:</strong> Spec Sheet column exists, mostly empty</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Board Details -->
+    <div class="section">
+        <h2>Board Structure Analysis</h2>
+
+        <div class="board-card">
+            <h4>
+                <span style="color: #9d50dd;">Production Board</span>
+                <span class="board-id">ID: 9304930311 | 123 items | Production Workspace</span>
+            </h4>
+            <p>The main board where Jen needs to attach final QA documentation.</p>
+            <h5>QA-Related Columns:</h5>
+            <div class="column-list">
+                <div class="column-item file">
+                    <strong>Spec Sheet</strong><br/>
+                    <code>file_mks9gxp7</code><br/>
+                    <span class="status-badge status-empty">Mostly Empty</span>
+                </div>
+                <div class="column-item file">
+                    <strong>QA DOCS</strong><br/>
+                    <code>file_mktcs58s</code><br/>
+                    <span class="status-badge status-missing">Completely Empty</span>
+                </div>
+                <div class="column-item link">
+                    <strong>Schedule Sheet</strong><br/>
+                    <code>link_mktcrszw</code><br/>
+                    <span class="status-badge status-empty">Empty</span>
+                </div>
+                <div class="column-item status">
+                    <strong>STATUS</strong><br/>
+                    <code>status</code><br/>
+                    <span class="status-badge status-exists">7 items in QA</span>
+                </div>
+                <div class="column-item mirror">
+                    <strong>BULK STATUS</strong><br/>
+                    <code>lookup_mks3gcj6</code><br/>
+                    <span class="status-badge status-exists">From BBT</span>
+                </div>
+                <div class="column-item mirror">
+                    <strong>Materials Status</strong><br/>
+                    <code>lookup_mkt27762</code><br/>
+                    <span class="status-badge status-exists">From EPOs</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="board-card">
+            <h4>
+                <span style="color: #007eb5;">Bulk Batch Traceability (BBT)</span>
+                <span class="board-id">ID: 8768285252 | 190 batches | Lab Workspace</span>
+            </h4>
+            <p>Tracks bulk batches with QA documentation for lab/bulk processes.</p>
+            <h5>QA-Related Columns:</h5>
+            <div class="column-list">
+                <div class="column-item file">
+                    <strong>Batch Record upload</strong><br/>
+                    <code>file_mkp0csbb</code><br/>
+                    <span class="status-badge status-exists">In Use</span>
+                </div>
+                <div class="column-item file">
+                    <strong>COA upload</strong><br/>
+                    <code>files9</code><br/>
+                    <span class="status-badge status-exists">In Use</span>
+                </div>
+                <div class="column-item file">
+                    <strong>Micro Test</strong><br/>
+                    <code>files6</code><br/>
+                    <span class="status-badge status-exists">In Use</span>
+                </div>
+                <div class="column-item checkbox">
+                    <strong>Stability</strong><br/>
+                    <code>boolean_mkp2t2n2</code><br/>
+                    <span class="status-badge status-exists">Checkbox</span>
+                </div>
+                <div class="column-item checkbox">
+                    <strong>Microtest</strong><br/>
+                    <code>boolean_mkxtyhbb</code><br/>
+                    <span class="status-badge status-exists">Checkbox</span>
+                </div>
+                <div class="column-item mirror">
+                    <strong>Batch Record Template</strong><br/>
+                    <code>lookup_mkscx11</code><br/>
+                    <span class="status-badge status-exists">From Finalization</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="board-card">
+            <h4>
+                <span style="color: #00c875;">Finalization (Product Templates)</span>
+                <span class="board-id">ID: 8887010257 | 137 products | Lab Workspace</span>
+            </h4>
+            <p>Contains product templates including batch records and COAs.</p>
+            <h5>Template Columns:</h5>
+            <div class="column-list">
+                <div class="column-item file">
+                    <strong>Batch Record Template</strong><br/>
+                    <code>file_mkp0csbb</code><br/>
+                    <span class="status-badge status-exists">Templates</span>
+                </div>
+                <div class="column-item file">
+                    <strong>COA Template</strong><br/>
+                    <code>files9</code><br/>
+                    <span class="status-badge status-exists">Templates</span>
+                </div>
+                <div class="column-item file">
+                    <strong>Challenge Test</strong><br/>
+                    <code>files6</code><br/>
+                    <span class="status-badge status-exists">Files</span>
+                </div>
+                <div class="column-item file">
+                    <strong>Product Pictures</strong><br/>
+                    <code>file_mkw3bac5</code><br/>
+                    <span class="status-badge status-exists">Files</span>
+                </div>
+                <div class="column-item checkbox">
+                    <strong>CoA Updated</strong><br/>
+                    <code>boolean_mkxxsapx</code><br/>
+                    <span class="status-badge status-exists">Checkbox</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gap Analysis -->
+    <div class="section">
+        <h2>Gap Analysis</h2>
+
+        <div class="mermaid">
+flowchart TB
+    subgraph Exists["What Exists"]
+        E1["Production Board<br/>with QA DOCS column"]
+        E2["BBT Board<br/>with upload columns"]
+        E3["Finalization Board<br/>with templates"]
+        E4["Items in QA status"]
+    end
+
+    subgraph Missing["What's Missing"]
+        M1["QA Inspection Report<br/>Template Link"]
+        M2["Spec Sheets<br/>populated"]
+        M3["Schedule Sheet<br/>links"]
+        M4["Actual files in<br/>QA DOCS column"]
+        M5["Pre-run checklist<br/>tracking"]
+    end
+
+    subgraph Result["Current Result"]
+        R1["Jen can't find<br/>templates easily"]
+        R2["No verification<br/>docs are attached"]
+        R3["Manual process<br/>with no tracking"]
+    end
+
+    E1 --> M4 --> R2
+    E3 --> M1 --> R1
+    E4 --> M5 --> R3
+
+    style M1 fill:#df2f4a,color:#fff
+    style M2 fill:#fdab3d,color:#000
+    style M3 fill:#fdab3d,color:#000
+    style M4 fill:#df2f4a,color:#fff
+    style M5 fill:#fdab3d,color:#000
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Workflow Need</th>
+                    <th>Monday.com Field</th>
+                    <th>Current State</th>
+                    <th>Impact</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>QA Inspection Report Template</td>
+                    <td>None exists</td>
+                    <td><span class="status-badge status-missing">Missing</span></td>
+                    <td>Jen must manually find template in Drive</td>
+                </tr>
+                <tr>
+                    <td>Attach final QA docs</td>
+                    <td><code>file_mktcs58s</code> "QA DOCS"</td>
+                    <td><span class="status-badge status-missing">Empty (0/7)</span></td>
+                    <td>No verification that QA docs exist</td>
+                </tr>
+                <tr>
+                    <td>Spec sheet access</td>
+                    <td><code>file_mks9gxp7</code> "Spec Sheet"</td>
+                    <td><span class="status-badge status-empty">Mostly Empty</span></td>
+                    <td>Jen must search for spec sheets</td>
+                </tr>
+                <tr>
+                    <td>Sprint/Bulk weekly sheet</td>
+                    <td><code>link_mktcrszw</code> "Schedule Sheet"</td>
+                    <td><span class="status-badge status-empty">Empty</span></td>
+                    <td>No quick access to daily schedule</td>
+                </tr>
+                <tr>
+                    <td>Pre-run checklist</td>
+                    <td>Subitems (not configured)</td>
+                    <td><span class="status-badge status-missing">Not Tracked</span></td>
+                    <td>No verification pre-run steps are done</td>
+                </tr>
+                <tr>
+                    <td>Batch Record Template</td>
+                    <td>Via BBT mirror</td>
+                    <td><span class="status-badge status-exists">Working</span></td>
+                    <td>Accessible through BBT link</td>
+                </tr>
+                <tr>
+                    <td>COA Template</td>
+                    <td>Via BBT mirror</td>
+                    <td><span class="status-badge status-exists">Working</span></td>
+                    <td>Accessible through BBT link</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Items in QA Status -->
+    <div class="section">
+        <h2>Current Items in QA Status</h2>
+        <p>These 7 items are currently in QA status but have no QA documentation attached:</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Item Name</th>
+                    <th>Spec Sheet</th>
+                    <th>QA DOCS</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>FabFitFun - WO-001714 - Calypso 1oz</td>
+                    <td><span class="status-badge status-missing">Empty</span></td>
+                    <td><span class="status-badge status-missing">Empty</span></td>
+                </tr>
+                <tr>
+                    <td>EVRE - WO-001678 - Micellar Water - Bottled</td>
+                    <td><span class="status-badge status-exists">Google Doc</span></td>
+                    <td><span class="status-badge status-missing">Empty</span></td>
+                </tr>
+                <tr>
+                    <td>FabFitFun - WO-001709 - Aqua Aura 15ml</td>
+                    <td><span class="status-badge status-missing">Empty</span></td>
+                    <td><span class="status-badge status-missing">Empty</span></td>
+                </tr>
+                <tr>
+                    <td>EVRE - WO-001744 - SUPER NICE (Tubes)</td>
+                    <td><span class="status-badge status-missing">Empty</span></td>
+                    <td><span class="status-badge status-missing">Empty</span></td>
+                </tr>
+                <tr>
+                    <td>FabFitFun - WO-001716 - Helios 1oz</td>
+                    <td><span class="status-badge status-missing">Empty</span></td>
+                    <td><span class="status-badge status-missing">Empty</span></td>
+                </tr>
+                <tr>
+                    <td>FabFitFun - WO-001717 - Cloudburst 2oz</td>
+                    <td><span class="status-badge status-missing">Empty</span></td>
+                    <td><span class="status-badge status-missing">Empty</span></td>
+                </tr>
+                <tr>
+                    <td>FabFitFun - WO-001712 - Aurora 1oz</td>
+                    <td><span class="status-badge status-missing">Empty</span></td>
+                    <td><span class="status-badge status-missing">Empty</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Proposed Solution -->
+    <div class="section">
+        <h2>Recommended Actions</h2>
+        <div class="recommendations">
+            <div class="rec-card priority-high">
+                <h4>1. Add QA Inspection Template Link</h4>
+                <ul>
+                    <li>Create new link column on Production board</li>
+                    <li>Or add to Finalization board and mirror</li>
+                    <li>Link to "PURE EARTH LABS Spec Sheet & Inspection Report" template</li>
+                </ul>
+            </div>
+
+            <div class="rec-card priority-high">
+                <h4>2. Enforce QA DOCS Upload</h4>
+                <ul>
+                    <li>Add automation: Can't move to FULFILLED unless QA DOCS has file</li>
+                    <li>Training: Step 13 is non-negotiable</li>
+                    <li>Weekly audit of QA status items</li>
+                </ul>
+            </div>
+
+            <div class="rec-card priority-medium">
+                <h4>3. Populate Spec Sheets</h4>
+                <ul>
+                    <li>Backfill existing items with spec sheet links</li>
+                    <li>Create spec sheets for Earth Harbor products</li>
+                    <li>Consider mirroring from Finalization board</li>
+                </ul>
+            </div>
+
+            <div class="rec-card priority-medium">
+                <h4>4. Link Schedule Sheets</h4>
+                <ul>
+                    <li>Add Sprint/Bulk weekly sheet link to Schedule Sheet column</li>
+                    <li>Or create board-level link accessible from any item</li>
+                </ul>
+            </div>
+
+            <div class="rec-card">
+                <h4>5. Pre-Run Checklist (Optional)</h4>
+                <ul>
+                    <li>Create subitem template for pre-run verification</li>
+                    <li>Steps 1-6 as checkable subitems</li>
+                    <li>Auto-create when item enters "PRODUCING" status</li>
+                </ul>
+            </div>
+
+            <div class="rec-card">
+                <h4>6. Create QA Dashboard View</h4>
+                <ul>
+                    <li>Filter: STATUS = "QA"</li>
+                    <li>Show: Name, Spec Sheet, QA DOCS, Days in QA</li>
+                    <li>Highlight items missing documentation</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Proposed Workflow -->
+    <div class="section">
+        <h2>Proposed Workflow (After Fixes)</h2>
+        <div class="mermaid">
+flowchart LR
+    subgraph Morning["Morning Setup"]
+        A1["Open Production Board"]
+        A2["Filter: TODAY's items"]
+        A3["Click Schedule Sheet link"]
+        A4["Click QA Template link"]
+    end
+
+    subgraph PreRun["Pre-Run"]
+        B1["Open Spec Sheet<br/>(from column)"]
+        B2["Complete pre-run<br/>checklist (subitems)"]
+        B3["Verify components<br/>match spec"]
+    end
+
+    subgraph Production["Production"]
+        C1["Fill QA Inspection<br/>Report during run"]
+        C2["In-process checks"]
+        C3["End of run close-out"]
+    end
+
+    subgraph CloseOut["Close-Out"]
+        D1["Save to Drive"]
+        D2["Upload to QA DOCS<br/>(mandatory)"]
+        D3["Move to FULFILLED"]
+    end
+
+    A1 --> A2 --> A3 --> A4
+    A4 --> B1 --> B2 --> B3
+    B3 --> C1 --> C2 --> C3
+    C3 --> D1 --> D2 --> D3
+
+    style A4 fill:#00c875,color:#fff
+    style B1 fill:#00c875,color:#fff
+    style D2 fill:#00c875,color:#fff
+        </div>
+    </div>
+
+    <!-- Questions -->
+    <div class="section">
+        <h2>Open Questions</h2>
+        <div class="checklist">
+            <div class="checklist-item">
+                <div class="check-box"></div>
+                <div>
+                    <strong>Where is the "PURE EARTH LABS Spec Sheet & Inspection Report" template?</strong><br/>
+                    Is it in Google Drive? What's the URL?
+                </div>
+            </div>
+            <div class="checklist-item">
+                <div class="check-box"></div>
+                <div>
+                    <strong>Should spec sheets be created for Earth Harbor products?</strong><br/>
+                    The loom script mentions they don't exist yet.
+                </div>
+            </div>
+            <div class="checklist-item">
+                <div class="check-box"></div>
+                <div>
+                    <strong>What's the Sprint + Bulk weekly sheet URL?</strong><br/>
+                    BBT board description has a Google Sheet link - is that it?
+                </div>
+            </div>
+            <div class="checklist-item">
+                <div class="check-box"></div>
+                <div>
+                    <strong>Should QA DOCS be required before moving to FULFILLED?</strong><br/>
+                    Can we add an automation to enforce this?
+                </div>
+            </div>
+            <div class="checklist-item">
+                <div class="check-box"></div>
+                <div>
+                    <strong>Is there a naming convention for QA docs?</strong><br/>
+                    Script mentions: "Client_Brand - SKU - PO/MO - Date - QA Inspection Report"
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>QA Workflow Analysis | Generated December 8, 2025</p>
+        <p>Production Board: <a href="https://earthharbor.monday.com/boards/9304930311" style="color: #9d50dd;">earthharbor.monday.com/boards/9304930311</a></p>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+    </script>
+</body>
+</html>
