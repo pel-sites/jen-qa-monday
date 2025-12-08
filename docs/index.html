@@ -12,11 +12,12 @@
             color: #eee;
             min-height: 100vh;
             margin: 0;
-            padding: 40px 20px;
+            padding: 0;
         }
         .container {
             max-width: 800px;
             margin: 0 auto;
+            padding: 40px 20px;
         }
         h1 {
             text-align: center;
@@ -65,9 +66,42 @@
             opacity: 0.5;
             font-size: 0.9em;
         }
+        nav {
+            position: sticky;
+            top: 0;
+            background: #16213e;
+            padding: 15px 20px;
+            border-bottom: 1px solid #2a2a4a;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+        nav a {
+            color: #9d50dd;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: background 0.2s, color 0.2s;
+        }
+        nav a:hover {
+            background: #9d50dd;
+            color: #fff;
+        }
+        nav a.active {
+            background: #9d50dd;
+            color: #fff;
+        }
     </style>
 </head>
 <body>
+    <nav>
+        <a href="/" class="active">Home</a>
+        <a href="/qa_workflow_analysis.html">Analysis</a>
+        <a href="/production_board_structure.html">Board</a>
+    </nav>
     <div class="container">
         <h1>Jen QA Monday</h1>
         <p class="subtitle">QA Workflow Documentation for Pure Earth Labs</p>
