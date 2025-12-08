@@ -1,3 +1,8 @@
+# fly.toml app configuration file generated for jen-qa-monday on 2025-12-08T15:03:55-07:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
 app = 'jen-qa-monday'
 primary_region = 'sjc'
 
@@ -12,6 +17,6 @@ primary_region = 'sjc'
   processes = ['app']
 
 [[vm]]
-  memory = '256mb'
+  memory = '1gb'
   cpu_kind = 'shared'
   cpus = 1
