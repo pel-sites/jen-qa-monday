@@ -59,6 +59,39 @@
         .card a:hover {
             background: #7b3aab;
         }
+        .badge {
+            display: inline-block;
+            background: #28a745;
+            color: #fff;
+            font-size: 0.75em;
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+        .intro {
+            background: rgba(157, 80, 221, 0.1);
+            border: 1px solid rgba(157, 80, 221, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .intro p {
+            margin: 0;
+            line-height: 1.6;
+        }
+        .card.placeholder {
+            opacity: 0.6;
+        }
+        .card.placeholder a {
+            background: #555;
+            cursor: not-allowed;
+        }
+        .coming-soon {
+            font-size: 0.8em;
+            color: #888;
+            margin-left: 10px;
+        }
         .footer {
             text-align: center;
             margin-top: 40px;
@@ -72,16 +105,44 @@
         <h1>Jen QA Monday</h1>
         <p class="subtitle">QA Workflow Documentation for Pure Earth Labs</p>
 
+        <div class="intro">
+            <p>Start with the <strong>QA Manager Procedure</strong> for the complete workflow, then review <strong>Team Performance Analysis</strong> for current metrics. Continue through the analysis and roadmap sections, with technical reference and hiring docs at the end.</p>
+        </div>
+
+        <div class="card placeholder">
+            <h2>QA Manager Procedure <span class="badge">START HERE</span><span class="coming-soon">(Coming Soon)</span></h2>
+            <p>Step-by-step operational SOP for the QA Manager role, covering daily procedures and responsibilities.</p>
+            <a href="#">View Procedure</a>
+        </div>
+
+        <div class="card placeholder">
+            <h2>Team Performance Analysis<span class="coming-soon">(Coming Soon)</span></h2>
+            <p>Current metrics and data analysis of team QA performance, identifying trends and areas for improvement.</p>
+            <a href="#">View Analysis</a>
+        </div>
+
         <div class="card">
             <h2>QA Workflow Analysis</h2>
             <p>Complete analysis of Jen's 13-step QA process mapped to Monday.com, including gap analysis and recommendations.</p>
             <a href="/qa_workflow_analysis.html">View Analysis</a>
         </div>
 
+        <div class="card placeholder">
+            <h2>Next Steps Roadmap<span class="coming-soon">(Coming Soon)</span></h2>
+            <p>Action plan for implementing QA workflow improvements and addressing identified gaps.</p>
+            <a href="#">View Roadmap</a>
+        </div>
+
         <div class="card">
             <h2>Production Board Structure</h2>
             <p>Technical documentation of the Production board including columns, groups, views, and board relationships.</p>
             <a href="/production_board_structure.html">View Structure</a>
+        </div>
+
+        <div class="card placeholder">
+            <h2>Ideal Candidate Profile<span class="coming-soon">(Coming Soon)</span></h2>
+            <p>Profile and requirements for hiring QA team members aligned with Pure Earth Labs' workflow.</p>
+            <a href="#">View Profile</a>
         </div>
 
         <p class="footer">Generated December 8, 2025</p>
