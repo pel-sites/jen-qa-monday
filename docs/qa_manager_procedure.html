@@ -23,12 +23,34 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            max-width: 1400px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 20px;
             background: linear-gradient(135deg, var(--dark-bg) 0%, var(--card-bg) 100%);
             color: #eee;
             line-height: 1.6;
+        }
+
+        /* Prose content - optimal reading width */
+        .section > p,
+        .section > ul,
+        .section > ol,
+        .subsection > p,
+        .subsection > ul,
+        .checklist-item,
+        .non-negotiable,
+        .loom-callout {
+            max-width: 70ch;
+        }
+
+        /* Full-width elements */
+        .mermaid,
+        table,
+        .phase-overview,
+        .checklist-grid,
+        .photo-grid,
+        .naming-convention {
+            max-width: 100%;
         }
 
         h1, h2, h3, h4 { color: #fff; }
@@ -445,7 +467,6 @@
     <div style="display: flex; gap: 20px; font-size: 0.9em;">
         <a href="/qa_manager_procedure.html" style="color: #00c875; text-decoration: none; font-weight: 500;">Procedure</a>
         <a href="/qa_workflow_analysis.html" style="color: #eee; text-decoration: none; opacity: 0.8;">Analysis</a>
-        <a href="/production_board_structure.html" style="color: #eee; text-decoration: none; opacity: 0.8;">Board</a>
         <a href="/team_performance_analysis.html" style="color: #eee; text-decoration: none; opacity: 0.8;">Performance</a>
         <a href="/next_steps_roadmap.html" style="color: #eee; text-decoration: none; opacity: 0.8;">Roadmap</a>
         <a href="/ideal_candidate_profile.html" style="color: #eee; text-decoration: none; opacity: 0.8;">Candidate</a>
@@ -1271,5 +1292,6 @@ flowchart LR
     </script>
     <script src="/js/share.js"></script>
     <script src="/js/breadcrumbs.js"></script>
+    <script src="/js/related-pages.js"></script>
 </body>
 </html>

@@ -26,7 +26,7 @@
             border-bottom: 1px solid #2a2a4a;
         }
         .nav-container {
-            max-width: 1600px;
+            max-width: 1000px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
@@ -118,12 +118,30 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            max-width: 1600px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 20px;
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             color: #eee;
             line-height: 1.6;
+        }
+
+        /* Prose content - optimal reading width */
+        .section > p,
+        .section > ul,
+        .section > ol,
+        .tldr-content p,
+        .tldr-content li {
+            max-width: 70ch;
+        }
+
+        /* Full-width elements */
+        .mermaid,
+        table,
+        .step-grid,
+        .board-connections,
+        .columns-grid {
+            max-width: 100%;
         }
 
         h1, h2, h3 { color: #fff; margin-top: 2em; }
@@ -566,8 +584,11 @@
             </div>
             <ul class="nav-links">
                 <li><a href="/">Home</a></li>
+                <li><a href="/qa_manager_procedure.html">Procedure</a></li>
                 <li><a href="/qa_workflow_analysis.html" class="active">Workflow</a></li>
-                <li><a href="/production_board_structure.html">Board Structure</a></li>
+                <li><a href="/team_performance_analysis.html">Performance</a></li>
+                <li><a href="/next_steps_roadmap.html">Roadmap</a></li>
+                <li><a href="/ideal_candidate_profile.html">Candidate</a></li>
             </ul>
         </div>
     </nav>
@@ -585,7 +606,7 @@
             <li><strong>7 items</strong> currently in QA status with zero documentation attached</li>
             <li><strong>Fix priority:</strong> Add QA template link, enforce QA DOCS upload before FULFILLED</li>
         </ul>
-        <p class="read-time">Full read: ~10 minutes | <a href="/production_board_structure.html">See Board Structure</a></p>
+        <p class="read-time">Full read: ~10 minutes | <a href="/next_steps_roadmap.html">See Roadmap</a></p>
     </section>
 
     <!-- User Story -->
@@ -1186,5 +1207,6 @@ flowchart LR
         });
     </script>
     <script src="/js/share.js"></script>
+    <script src="/js/related-pages.js"></script>
 </body>
 </html>

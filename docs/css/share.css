@@ -85,3 +85,57 @@ h3:hover .copy-link-btn {
     transform: translateX(-50%) translateY(0);
     opacity: 1;
 }
+
+/* ===========================================
+   READING WIDTH UTILITIES
+   Optimal reading width: 50-75 characters
+   =========================================== */
+
+/* Prose sections - constrained for readability */
+.prose {
+    max-width: 70ch;
+}
+
+/* Prose that should be centered in its container */
+.prose-centered {
+    max-width: 70ch;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Full-width content (diagrams, tables, etc.) */
+.full-width {
+    max-width: 100%;
+}
+
+/* Section containers - reasonable max but allows wide content */
+.section {
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+/* For pages with primarily prose content */
+.content-narrow {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+/* Mobile: full width with padding */
+@media (max-width: 768px) {
+    .prose,
+    .prose-centered {
+        max-width: 100%;
+    }
+
+    .section,
+    .content-narrow {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
