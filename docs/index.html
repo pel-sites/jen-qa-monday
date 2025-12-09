@@ -7,23 +7,42 @@
     <style>
         * { box-sizing: border-box; }
 
+        :root {
+            --purple: #9d50dd;
+            --purple-dark: #7b3aab;
+            --bg-dark: #0f0f23;
+            --bg-card: #16213e;
+            --border: #2a2a4a;
+            --text: #eee;
+            --text-muted: rgba(238, 238, 238, 0.7);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1a1a2e;
+            color: var(--text);
+            min-height: 100vh;
+            margin: 0;
+            line-height: 1.6;
+        }
+
         .nav {
-            background: #0f0f23;
+            background: var(--bg-dark);
             padding: 15px 20px;
             position: sticky;
             top: 0;
             z-index: 1000;
-            border-bottom: 1px solid #2a2a4a;
+            border-bottom: 1px solid var(--border);
         }
         .nav-container {
-            max-width: 1200px;
+            max-width: 800px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
         .nav-brand {
-            color: #9d50dd;
+            color: var(--purple);
             font-weight: 600;
             font-size: 1.1em;
             text-decoration: none;
@@ -36,17 +55,17 @@
             padding: 0;
         }
         .nav-links a {
-            color: #eee;
+            color: var(--text);
             text-decoration: none;
             padding: 8px 12px;
             border-radius: 6px;
             transition: background 0.2s;
         }
         .nav-links a:hover {
-            background: #16213e;
+            background: var(--bg-card);
         }
         .nav-links a.active {
-            background: #9d50dd;
+            background: var(--purple);
             color: #fff;
         }
         .hamburger {
@@ -59,7 +78,7 @@
         .hamburger span {
             width: 25px;
             height: 3px;
-            background: #eee;
+            background: var(--text);
             border-radius: 3px;
             transition: all 0.3s;
         }
@@ -72,6 +91,177 @@
         .hamburger.active span:nth-child(3) {
             transform: rotate(-45deg) translate(6px, -6px);
         }
+
+        .hero {
+            padding: 60px 20px 40px;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .hero h1 {
+            font-size: 2.2em;
+            margin: 0 0 12px 0;
+            font-weight: 600;
+        }
+        .hero .tagline {
+            font-size: 1.2em;
+            color: var(--text-muted);
+            margin: 0 0 32px 0;
+        }
+        .audiences {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            text-align: left;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .audience {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95em;
+            color: var(--text-muted);
+        }
+        .audience-label {
+            color: var(--purple);
+            font-weight: 500;
+            min-width: 100px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 40px 0 20px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+        .section-header h2 {
+            margin: 0;
+            font-size: 0.9em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+        .section-header.primary h2 {
+            color: var(--purple);
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 24px;
+            border: 1px solid var(--border);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+            position: relative;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+        .card-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        .card-number {
+            background: var(--purple);
+            color: #fff;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85em;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        .card h3 {
+            margin: 0;
+            font-size: 1.1em;
+            color: var(--purple);
+            font-weight: 600;
+        }
+        .card p {
+            margin: 0 0 auto 0;
+            font-size: 0.9em;
+            color: var(--text-muted);
+            flex-grow: 1;
+        }
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 16px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border);
+        }
+        .read-time {
+            font-size: 0.8em;
+            color: var(--text-muted);
+        }
+        .card-arrow {
+            color: var(--purple);
+            font-size: 1.2em;
+        }
+
+        .flow-connector {
+            display: flex;
+            justify-content: center;
+            padding: 8px 0;
+        }
+        .flow-arrow {
+            color: var(--purple);
+            opacity: 0.6;
+            font-size: 1.2em;
+        }
+
+        .cards-grid.reference .card {
+            opacity: 0.85;
+        }
+        .cards-grid.reference .card-number {
+            background: var(--border);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 0.9em;
+            border-top: 1px solid var(--border);
+            margin-top: 20px;
+        }
+        .footer p {
+            margin: 5px 0;
+            color: var(--text-muted);
+        }
+        .footer a {
+            color: var(--purple);
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
         @media (max-width: 768px) {
             .hamburger {
                 display: flex;
@@ -81,20 +271,20 @@
                 top: 100%;
                 left: 0;
                 right: 0;
-                background: #0f0f23;
+                background: var(--bg-dark);
                 flex-direction: column;
                 padding: 0;
                 gap: 0;
                 max-height: 0;
                 overflow: hidden;
                 transition: max-height 0.3s ease-out;
-                border-bottom: 1px solid #2a2a4a;
+                border-bottom: 1px solid var(--border);
             }
             .nav-links.active {
                 max-height: 300px;
             }
             .nav-links li {
-                border-top: 1px solid #2a2a4a;
+                border-top: 1px solid var(--border);
             }
             .nav-links a {
                 display: block;
@@ -106,129 +296,29 @@
             }
         }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: #eee;
-            min-height: 100vh;
-            margin: 0;
-            padding: 40px 20px;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        h1 {
-            text-align: center;
-            margin-bottom: 10px;
-        }
-        .subtitle {
-            text-align: center;
-            opacity: 0.7;
-            margin-bottom: 40px;
-        }
-        .card {
-            background: #16213e;
-            border-radius: 12px;
-            padding: 25px;
-            margin: 20px 0;
-            border: 1px solid #2a2a4a;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-        }
-        .card h2 {
-            margin: 0 0 10px 0;
-            color: #9d50dd;
-        }
-        .card p {
-            margin: 0 0 15px 0;
-            opacity: 0.8;
-        }
-        .card a {
-            display: inline-block;
-            background: #9d50dd;
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        .card a:hover {
-            background: #7b3aab;
-        }
-        .badge {
-            display: inline-block;
-            background: #28a745;
-            color: #fff;
-            font-size: 0.75em;
-            padding: 4px 10px;
-            border-radius: 4px;
-            margin-left: 10px;
-            vertical-align: middle;
-        }
-        .intro {
-            background: rgba(157, 80, 221, 0.1);
-            border: 1px solid rgba(157, 80, 221, 0.3);
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 30px;
-        }
-        .intro p {
-            margin: 0;
-            line-height: 1.6;
-        }
-        .card.placeholder {
-            opacity: 0.6;
-        }
-        .card.placeholder a {
-            background: #555;
-            cursor: not-allowed;
-        }
-        .coming-soon {
-            font-size: 0.8em;
-            color: #888;
-            margin-left: 10px;
-        }
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            font-size: 0.9em;
-        }
-        .footer p {
-            margin: 5px 0;
-            opacity: 0.7;
-        }
-        .footer a {
-            color: #9d50dd;
-            text-decoration: none;
-        }
-        .footer a:hover {
-            text-decoration: underline;
-        }
-
-        @media (max-width: 480px) {
-            body {
-                padding: 20px 10px;
+        @media (max-width: 600px) {
+            .hero {
+                padding: 40px 20px 30px;
             }
-
-            h1 {
-                font-size: 1.5em;
+            .hero h1 {
+                font-size: 1.8em;
             }
-
+            .hero .tagline {
+                font-size: 1.1em;
+            }
+            .audiences {
+                max-width: 100%;
+            }
+            .audience {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 2px;
+            }
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
             .card {
                 padding: 20px;
-            }
-
-            .card h2 {
-                font-size: 1.2em;
-            }
-
-            .card a {
-                display: block;
-                text-align: center;
             }
         }
     </style>
@@ -249,55 +339,121 @@
             </ul>
         </div>
     </nav>
-    <div class="container">
+
+    <header class="hero">
         <h1>Jen QA Monday</h1>
-        <p class="subtitle">QA Workflow Documentation for Pure Earth Labs</p>
+        <p class="tagline">Everyone aligned on QA. One page.</p>
+        <div class="audiences">
+            <div class="audience">
+                <span class="audience-label">Stakeholders</span>
+                <span>Get the big picture</span>
+            </div>
+            <div class="audience">
+                <span class="audience-label">Staff</span>
+                <span>Reference the process</span>
+            </div>
+            <div class="audience">
+                <span class="audience-label">New hires</span>
+                <span>Learn what success looks like</span>
+            </div>
+        </div>
+    </header>
 
-        <div class="intro">
-            <p>Start with the <strong>QA Manager Procedure</strong> for the complete workflow, then review <strong>Team Performance Analysis</strong> for current metrics. Continue through the analysis and roadmap sections, with technical reference and hiring docs at the end.</p>
+    <main class="container">
+        <div class="section-header primary">
+            <h2>Start Here</h2>
         </div>
 
-        <div class="card">
-            <h2>QA Manager Procedure <span class="badge">START HERE</span></h2>
-            <p>Step-by-step operational SOP for the QA Manager role, covering daily procedures and responsibilities.</p>
-            <a href="/qa_manager_procedure.html">View Procedure</a>
+        <div class="cards-grid">
+            <a href="/qa_manager_procedure.html" class="card">
+                <div class="card-header">
+                    <span class="card-number">1</span>
+                    <h3>QA Manager Procedure</h3>
+                </div>
+                <p>Step-by-step operational SOP for the QA Manager role, covering daily procedures and responsibilities.</p>
+                <div class="card-meta">
+                    <span class="read-time">15 min read</span>
+                    <span class="card-arrow">&rarr;</span>
+                </div>
+            </a>
+
+            <a href="/team_performance_analysis.html" class="card">
+                <div class="card-header">
+                    <span class="card-number">2</span>
+                    <h3>Team Performance</h3>
+                </div>
+                <p>Current metrics and data analysis of team QA performance, identifying trends and areas for improvement.</p>
+                <div class="card-meta">
+                    <span class="read-time">5 min read</span>
+                    <span class="card-arrow">&rarr;</span>
+                </div>
+            </a>
         </div>
 
-        <div class="card">
-            <h2>Team Performance Analysis</h2>
-            <p>Current metrics and data analysis of team QA performance, identifying trends and areas for improvement.</p>
-            <a href="/team_performance_analysis.html">View Analysis</a>
+        <div class="flow-connector">
+            <span class="flow-arrow">&darr;</span>
         </div>
 
-        <div class="card">
-            <h2>QA Workflow Analysis</h2>
-            <p>Complete analysis of Jen's 13-step QA process mapped to Monday.com, including gap analysis and recommendations.</p>
-            <a href="/qa_workflow_analysis.html">View Analysis</a>
+        <div class="cards-grid">
+            <a href="/qa_workflow_analysis.html" class="card">
+                <div class="card-header">
+                    <span class="card-number">3</span>
+                    <h3>Workflow Analysis</h3>
+                </div>
+                <p>Complete analysis of Jen's 13-step QA process mapped to Monday.com, including gap analysis and recommendations.</p>
+                <div class="card-meta">
+                    <span class="read-time">10 min read</span>
+                    <span class="card-arrow">&rarr;</span>
+                </div>
+            </a>
+
+            <a href="/next_steps_roadmap.html" class="card">
+                <div class="card-header">
+                    <span class="card-number">4</span>
+                    <h3>Next Steps Roadmap</h3>
+                </div>
+                <p>Action plan for implementing QA workflow improvements and addressing identified gaps.</p>
+                <div class="card-meta">
+                    <span class="read-time">5 min read</span>
+                    <span class="card-arrow">&rarr;</span>
+                </div>
+            </a>
         </div>
 
-        <div class="card">
-            <h2>Next Steps Roadmap</h2>
-            <p>Action plan for implementing QA workflow improvements and addressing identified gaps.</p>
-            <a href="/next_steps_roadmap.html">View Roadmap</a>
+        <div class="section-header">
+            <h2>Reference</h2>
         </div>
 
-        <div class="card">
-            <h2>Production Board Structure</h2>
-            <p>Technical documentation of the Production board including columns, groups, views, and board relationships.</p>
-            <a href="/production_board_structure.html">View Structure</a>
-        </div>
+        <div class="cards-grid reference">
+            <a href="/production_board_structure.html" class="card">
+                <div class="card-header">
+                    <span class="card-number">&bull;</span>
+                    <h3>Board Structure</h3>
+                </div>
+                <p>Technical documentation of the Production board including columns, groups, views, and board relationships.</p>
+                <div class="card-meta">
+                    <span class="read-time">10 min read</span>
+                    <span class="card-arrow">&rarr;</span>
+                </div>
+            </a>
 
-        <div class="card">
-            <h2>Ideal Candidate Profile</h2>
-            <p>Profile and requirements for hiring QA team members aligned with Pure Earth Labs' workflow.</p>
-            <a href="/ideal_candidate_profile.html">View Profile</a>
+            <a href="/ideal_candidate_profile.html" class="card">
+                <div class="card-header">
+                    <span class="card-number">&bull;</span>
+                    <h3>Ideal Candidate</h3>
+                </div>
+                <p>Profile and requirements for hiring QA team members aligned with Pure Earth Labs' workflow.</p>
+                <div class="card-meta">
+                    <span class="read-time">5 min read</span>
+                    <span class="card-arrow">&rarr;</span>
+                </div>
+            </a>
         </div>
+    </main>
 
-        <div class="footer">
-            <p>Pure Earth Labs QA Documentation</p>
-            <p><a href="https://earthharbor.com" target="_blank" rel="noopener noreferrer">earthharbor.com</a> | Questions? Contact <a href="mailto:qa@pureearthlabs.com">qa@pureearthlabs.com</a></p>
-            <p>Last updated: December 2025</p>
-        </div>
-    </div>
+    <footer class="footer">
+        <p>Pure Earth Labs QA Documentation</p>
+        <p><a href="https://earthharbor.com" target="_blank" rel="noopener noreferrer">earthharbor.com</a> | Questions? Contact <a href="mailto:qa@pureearthlabs.com">qa@pureearthlabs.com</a></p>
+    </footer>
 </body>
 </html>
