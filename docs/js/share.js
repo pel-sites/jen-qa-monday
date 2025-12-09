@@ -131,10 +131,77 @@
         });
     }
 
+    function setupCollapsibles() {
+        var collapsibles = document.querySelectorAll('.collapsible');
+        var STORAGE_KEY = 'collapsible-states';
+
+        function getStoredStates() {
+            try {
+                return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+            } catch (e) {
+                return {};
+            }
+        }
+
+        function saveState(id, isCollapsed) {
+            try {
+                var states = getStoredStates();
+                states[window.location.pathname + '#' + id] = isCollapsed;
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(states));
+            } catch (e) {
+                // Ignore storage errors
+            }
+        }
+
+        collapsibles.forEach(function(collapsible) {
+            var header = collapsible.querySelector('.collapsible-header');
+            if (!header) return;
+
+            var id = collapsible.id || header.textContent.trim().slice(0, 30).replace(/\s+/g, '-').toLowerCase();
+            collapsible.id = id;
+
+            // Restore state from localStorage
+            var states = getStoredStates();
+            var storedState = states[window.location.pathname + '#' + id];
+            if (storedState === true) {
+                collapsible.classList.add('collapsed');
+            }
+
+            // Add toggle icon if not present
+            if (!header.querySelector('.collapsible-toggle')) {
+                var toggle = document.createElement('span');
+                toggle.className = 'collapsible-toggle';
+                toggle.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>';
+                header.appendChild(toggle);
+            }
+
+            header.addEventListener('click', function(e) {
+                // Don't toggle if clicking a link inside header
+                if (e.target.tagName === 'A') return;
+
+                var isCollapsed = collapsible.classList.toggle('collapsed');
+                saveState(id, isCollapsed);
+            });
+
+            // Make it keyboard accessible
+            header.setAttribute('tabindex', '0');
+            header.setAttribute('role', 'button');
+            header.setAttribute('aria-expanded', !collapsible.classList.contains('collapsed'));
+
+            header.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    header.click();
+                }
+            });
+        });
+    }
+
     function init() {
         setupCopyButtons();
         highlightAnchor();
         setupNavScrollAffordance();
+        setupCollapsibles();
 
         window.addEventListener('hashchange', highlightAnchor);
     }

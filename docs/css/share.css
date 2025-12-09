@@ -247,3 +247,102 @@ a {
 table td a {
     word-break: break-all;
 }
+
+/* ===========================================
+   EXTERNAL LINK STYLING
+   Visual indicator for links that open externally
+   =========================================== */
+
+/* External links get an icon after them */
+a[href^="http"]:not([href*="jen-qa-monday.fly.dev"]):not(.no-external-icon)::after {
+    content: '\2197'; /* ↗ arrow */
+    display: inline-block;
+    margin-left: 0.25em;
+    font-size: 0.75em;
+    opacity: 0.7;
+    transition: opacity 0.15s ease;
+}
+
+a[href^="http"]:not([href*="jen-qa-monday.fly.dev"]):not(.no-external-icon):hover::after {
+    opacity: 1;
+}
+
+/* Don't show icon on buttons or cards that are obviously clickable */
+a.btn[href^="http"]::after,
+a.card[href^="http"]::after,
+.nav-links a[href^="http"]::after {
+    display: none;
+}
+
+/* ===========================================
+   COLLAPSIBLE SECTIONS
+   Expandable/collapsible content areas
+   =========================================== */
+
+.collapsible-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    user-select: none;
+    padding: 12px 16px;
+    background: rgba(157, 80, 221, 0.1);
+    border-radius: 8px;
+    transition: background 0.2s ease;
+}
+
+.collapsible-header:hover {
+    background: rgba(157, 80, 221, 0.2);
+}
+
+.collapsible-header h3,
+.collapsible-header h4 {
+    margin: 0;
+    flex: 1;
+}
+
+.collapsible-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    transition: transform 0.3s ease;
+}
+
+.collapsible-toggle svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+}
+
+.collapsible.collapsed .collapsible-toggle {
+    transform: rotate(-90deg);
+}
+
+.collapsible-content {
+    overflow: hidden;
+    transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+    max-height: 2000px;
+    opacity: 1;
+    padding-top: 16px;
+}
+
+.collapsible.collapsed .collapsible-content {
+    max-height: 0;
+    opacity: 0;
+    padding-top: 0;
+}
+
+/* Summary indicator for collapsed state */
+.collapsible-summary {
+    display: none;
+    font-size: 0.85em;
+    color: rgba(255, 255, 255, 0.5);
+    margin-left: 12px;
+}
+
+.collapsible.collapsed .collapsible-summary {
+    display: inline;
+}
