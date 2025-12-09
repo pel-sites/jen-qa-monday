@@ -65,7 +65,7 @@
         bar.innerHTML = `
             <div class="breadcrumb-content">
                 <div class="breadcrumb-trail">
-                    <a href="/" class="breadcrumb-home">Home</a>
+                    <a href="./index.html" class="breadcrumb-home">Home</a>
                     <span class="breadcrumb-sep">›</span>
                     <span class="breadcrumb-page">${structure.title}</span>
                     <span class="breadcrumb-sep breadcrumb-phase-sep">›</span>

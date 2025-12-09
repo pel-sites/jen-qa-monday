@@ -574,24 +574,16 @@
     <link rel="stylesheet" href="/css/share.css">
 </head>
 <body>
-    <nav class="nav">
-        <div class="nav-container">
-            <a href="/" class="nav-brand">Jen QA Monday</a>
-            <div class="hamburger" onclick="this.classList.toggle('active'); document.querySelector('.nav-links').classList.toggle('active');">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <ul class="nav-links">
-                <li><a href="/">Home</a></li>
-                <li><a href="/qa_manager_procedure.html">Procedure</a></li>
-                <li><a href="/qa_workflow_analysis.html" class="active">Workflow</a></li>
-                <li><a href="/team_performance_analysis.html">Performance</a></li>
-                <li><a href="/next_steps_roadmap.html">Roadmap</a></li>
-                <li><a href="/ideal_candidate_profile.html">Candidate</a></li>
-            </ul>
-        </div>
-    </nav>
+<nav style="position: sticky; top: 0; z-index: 100; background: #0f0f23; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #2a2a4a;">
+    <a href="./index.html" style="color: #9d50dd; text-decoration: none; font-weight: 500;">← Home</a>
+    <div style="display: flex; gap: 20px; font-size: 0.9em;">
+        <a href="./qa_manager_procedure.html" style="color: #eee; text-decoration: none; opacity: 0.8;">Procedure</a>
+        <a href="./qa_workflow_analysis.html" style="color: #00c875; text-decoration: none; font-weight: 500;">Workflow</a>
+        <a href="./team_performance_analysis.html" style="color: #eee; text-decoration: none; opacity: 0.8;">Performance</a>
+        <a href="./next_steps_roadmap.html" style="color: #eee; text-decoration: none; opacity: 0.8;">Roadmap</a>
+        <a href="./ideal_candidate_profile.html" style="color: #eee; text-decoration: none; opacity: 0.8;">Candidate</a>
+    </div>
+</nav>
     <div class="header">
         <h1>QA Workflow Analysis</h1>
         <div class="subtitle">Mapping Jen's 13-Step QA Process to Monday.com</div>
@@ -606,7 +598,7 @@
             <li><strong>7 items</strong> currently in QA status with zero documentation attached</li>
             <li><strong>Fix priority:</strong> Add QA template link, enforce QA DOCS upload before FULFILLED</li>
         </ul>
-        <p class="read-time">Full read: ~10 minutes | <a href="/next_steps_roadmap.html">See Roadmap</a></p>
+        <p class="read-time">Full read: ~10 minutes | <a href="./next_steps_roadmap.html">See Roadmap</a></p>
     </section>
 
     <!-- User Story -->

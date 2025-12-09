@@ -45,10 +45,9 @@ Not restricting. Breathing room. Focuses the user on the purpose of each page an
 ```
 docs/
 ├── index.html                    # Landing - the welcome mat
-├── qa_manager_procedure.html     # The 14-step SOP (main content)
+├── qa_manager_procedure.html     # The 13-step SOP (main content)
 ├── qa_workflow_analysis.html     # Gap analysis - what's missing
 ├── team_performance_analysis.html # Current metrics
-├── production_board_structure.html # Monday.com technical reference
 ├── next_steps_roadmap.html       # Action plan
 ├── ideal_candidate_profile.html  # Hiring docs
 └── components/                   # Interactive UI components
@@ -75,14 +74,13 @@ import { signal } from 'https://esm.sh/@preact/signals';
 
 ### Primary Flow (for new readers)
 
-1. **QA Manager Procedure** - START HERE. The 14-step SOP.
+1. **QA Manager Procedure** - START HERE. The 13-step SOP.
 2. **Team Performance Analysis** - Current state. What's working, what's not.
 3. **QA Workflow Analysis** - Mapping to Monday.com. Gap analysis.
 4. **Next Steps Roadmap** - What we're doing about it.
 
 ### Reference (for specific lookups)
 
-- **Production Board Structure** - Technical: columns, IDs, relationships
 - **Ideal Candidate Profile** - Hiring: who we need, interview questions
 
 ## Monday.com Integration
