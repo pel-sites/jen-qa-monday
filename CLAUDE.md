@@ -50,24 +50,20 @@ docs/
 ├── team_performance_analysis.html # Current metrics
 ├── next_steps_roadmap.html       # Action plan
 ├── ideal_candidate_profile.html  # Hiring docs
-└── components/                   # Interactive UI components
-    ├── index.html
-    ├── step-indicator.html
-    ├── interactive-checklist.html
-    └── phase-transitions.html
+├── css/
+│   └── share.css                 # Shared styles
+├── js/
+│   ├── share.js                  # Shared functionality (nav, copy links, etc.)
+│   ├── breadcrumbs.js            # Dynamic breadcrumb navigation
+│   └── related-pages.js          # Related pages component
+└── favicon.svg                   # Site favicon
 ```
 
 ### Libraries (CDN imports only)
 
 ```javascript
-// Diagrams
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.esm.min.mjs';
-
-// Animation (when needed)
-import gsap from 'https://esm.sh/gsap';
-
-// Reactivity (when needed)
-import { signal } from 'https://esm.sh/@preact/signals';
+// Diagrams (used for workflow visualization in qa_manager_procedure.html)
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js';
 ```
 
 ## Content Structure
