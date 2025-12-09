@@ -243,6 +243,57 @@
 
         a { color: #66ccff; }
 
+        .tldr {
+            background: linear-gradient(135deg, rgba(157, 80, 221, 0.15) 0%, rgba(87, 155, 252, 0.1) 100%);
+            border: 1px solid var(--purple);
+            border-radius: 12px;
+            padding: 25px 30px;
+            margin-bottom: 30px;
+        }
+
+        .tldr h2 {
+            margin: 0 0 15px 0;
+            color: var(--purple);
+            font-size: 1.3em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tldr h2::before {
+            content: "⚡";
+        }
+
+        .tldr ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .tldr li {
+            margin: 10px 0;
+        }
+
+        .tldr strong {
+            color: var(--good);
+        }
+
+        .tldr .read-time {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(157, 80, 221, 0.3);
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        .tldr a {
+            color: var(--info);
+            text-decoration: none;
+        }
+
+        .tldr a:hover {
+            text-decoration: underline;
+        }
+
         .phase-header {
             display: flex;
             align-items: center;
@@ -323,6 +374,17 @@
         <div class="subtitle">QA Workflow Improvement Plan for Pure Earth Labs</div>
         <div class="date">Generated: December 8, 2025 | Based on Team Performance Analysis</div>
     </div>
+
+    <section id="tldr" class="tldr">
+        <h2>TL;DR</h2>
+        <ul>
+            <li><strong>Priority 1:</strong> Assign owners + block FULFILLED without QA DOCS (fix 60% gap)</li>
+            <li><strong>4 phases:</strong> Foundation, Enforcement, Visibility, Cleanup (~8 weeks total)</li>
+            <li><strong>Target:</strong> QA DOCS completion 40% → 95%, Owner assignment 37% → 100%</li>
+            <li><strong>Quick win:</strong> Items with owners are 2.7x more likely to have complete docs</li>
+        </ul>
+        <p class="read-time">Full read: ~10 minutes | <a href="/ideal_candidate_profile.html">See Hiring Profile</a></p>
+    </section>
 
     <!-- Assessment Summary -->
     <div class="section">

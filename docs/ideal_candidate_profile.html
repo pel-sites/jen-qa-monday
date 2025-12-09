@@ -315,6 +315,57 @@
 
         a { color: #66ccff; }
 
+        .tldr {
+            background: linear-gradient(135deg, rgba(0, 200, 117, 0.15) 0%, rgba(87, 155, 252, 0.1) 100%);
+            border: 1px solid var(--good);
+            border-radius: 12px;
+            padding: 25px 30px;
+            margin-bottom: 30px;
+        }
+
+        .tldr h2 {
+            margin: 0 0 15px 0;
+            color: var(--good);
+            font-size: 1.3em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tldr h2::before {
+            content: "⚡";
+        }
+
+        .tldr ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .tldr li {
+            margin: 10px 0;
+        }
+
+        .tldr strong {
+            color: var(--good);
+        }
+
+        .tldr .read-time {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(0, 200, 117, 0.3);
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        .tldr a {
+            color: var(--info);
+            text-decoration: none;
+        }
+
+        .tldr a:hover {
+            text-decoration: underline;
+        }
+
         .vs-table {
             margin: 20px 0;
         }
@@ -347,6 +398,17 @@
         <div class="subtitle">QA Compliance Coordinator for Pure Earth Labs</div>
         <div class="date">Generated: December 8, 2025 | Based on Workflow Gap Analysis</div>
     </div>
+
+    <section id="tldr" class="tldr">
+        <h2>TL;DR</h2>
+        <ul>
+            <li><strong>Role:</strong> QA Compliance Coordinator - enforces existing process, not floor QA</li>
+            <li><strong>3 must-haves:</strong> Monday.com admin skills, enforcement mindset, data analysis</li>
+            <li><strong>Reports to:</strong> Production Manager (supports Jen's floor QA work)</li>
+            <li><strong>90-day goal:</strong> QA DOCS 40% → 90%, Owner assignment 37% → 100%</li>
+        </ul>
+        <p class="read-time">Full read: ~10 minutes | <a href="/next_steps_roadmap.html">See Implementation Roadmap</a></p>
+    </section>
 
     <!-- The Problem -->
     <div class="section">
