@@ -375,6 +375,25 @@
         <div class="date">Generated: December 8, 2025 | Data Source: Monday.com API</div>
     </div>
 
+    <div class="data-snapshot" style="background: linear-gradient(135deg, rgba(87, 155, 252, 0.15) 0%, rgba(87, 155, 252, 0.05) 100%); border: 1px solid var(--info); border-radius: 12px; padding: 20px; margin-bottom: 30px;">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+            <span style="font-size: 1.2em;">📊</span>
+            <strong style="color: var(--info);">Point-in-Time Data Snapshot</strong>
+        </div>
+        <p style="margin: 0 0 15px 0; opacity: 0.9;">This analysis reflects data as of <strong>December 8, 2025</strong>. These metrics are a snapshot, not a live dashboard. Production data changes daily as items move through the workflow.</p>
+        <details style="margin-top: 10px;">
+            <summary style="cursor: pointer; color: var(--info); font-weight: 500;">How to refresh this data</summary>
+            <div style="margin-top: 15px; padding: 15px; background: #0f0f23; border-radius: 8px;">
+                <p style="margin: 0 0 10px 0;">To get updated metrics, run this query against the Monday.com GraphQL API:</p>
+                <pre style="background:#16213e; padding:12px; border-radius:6px; overflow-x:auto; font-size: 0.85em; margin: 10px 0;">
+Board ID: 9304930311
+Filter: STATUS = FULFILLED (label_id: 6)
+Fields: QA DOCS, Spec Sheet, Owners, QTY, PRODUCED, DAY, LINE</pre>
+                <p style="margin: 10px 0 0 0; font-size: 0.9em; opacity: 0.8;">See the <a href="#data-source" style="color: var(--info);">Data Source</a> section for the complete API reference.</p>
+            </div>
+        </details>
+    </div>
+
     <section id="tldr" class="tldr">
         <h2>TL;DR</h2>
         <ul>

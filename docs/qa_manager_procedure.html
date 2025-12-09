@@ -267,8 +267,12 @@
 
         .modal-close:hover { background: #c02040; }
 
-        .modal-content .mermaid {
+        .modal-content .mermaid,
+        .modal-content .mermaid-container {
             min-width: 1000px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
         }
 
         .checklist {
@@ -578,7 +582,7 @@
             </div>
         </div>
 
-        <button class="expand-btn" onclick="document.getElementById('flowModal').classList.add('active')">
+        <button class="expand-btn" onclick="openFlowModal()">
             Show Detailed Workflow Diagram
         </button>
     </div>
@@ -588,60 +592,7 @@
         <div class="modal-content">
             <button class="modal-close" onclick="document.getElementById('flowModal').classList.remove('active')">&times;</button>
             <h3 style="color: #333; margin-top: 0;">Complete Workflow</h3>
-            <div class="mermaid">
-flowchart LR
-    subgraph Prep["Step 0: Preparation"]
-        P1["Open Sprint/Bulk<br/>Weekly Sheet"]
-        P2["Find Today's Run"]
-        P3["Open Spec Sheet"]
-        P4["Open QA Report<br/>Template"]
-    end
-
-    subgraph PreRun["Steps 1-6: Pre-Run"]
-        PR1["1. Spec at Line"]
-        PR2["2. Components"]
-        PR3["3. Batch Code"]
-        PR4["4. Equipment"]
-        PR5["5. Line Config"]
-        PR6["6. MO Verify"]
-    end
-
-    subgraph InProcess["Steps 7-11: In-Process"]
-        IP1["7. Start Docs"]
-        IP2["8. QA Checks"]
-        IP3["9. Defects"]
-        IP4["10. Standards"]
-        IP5["11. Close-out"]
-    end
-
-    subgraph Final["Steps 12-13: Final"]
-        F1["12. Save to Drive"]
-        F2["13. Attach to<br/>Monday.com"]
-    end
-
-    P1 --> P2 --> P3 --> P4
-    P4 --> PR1 --> PR2 --> PR3 --> PR4 --> PR5 --> PR6
-    PR6 --> IP1 --> IP2 --> IP3 --> IP4 --> IP5
-    IP5 --> F1 --> F2
-
-    style P1 fill:#579bfc,color:#fff
-    style P2 fill:#579bfc,color:#fff
-    style P3 fill:#579bfc,color:#fff
-    style P4 fill:#579bfc,color:#fff
-    style PR1 fill:#fdab3d,color:#000
-    style PR2 fill:#fdab3d,color:#000
-    style PR3 fill:#fdab3d,color:#000
-    style PR4 fill:#fdab3d,color:#000
-    style PR5 fill:#fdab3d,color:#000
-    style PR6 fill:#fdab3d,color:#000
-    style IP1 fill:#00c875,color:#000
-    style IP2 fill:#00c875,color:#000
-    style IP3 fill:#00c875,color:#000
-    style IP4 fill:#00c875,color:#000
-    style IP5 fill:#00c875,color:#000
-    style F1 fill:#9d50dd,color:#fff
-    style F2 fill:#9d50dd,color:#fff
-            </div>
+            <div id="modalMermaid" class="mermaid-container"></div>
         </div>
     </div>
 
@@ -723,7 +674,11 @@ flowchart TB
             <div class="checklist-item">
                 <div class="check-box"></div>
                 <div>
-                    <strong>Open a new copy of the "PURE EARTH LABS Spec Sheet & Inspection Report"</strong> doc for today's PO/run
+                    <strong>Open a new copy of the "PURE EARTH LABS Spec Sheet & Inspection Report"</strong> doc for today's PO/run<br/>
+                    <a href="https://drive.google.com/drive/folders/1_aaQp1t-8dt4KlJf95ZRp-TtjpIjjx3_?usp=drive_link" target="_blank" rel="noopener noreferrer" style="color: var(--blue); display: inline-flex; align-items: center; gap: 6px; margin-top: 8px;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                        Open QA Template Folder (Google Drive)
+                    </a>
                 </div>
             </div>
         </div>
@@ -1242,7 +1197,13 @@ flowchart TB
         <div class="checklist">
             <div class="checklist-item">
                 <div class="check-box"></div>
-                <div>Save the completed QA doc in Drive using the trained folder structure</div>
+                <div>
+                    Save the completed QA doc in Drive using the trained folder structure<br/>
+                    <a href="https://drive.google.com/drive/folders/1_aaQp1t-8dt4KlJf95ZRp-TtjpIjjx3_?usp=drive_link" target="_blank" rel="noopener noreferrer" style="color: var(--blue); display: inline-flex; align-items: center; gap: 6px; margin-top: 8px;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                        Open QA Template Folder (Google Drive)
+                    </a>
+                </div>
             </div>
         </div>
 
@@ -1363,6 +1324,19 @@ flowchart LR
                 curve: 'basis'
             }
         });
+
+        // Re-render Mermaid diagram when modal opens (fixes hidden element rendering)
+        function openFlowModal() {
+            const modal = document.getElementById('flowModal');
+            modal.classList.add('active');
+
+            // Re-render the mermaid diagram inside the modal
+            const mermaidEl = modal.querySelector('.mermaid');
+            if (mermaidEl && !mermaidEl.querySelector('svg')) {
+                // Diagram hasn't rendered yet - trigger render
+                mermaid.run({ nodes: [mermaidEl] });
+            }
+        }
     </script>
     <button class="back-to-top" aria-label="Back to top">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
