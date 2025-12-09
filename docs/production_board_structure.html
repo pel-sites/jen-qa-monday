@@ -250,11 +250,21 @@
 
         a { color: #66ccff; }
 
-        .timestamp {
-            font-size: 12px;
-            opacity: 0.6;
-            margin-top: 30px;
+        .footer {
             text-align: center;
+            margin-top: 30px;
+            font-size: 0.9em;
+        }
+        .footer p {
+            margin: 5px 0;
+            opacity: 0.7;
+        }
+        .footer a {
+            color: #9d50dd;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
         }
 
         .table-wrapper {
@@ -736,9 +746,11 @@ query GetBoardStructure {
         </p>
     </div>
 
-    <p class="timestamp">
-        Generated: December 8, 2025 | Board Last Updated: December 5, 2025
-    </p>
+    <div class="footer">
+        <p>Pure Earth Labs QA Documentation</p>
+        <p><a href="https://earthharbor.com" target="_blank" rel="noopener noreferrer">earthharbor.com</a> | Questions? Contact <a href="mailto:qa@pureearthlabs.com">qa@pureearthlabs.com</a></p>
+        <p>Last updated: December 2025</p>
+    </div>
 
     <script>
         mermaid.initialize({
