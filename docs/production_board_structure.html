@@ -15,6 +15,105 @@
             --completed: #9cd326;
         }
 
+        .nav {
+            background: #0f0f23;
+            padding: 15px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #2a2a4a;
+        }
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-brand {
+            color: #9d50dd;
+            font-weight: 600;
+            font-size: 1.1em;
+            text-decoration: none;
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .nav-links a {
+            color: #eee;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+        .nav-links a:hover {
+            background: #16213e;
+        }
+        .nav-links a.active {
+            background: #9d50dd;
+            color: #fff;
+        }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 5px;
+            gap: 5px;
+        }
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #eee;
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #0f0f23;
+                flex-direction: column;
+                padding: 0;
+                gap: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease-out;
+                border-bottom: 1px solid #2a2a4a;
+            }
+            .nav-links.active {
+                max-height: 300px;
+            }
+            .nav-links li {
+                border-top: 1px solid #2a2a4a;
+            }
+            .nav-links a {
+                display: block;
+                padding: 15px 20px;
+                border-radius: 0;
+            }
+            .nav {
+                position: relative;
+            }
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
             max-width: 1400px;
@@ -157,9 +256,90 @@
             margin-top: 30px;
             text-align: center;
         }
+
+        .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .header {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 1.5em;
+            }
+
+            .meta-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .meta-card .value {
+                font-size: 18px;
+            }
+
+            .section {
+                padding: 15px;
+            }
+
+            .views-grid {
+                grid-template-columns: 1fr;
+            }
+
+            table {
+                font-size: 14px;
+            }
+
+            th, td {
+                padding: 8px;
+            }
+
+            pre {
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .meta-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .meta-card .value {
+                font-size: 16px;
+            }
+
+            th, td {
+                padding: 6px;
+            }
+
+            .badge {
+                font-size: 10px;
+                padding: 3px 6px;
+            }
+        }
     </style>
 </head>
 <body>
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="/" class="nav-brand">Jen QA Monday</a>
+            <div class="hamburger" onclick="this.classList.toggle('active'); document.querySelector('.nav-links').classList.toggle('active');">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/qa_workflow_analysis.html">Workflow</a></li>
+                <li><a href="/production_board_structure.html" class="active">Board Structure</a></li>
+            </ul>
+        </div>
+    </nav>
     <div class="header">
         <h1>Production Board Documentation</h1>
         <p>Monday.com Board Structure & Data Flow Analysis</p>
@@ -312,6 +492,7 @@ flowchart LR
     <!-- Groups Table -->
     <div class="section">
         <h2>Groups (6)</h2>
+        <div class="table-wrapper">
         <table>
             <thead>
                 <tr>
@@ -360,11 +541,13 @@ flowchart LR
                 </tr>
             </tbody>
         </table>
+        </div>
     </div>
 
     <!-- Columns Table -->
     <div class="section">
         <h2>Columns (36)</h2>
+        <div class="table-wrapper">
         <table>
             <thead>
                 <tr>
@@ -412,6 +595,7 @@ flowchart LR
                 <tr><td>PO(s)</td><td><code>lookup_mkvkmj5m</code></td><td><span class="badge badge-mirror">mirror</span></td></tr>
             </tbody>
         </table>
+        </div>
     </div>
 
     <!-- Views -->
@@ -496,6 +680,7 @@ flowchart LR
     <!-- Owners -->
     <div class="section">
         <h2>Board Owners</h2>
+        <div class="table-wrapper">
         <table>
             <thead>
                 <tr>
@@ -517,6 +702,7 @@ flowchart LR
                 </tr>
             </tbody>
         </table>
+        </div>
     </div>
 
     <!-- API Reference -->

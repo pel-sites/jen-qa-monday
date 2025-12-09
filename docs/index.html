@@ -6,18 +6,117 @@
     <title>Jen QA Monday - Documentation</title>
     <style>
         * { box-sizing: border-box; }
+
+        .nav {
+            background: #0f0f23;
+            padding: 15px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #2a2a4a;
+        }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-brand {
+            color: #9d50dd;
+            font-weight: 600;
+            font-size: 1.1em;
+            text-decoration: none;
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .nav-links a {
+            color: #eee;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+        .nav-links a:hover {
+            background: #16213e;
+        }
+        .nav-links a.active {
+            background: #9d50dd;
+            color: #fff;
+        }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 5px;
+            gap: 5px;
+        }
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #eee;
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #0f0f23;
+                flex-direction: column;
+                padding: 0;
+                gap: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease-out;
+                border-bottom: 1px solid #2a2a4a;
+            }
+            .nav-links.active {
+                max-height: 300px;
+            }
+            .nav-links li {
+                border-top: 1px solid #2a2a4a;
+            }
+            .nav-links a {
+                display: block;
+                padding: 15px 20px;
+                border-radius: 0;
+            }
+            .nav {
+                position: relative;
+            }
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             color: #eee;
             min-height: 100vh;
             margin: 0;
-            padding: 0;
+            padding: 40px 20px;
         }
         .container {
             max-width: 800px;
             margin: 0 auto;
-            padding: 40px 20px;
         }
         h1 {
             text-align: center;
@@ -60,51 +159,105 @@
         .card a:hover {
             background: #7b3aab;
         }
+        .badge {
+            display: inline-block;
+            background: #28a745;
+            color: #fff;
+            font-size: 0.75em;
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+        .intro {
+            background: rgba(157, 80, 221, 0.1);
+            border: 1px solid rgba(157, 80, 221, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .intro p {
+            margin: 0;
+            line-height: 1.6;
+        }
+        .card.placeholder {
+            opacity: 0.6;
+        }
+        .card.placeholder a {
+            background: #555;
+            cursor: not-allowed;
+        }
+        .coming-soon {
+            font-size: 0.8em;
+            color: #888;
+            margin-left: 10px;
+        }
         .footer {
             text-align: center;
             margin-top: 40px;
             opacity: 0.5;
             font-size: 0.9em;
         }
-        nav {
-            position: sticky;
-            top: 0;
-            background: #16213e;
-            padding: 15px 20px;
-            border-bottom: 1px solid #2a2a4a;
-            z-index: 1000;
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            flex-wrap: wrap;
-        }
-        nav a {
-            color: #9d50dd;
-            text-decoration: none;
-            font-weight: 500;
-            padding: 8px 16px;
-            border-radius: 6px;
-            transition: background 0.2s, color 0.2s;
-        }
-        nav a:hover {
-            background: #9d50dd;
-            color: #fff;
-        }
-        nav a.active {
-            background: #9d50dd;
-            color: #fff;
+
+        @media (max-width: 480px) {
+            body {
+                padding: 20px 10px;
+            }
+
+            h1 {
+                font-size: 1.5em;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .card h2 {
+                font-size: 1.2em;
+            }
+
+            .card a {
+                display: block;
+                text-align: center;
+            }
         }
     </style>
 </head>
 <body>
-    <nav>
-        <a href="/" class="active">Home</a>
-        <a href="/qa_workflow_analysis.html">Analysis</a>
-        <a href="/production_board_structure.html">Board</a>
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="/" class="nav-brand">Jen QA Monday</a>
+            <div class="hamburger" onclick="this.classList.toggle('active'); document.querySelector('.nav-links').classList.toggle('active');">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="/" class="active">Home</a></li>
+                <li><a href="/qa_workflow_analysis.html">Workflow</a></li>
+                <li><a href="/production_board_structure.html">Board Structure</a></li>
+            </ul>
+        </div>
     </nav>
     <div class="container">
         <h1>Jen QA Monday</h1>
         <p class="subtitle">QA Workflow Documentation for Pure Earth Labs</p>
+
+        <div class="intro">
+            <p>Start with the <strong>QA Manager Procedure</strong> for the complete workflow, then review <strong>Team Performance Analysis</strong> for current metrics. Continue through the analysis and roadmap sections, with technical reference and hiring docs at the end.</p>
+        </div>
+
+        <div class="card placeholder">
+            <h2>QA Manager Procedure <span class="badge">START HERE</span><span class="coming-soon">(Coming Soon)</span></h2>
+            <p>Step-by-step operational SOP for the QA Manager role, covering daily procedures and responsibilities.</p>
+            <a href="#">View Procedure</a>
+        </div>
+
+        <div class="card placeholder">
+            <h2>Team Performance Analysis<span class="coming-soon">(Coming Soon)</span></h2>
+            <p>Current metrics and data analysis of team QA performance, identifying trends and areas for improvement.</p>
+            <a href="#">View Analysis</a>
+        </div>
 
         <div class="card">
             <h2>QA Workflow Analysis</h2>
@@ -112,10 +265,22 @@
             <a href="/qa_workflow_analysis.html">View Analysis</a>
         </div>
 
+        <div class="card placeholder">
+            <h2>Next Steps Roadmap<span class="coming-soon">(Coming Soon)</span></h2>
+            <p>Action plan for implementing QA workflow improvements and addressing identified gaps.</p>
+            <a href="#">View Roadmap</a>
+        </div>
+
         <div class="card">
             <h2>Production Board Structure</h2>
             <p>Technical documentation of the Production board including columns, groups, views, and board relationships.</p>
             <a href="/production_board_structure.html">View Structure</a>
+        </div>
+
+        <div class="card placeholder">
+            <h2>Ideal Candidate Profile<span class="coming-soon">(Coming Soon)</span></h2>
+            <p>Profile and requirements for hiring QA team members aligned with Pure Earth Labs' workflow.</p>
+            <a href="#">View Profile</a>
         </div>
 
         <p class="footer">Generated December 8, 2025</p>
