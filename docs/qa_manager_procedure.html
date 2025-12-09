@@ -465,6 +465,128 @@
         nav {
             top: 3px !important;
         }
+
+        /* Interactive Checkboxes */
+        .checkbox {
+            width: 24px;
+            height: 24px;
+            min-width: 24px;
+            border: 2px solid var(--color-border-light);
+            border-radius: var(--radius-sm);
+            background: transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-fast);
+            padding: 0;
+        }
+
+        .checkbox:hover {
+            border-color: var(--color-accent);
+            background: rgba(157, 80, 221, 0.1);
+        }
+
+        .checkbox:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(157, 80, 221, 0.3);
+        }
+
+        .checkbox[aria-pressed="true"] {
+            background: var(--color-success);
+            border-color: var(--color-success);
+        }
+
+        .checkbox-icon {
+            width: 16px;
+            height: 16px;
+            stroke: transparent;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+        }
+
+        .checkbox[aria-pressed="true"] .checkbox-icon {
+            stroke: #000;
+        }
+
+        /* Checkmark animation */
+        .checkbox-icon path {
+            stroke-dasharray: 24;
+            stroke-dashoffset: 24;
+            transition: stroke-dashoffset 0.2s ease-out;
+        }
+
+        .checkbox[aria-pressed="true"] .checkbox-icon path {
+            stroke-dashoffset: 0;
+        }
+
+        /* Scale bounce on check */
+        @keyframes checkbox-bounce {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+
+        .checkbox.just-checked {
+            animation: checkbox-bounce 0.2s ease-out;
+        }
+
+        /* Checked item styling */
+        .checklist-item.checked > div:last-child {
+            opacity: 0.6;
+        }
+
+        .checklist-item.checked > div:last-child strong {
+            text-decoration: line-through;
+            text-decoration-color: var(--color-success);
+        }
+
+        /* Progress indicator per section */
+        .checklist-progress {
+            font-size: var(--text-sm);
+            color: var(--color-text-muted);
+            margin-bottom: var(--space-3);
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .checklist-progress-bar {
+            flex: 1;
+            max-width: 120px;
+            height: 4px;
+            background: var(--darker-bg);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .checklist-progress-fill {
+            height: 100%;
+            background: var(--color-success);
+            transition: width 0.3s ease-out;
+            width: 0%;
+        }
+
+        /* Reset button */
+        .reset-progress-btn {
+            display: block;
+            margin: var(--space-8) auto;
+            background: transparent;
+            border: 1px solid var(--color-border);
+            color: var(--color-text-muted);
+            padding: var(--space-2) var(--space-4);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-size: var(--text-sm);
+            transition: all var(--transition-fast);
+        }
+
+        .reset-progress-btn:hover {
+            border-color: var(--color-critical);
+            color: var(--color-critical);
+        }
     </style>
 </head>
 <body>
@@ -665,30 +787,42 @@ flowchart TB
     style G fill:#579bfc,color:#fff
         </div>
 
-        <div class="checklist">
+        <div class="checklist" data-checklist="step-0">
+            <div class="checklist-progress">
+                <span class="checklist-progress-text">0/4 complete</span>
+                <div class="checklist-progress-bar"><div class="checklist-progress-fill"></div></div>
+            </div>
             <div class="checklist-item">
-                <div class="check-box"></div>
+                <button class="checkbox" data-id="step-0-item-0" aria-pressed="false">
+                    <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
+                </button>
                 <div>
                     <strong>Open the Sprint + Bulk weekly sheet</strong><br/>
                     Find today's run (SKU + PO/MO)
                 </div>
             </div>
             <div class="checklist-item">
-                <div class="check-box"></div>
+                <button class="checkbox" data-id="step-0-item-1" aria-pressed="false">
+                    <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
+                </button>
                 <div>
                     <strong>Note anything special for today:</strong><br/>
                     Component change, new label, new closure, etc.
                 </div>
             </div>
             <div class="checklist-item">
-                <div class="check-box"></div>
+                <button class="checkbox" data-id="step-0-item-2" aria-pressed="false">
+                    <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
+                </button>
                 <div>
                     <strong>Open the approved, up-to-date spec sheet</strong> for today's SKU<br/>
                     <em>Note: If there is not one (Earth Harbor products don't have them yet), proceed without</em>
                 </div>
             </div>
             <div class="checklist-item">
-                <div class="check-box"></div>
+                <button class="checkbox" data-id="step-0-item-3" aria-pressed="false">
+                    <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
+                </button>
                 <div>
                     <strong>Open a new copy of the "PURE EARTH LABS Spec Sheet & Inspection Report"</strong> doc for today's PO/run
                 </div>
@@ -711,15 +845,23 @@ flowchart TB
             <strong>NON-NEGOTIABLE:</strong> The correct spec sheet must be at the line before any production begins.
         </div>
 
-        <div class="checklist">
+        <div class="checklist" data-checklist="step-1">
+            <div class="checklist-progress">
+                <span class="checklist-progress-text">0/2 complete</span>
+                <div class="checklist-progress-bar"><div class="checklist-progress-fill"></div></div>
+            </div>
             <div class="checklist-item">
-                <div class="check-box"></div>
+                <button class="checkbox" data-id="step-1-item-0" aria-pressed="false">
+                    <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
+                </button>
                 <div>
                     <strong>Bring the correct spec sheet to the line</strong> (printed or accessible)
                 </div>
             </div>
             <div class="checklist-item">
-                <div class="check-box"></div>
+                <button class="checkbox" data-id="step-1-item-1" aria-pressed="false">
+                    <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
+                </button>
                 <div>
                     <strong>Verify you have the most current approved version</strong>
                 </div>
@@ -832,9 +974,15 @@ flowchart TB
         </div>
         <p>Before production begins</p>
 
-        <div class="checklist">
+        <div class="checklist" data-checklist="step-3">
+            <div class="checklist-progress">
+                <span class="checklist-progress-text">0/2 complete</span>
+                <div class="checklist-progress-bar"><div class="checklist-progress-fill"></div></div>
+            </div>
             <div class="checklist-item">
-                <div class="check-box"></div>
+                <button class="checkbox" data-id="step-3-item-0" aria-pressed="false">
+                    <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
+                </button>
                 <div>
                     <strong>Confirm batch code standards on the form:</strong>
                     <ul>
@@ -845,7 +993,9 @@ flowchart TB
                 </div>
             </div>
             <div class="checklist-item">
-                <div class="check-box"></div>
+                <button class="checkbox" data-id="step-3-item-1" aria-pressed="false">
+                    <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
+                </button>
                 <div>
                     <strong>Verify printer is set correctly and do a test print/check:</strong>
                     <ul>
@@ -869,15 +1019,23 @@ flowchart TB
             </button>
         </div>
 
-        <div class="checklist">
+        <div class="checklist" data-checklist="step-4">
+            <div class="checklist-progress">
+                <span class="checklist-progress-text">0/2 complete</span>
+                <div class="checklist-progress-bar"><div class="checklist-progress-fill"></div></div>
+            </div>
             <div class="checklist-item">
-                <div class="check-box"></div>
+                <button class="checkbox" data-id="step-4-item-0" aria-pressed="false">
+                    <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
+                </button>
                 <div>
                     <strong>Torque meter</strong> is calibrated and operational
                 </div>
             </div>
             <div class="checklist-item">
-                <div class="check-box"></div>
+                <button class="checkbox" data-id="step-4-item-1" aria-pressed="false">
+                    <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
+                </button>
                 <div>
                     <strong>Scale</strong> is calibrated, tared, and accurate
                 </div>
@@ -902,17 +1060,27 @@ flowchart TB
 
         <div class="subsection">
             <h4>Line Setup Items (as applicable)</h4>
-            <div class="checklist">
+            <div class="checklist" data-checklist="step-5a">
+                <div class="checklist-progress">
+                    <span class="checklist-progress-text">0/3 complete</span>
+                    <div class="checklist-progress-bar"><div class="checklist-progress-fill"></div></div>
+                </div>
                 <div class="checklist-item">
-                    <div class="check-box"></div>
+                    <button class="checkbox" data-id="step-5a-item-0" aria-pressed="false">
+                        <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
+                    </button>
                     <div>Hopper mesh filter installed</div>
                 </div>
                 <div class="checklist-item">
-                    <div class="check-box"></div>
+                    <button class="checkbox" data-id="step-5a-item-1" aria-pressed="false">
+                        <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
+                    </button>
                     <div>Hopper lid secured</div>
                 </div>
                 <div class="checklist-item">
-                    <div class="check-box"></div>
+                    <button class="checkbox" data-id="step-5a-item-2" aria-pressed="false">
+                        <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
+                    </button>
                     <div>Blower attached + operational (when applicable)</div>
                 </div>
             </div>
@@ -920,9 +1088,15 @@ flowchart TB
 
         <div class="subsection">
             <h4>Sanitation Verification</h4>
-            <div class="checklist">
+            <div class="checklist" data-checklist="step-5b">
+                <div class="checklist-progress">
+                    <span class="checklist-progress-text">0/1 complete</span>
+                    <div class="checklist-progress-bar"><div class="checklist-progress-fill"></div></div>
+                </div>
                 <div class="checklist-item">
-                    <div class="check-box"></div>
+                    <button class="checkbox" data-id="step-5b-item-0" aria-pressed="false">
+                        <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
+                    </button>
                     <div>Line, hoppers, tools, surfaces sanitized per sanitation SOP and documented</div>
                 </div>
             </div>
@@ -944,9 +1118,15 @@ flowchart TB
             <strong>No run starts until the MO/batch record, spec sheet, and staged components all match.</strong>
         </div>
 
-        <div class="checklist">
+        <div class="checklist" data-checklist="step-6">
+            <div class="checklist-progress">
+                <span class="checklist-progress-text">0/1 complete</span>
+                <div class="checklist-progress-bar"><div class="checklist-progress-fill"></div></div>
+            </div>
             <div class="checklist-item">
-                <div class="check-box"></div>
+                <button class="checkbox" data-id="step-6-item-0" aria-pressed="false">
+                    <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
+                </button>
                 <div>
                     <strong>Verify the MO and batch record match:</strong>
                     <ul>
@@ -1185,21 +1365,33 @@ flowchart TB
             <strong>Always compare product to retention sample as the true standard.</strong>
         </div>
 
-        <div class="checklist">
+        <div class="checklist" data-checklist="step-10">
+            <div class="checklist-progress">
+                <span class="checklist-progress-text">0/4 complete</span>
+                <div class="checklist-progress-bar"><div class="checklist-progress-fill"></div></div>
+            </div>
             <div class="checklist-item">
-                <div class="check-box"></div>
+                <button class="checkbox" data-id="step-10-item-0" aria-pressed="false">
+                    <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
+                </button>
                 <div><strong>Appearance</strong> - Visual match to retention sample</div>
             </div>
             <div class="checklist-item">
-                <div class="check-box"></div>
+                <button class="checkbox" data-id="step-10-item-1" aria-pressed="false">
+                    <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
+                </button>
                 <div><strong>Color</strong> - Color match to retention sample</div>
             </div>
             <div class="checklist-item">
-                <div class="check-box"></div>
+                <button class="checkbox" data-id="step-10-item-2" aria-pressed="false">
+                    <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
+                </button>
                 <div><strong>Odor</strong> - Scent match to retention sample</div>
             </div>
             <div class="checklist-item">
-                <div class="check-box"></div>
+                <button class="checkbox" data-id="step-10-item-3" aria-pressed="false">
+                    <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
+                </button>
                 <div><strong>Texture/consistency</strong> - Feel and consistency match to retention sample</div>
             </div>
         </div>
@@ -1290,9 +1482,15 @@ flowchart TB
         </div>
         <p>Organized Drive filing</p>
 
-        <div class="checklist">
+        <div class="checklist" data-checklist="step-12">
+            <div class="checklist-progress">
+                <span class="checklist-progress-text">0/1 complete</span>
+                <div class="checklist-progress-bar"><div class="checklist-progress-fill"></div></div>
+            </div>
             <div class="checklist-item">
-                <div class="check-box"></div>
+                <button class="checkbox" data-id="step-12-item-0" aria-pressed="false">
+                    <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
+                </button>
                 <div>Save the completed QA doc in Drive using the trained folder structure</div>
             </div>
         </div>
@@ -1343,17 +1541,27 @@ flowchart LR
     style D fill:#9d50dd,color:#fff
         </div>
 
-        <div class="checklist">
+        <div class="checklist" data-checklist="step-13">
+            <div class="checklist-progress">
+                <span class="checklist-progress-text">0/3 complete</span>
+                <div class="checklist-progress-bar"><div class="checklist-progress-fill"></div></div>
+            </div>
             <div class="checklist-item">
-                <div class="check-box"></div>
+                <button class="checkbox" data-id="step-13-item-0" aria-pressed="false">
+                    <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
+                </button>
                 <div><strong>Open the Monday.com ticket</strong> for that specific PO</div>
             </div>
             <div class="checklist-item">
-                <div class="check-box"></div>
+                <button class="checkbox" data-id="step-13-item-1" aria-pressed="false">
+                    <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
+                </button>
                 <div><strong>Attach the final QA documentation file</strong> to the ticket (QA DOCS column)</div>
             </div>
             <div class="checklist-item">
-                <div class="check-box"></div>
+                <button class="checkbox" data-id="step-13-item-2" aria-pressed="false">
+                    <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
+                </button>
                 <div><strong>Confirm attachment is visible and correct</strong></div>
             </div>
         </div>
@@ -1405,6 +1613,8 @@ flowchart LR
             </ul>
         </div>
     </div>
+
+    <button class="reset-progress-btn" id="resetProgress">Reset All Progress</button>
 
     <div class="footer">
         <p>QA Manager Procedure | Pure Earth Labs</p>
@@ -1529,6 +1739,139 @@ flowchart LR
                     }
                 });
             });
+        })();
+
+        // Interactive Checkboxes
+        (function() {
+            const STORAGE_KEY = 'qa-procedure-checklist';
+
+            // Load saved state from localStorage
+            function loadState() {
+                try {
+                    const saved = localStorage.getItem(STORAGE_KEY);
+                    return saved ? JSON.parse(saved) : {};
+                } catch (e) {
+                    return {};
+                }
+            }
+
+            // Save state to localStorage
+            function saveState(state) {
+                try {
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+                } catch (e) {
+                    console.warn('Could not save checklist state');
+                }
+            }
+
+            // Update progress display for a checklist
+            function updateProgress(checklist) {
+                const checkboxes = checklist.querySelectorAll('.checkbox');
+                const checked = checklist.querySelectorAll('.checkbox[aria-pressed="true"]').length;
+                const total = checkboxes.length;
+
+                const progressText = checklist.querySelector('.checklist-progress-text');
+                const progressFill = checklist.querySelector('.checklist-progress-fill');
+
+                if (progressText) {
+                    progressText.textContent = `${checked}/${total} complete`;
+                }
+                if (progressFill) {
+                    progressFill.style.width = total > 0 ? `${(checked / total) * 100}%` : '0%';
+                }
+            }
+
+            // Initialize checkbox state from storage
+            function initializeCheckboxes() {
+                const state = loadState();
+                const checkboxes = document.querySelectorAll('.checkbox[data-id]');
+
+                checkboxes.forEach(checkbox => {
+                    const id = checkbox.getAttribute('data-id');
+                    const isChecked = state[id] === true;
+
+                    checkbox.setAttribute('aria-pressed', isChecked.toString());
+                    if (isChecked) {
+                        checkbox.closest('.checklist-item')?.classList.add('checked');
+                    }
+                });
+
+                // Update all progress displays
+                document.querySelectorAll('.checklist[data-checklist]').forEach(updateProgress);
+            }
+
+            // Toggle checkbox
+            function toggleCheckbox(checkbox) {
+                const id = checkbox.getAttribute('data-id');
+                const isCurrentlyChecked = checkbox.getAttribute('aria-pressed') === 'true';
+                const newState = !isCurrentlyChecked;
+
+                // Update aria-pressed
+                checkbox.setAttribute('aria-pressed', newState.toString());
+
+                // Update parent item styling
+                const item = checkbox.closest('.checklist-item');
+                if (item) {
+                    item.classList.toggle('checked', newState);
+                }
+
+                // Add bounce animation on check
+                if (newState) {
+                    checkbox.classList.add('just-checked');
+                    setTimeout(() => checkbox.classList.remove('just-checked'), 200);
+                }
+
+                // Save to localStorage
+                const state = loadState();
+                state[id] = newState;
+                saveState(state);
+
+                // Update progress
+                const checklist = checkbox.closest('.checklist[data-checklist]');
+                if (checklist) {
+                    updateProgress(checklist);
+                }
+            }
+
+            // Reset all progress
+            function resetProgress() {
+                if (confirm('Reset all checklist progress? This cannot be undone.')) {
+                    localStorage.removeItem(STORAGE_KEY);
+
+                    document.querySelectorAll('.checkbox[data-id]').forEach(checkbox => {
+                        checkbox.setAttribute('aria-pressed', 'false');
+                        checkbox.closest('.checklist-item')?.classList.remove('checked');
+                    });
+
+                    document.querySelectorAll('.checklist[data-checklist]').forEach(updateProgress);
+                }
+            }
+
+            // Event listeners
+            document.addEventListener('click', function(e) {
+                const checkbox = e.target.closest('.checkbox[data-id]');
+                if (checkbox) {
+                    toggleCheckbox(checkbox);
+                }
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    const checkbox = e.target.closest('.checkbox[data-id]');
+                    if (checkbox) {
+                        e.preventDefault();
+                        toggleCheckbox(checkbox);
+                    }
+                }
+            });
+
+            const resetBtn = document.getElementById('resetProgress');
+            if (resetBtn) {
+                resetBtn.addEventListener('click', resetProgress);
+            }
+
+            // Initialize on load
+            initializeCheckboxes();
         })();
     </script>
 </body>
