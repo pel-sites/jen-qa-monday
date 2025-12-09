@@ -385,9 +385,296 @@
 
         ul, ol { margin: 10px 0; padding-left: 25px; }
         li { margin: 8px 0; }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            z-index: 200;
+            transition: width 0.1s ease-out;
+        }
+
+        .section {
+            scroll-margin-top: 80px;
+        }
+
+        .section.active {
+            border-left: 4px solid var(--purple);
+        }
+
+        .section.active h2 .step-badge.prep ~ span,
+        .section.active h2 {
+            border-bottom-color: var(--blue);
+        }
+
+        .section.active h2 .step-badge.prerun ~ span {
+            border-bottom-color: var(--orange);
+        }
+
+        .section.active h2 .step-badge.inprocess ~ span {
+            border-bottom-color: var(--green);
+        }
+
+        .section.active h2 .step-badge.final ~ span {
+            border-bottom-color: var(--purple);
+        }
+
+        .section-header {
+            position: relative;
+        }
+
+        .copy-link-btn {
+            opacity: 0;
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--darker-bg);
+            border: 1px solid #444;
+            color: #eee;
+            padding: 6px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.75em;
+            transition: opacity 0.2s, background 0.2s;
+        }
+
+        .section h2:hover .copy-link-btn,
+        .copy-link-btn:focus {
+            opacity: 1;
+        }
+
+        .copy-link-btn:hover {
+            background: var(--purple);
+        }
+
+        .copy-link-btn.copied {
+            background: var(--green);
+            color: #000;
+        }
+
+        .section:target {
+            animation: highlight-flash 1s ease-out;
+        }
+
+        @keyframes highlight-flash {
+            0% { background: rgba(157, 80, 221, 0.3); }
+            100% { background: var(--card-bg); }
+        }
+
+        @media (min-width: 1200px) {
+            body {
+                display: grid;
+                grid-template-columns: 280px 1fr;
+                gap: 30px;
+                max-width: 1600px;
+            }
+
+            .header {
+                grid-column: 1 / -1;
+            }
+
+            .sidebar-toc {
+                position: sticky;
+                top: 70px;
+                height: fit-content;
+                max-height: calc(100vh - 90px);
+                overflow-y: auto;
+                background: var(--card-bg);
+                padding: 20px;
+                border-radius: 12px;
+                border: 1px solid #2a2a4a;
+            }
+
+            .sidebar-toc h3 {
+                margin-top: 0;
+                color: var(--purple);
+                font-size: 1em;
+            }
+
+            .sidebar-toc a {
+                color: #bbb;
+                text-decoration: none;
+                padding: 8px 10px;
+                border-radius: 6px;
+                display: block;
+                font-size: 0.85em;
+                transition: background 0.2s, color 0.2s, border-left 0.2s;
+                border-left: 3px solid transparent;
+                margin-bottom: 2px;
+            }
+
+            .sidebar-toc a:hover {
+                background: var(--darker-bg);
+                color: #fff;
+            }
+
+            .sidebar-toc a.active {
+                background: var(--darker-bg);
+                color: #fff;
+                font-weight: 500;
+            }
+
+            .sidebar-toc a.active[data-phase="prep"] {
+                border-left-color: var(--blue);
+            }
+
+            .sidebar-toc a.active[data-phase="prerun"] {
+                border-left-color: var(--orange);
+            }
+
+            .sidebar-toc a.active[data-phase="inprocess"] {
+                border-left-color: var(--green);
+            }
+
+            .sidebar-toc a.active[data-phase="final"] {
+                border-left-color: var(--purple);
+            }
+
+            .sidebar-toc .phase-dot {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 8px;
+            }
+
+            .sidebar-toc .phase-dot.prep { background: var(--blue); }
+            .sidebar-toc .phase-dot.prerun { background: var(--orange); }
+            .sidebar-toc .phase-dot.inprocess { background: var(--green); }
+            .sidebar-toc .phase-dot.final { background: var(--purple); }
+
+            .main-content {
+                max-width: 900px;
+            }
+
+            .main-content .toc {
+                display: none;
+            }
+
+            .progress-bar {
+                top: 0;
+            }
+        }
+
+        @media (max-width: 1199px) {
+            .sidebar-toc {
+                display: none;
+            }
+
+            .mobile-toc-toggle {
+                display: block;
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: var(--purple);
+                color: #fff;
+                border: none;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                font-size: 1.5em;
+                cursor: pointer;
+                z-index: 150;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            }
+
+            .mobile-toc-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.8);
+                z-index: 160;
+            }
+
+            .mobile-toc-overlay.active {
+                display: block;
+            }
+
+            .mobile-toc-panel {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: var(--card-bg);
+                max-height: 70vh;
+                overflow-y: auto;
+                border-radius: 20px 20px 0 0;
+                padding: 20px;
+                transform: translateY(100%);
+                transition: transform 0.3s ease-out;
+                z-index: 170;
+            }
+
+            .mobile-toc-overlay.active .mobile-toc-panel {
+                transform: translateY(0);
+            }
+
+            .mobile-toc-panel h3 {
+                margin: 0 0 15px 0;
+                color: var(--purple);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .mobile-toc-panel .close-btn {
+                background: transparent;
+                border: none;
+                color: #eee;
+                font-size: 1.5em;
+                cursor: pointer;
+            }
+
+            .mobile-toc-panel a {
+                color: #eee;
+                text-decoration: none;
+                padding: 12px 15px;
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                margin-bottom: 5px;
+            }
+
+            .mobile-toc-panel a:hover,
+            .mobile-toc-panel a.active {
+                background: var(--darker-bg);
+            }
+
+            .mobile-toc-panel .phase-dot {
+                display: inline-block;
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                flex-shrink: 0;
+            }
+
+            .mobile-toc-panel .phase-dot.prep { background: var(--blue); }
+            .mobile-toc-panel .phase-dot.prerun { background: var(--orange); }
+            .mobile-toc-panel .phase-dot.inprocess { background: var(--green); }
+            .mobile-toc-panel .phase-dot.final { background: var(--purple); }
+        }
+
+        @media (min-width: 1200px) {
+            .mobile-toc-toggle,
+            .mobile-toc-overlay {
+                display: none !important;
+            }
+        }
     </style>
 </head>
 <body>
+<div class="progress-bar" id="progressBar"></div>
 <nav style="position: sticky; top: 0; z-index: 100; background: #0f0f23; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #2a2a4a;">
     <a href="/" style="color: #9d50dd; text-decoration: none; font-weight: 500;">← Home</a>
     <div style="display: flex; gap: 20px; font-size: 0.9em;">
@@ -499,7 +786,29 @@ flowchart LR
         </div>
     </div>
 
-    <!-- Table of Contents -->
+    <!-- Sidebar TOC for desktop -->
+    <nav class="sidebar-toc" id="sidebarToc">
+        <h3>Contents</h3>
+        <a href="#step-0" data-phase="prep"><span class="phase-dot prep"></span>Step 0: What I Open First</a>
+        <a href="#step-1" data-phase="prerun"><span class="phase-dot prerun"></span>Step 1: Spec Sheet at Line</a>
+        <a href="#step-2" data-phase="prerun"><span class="phase-dot prerun"></span>Step 2: Component Verification</a>
+        <a href="#step-3" data-phase="prerun"><span class="phase-dot prerun"></span>Step 3: Batch Code Setup</a>
+        <a href="#step-4" data-phase="prerun"><span class="phase-dot prerun"></span>Step 4: Equipment Calibration</a>
+        <a href="#step-5" data-phase="prerun"><span class="phase-dot prerun"></span>Step 5: Line Config + Sanitation</a>
+        <a href="#step-6" data-phase="prerun"><span class="phase-dot prerun"></span>Step 6: Batch Record/MO</a>
+        <a href="#step-7" data-phase="inprocess"><span class="phase-dot inprocess"></span>Step 7: Begin QA Docs</a>
+        <a href="#step-8" data-phase="inprocess"><span class="phase-dot inprocess"></span>Step 8: In-Process Checks</a>
+        <a href="#step-9" data-phase="inprocess"><span class="phase-dot inprocess"></span>Step 9: Defect Classification</a>
+        <a href="#step-10" data-phase="inprocess"><span class="phase-dot inprocess"></span>Step 10: Product Standards</a>
+        <a href="#step-11" data-phase="inprocess"><span class="phase-dot inprocess"></span>Step 11: End of Run</a>
+        <a href="#step-12" data-phase="final"><span class="phase-dot final"></span>Step 12: Save Docs</a>
+        <a href="#step-13" data-phase="final"><span class="phase-dot final"></span>Step 13: Attach to Monday</a>
+    </nav>
+
+    <!-- Main content wrapper for grid layout -->
+    <div class="main-content">
+
+    <!-- Table of Contents (mobile/tablet) -->
     <div class="toc">
         <h3>Table of Contents</h3>
         <div class="toc-grid">
@@ -1195,6 +1504,37 @@ flowchart LR
         <p>Reference: Loom Training Script | Generated December 8, 2025</p>
     </div>
 
+    </div><!-- end main-content -->
+
+    <!-- Mobile TOC toggle button -->
+    <button class="mobile-toc-toggle" id="mobileTocToggle" aria-label="Open table of contents">
+        ☰
+    </button>
+
+    <!-- Mobile TOC overlay -->
+    <div class="mobile-toc-overlay" id="mobileTocOverlay">
+        <div class="mobile-toc-panel">
+            <h3>
+                Contents
+                <button class="close-btn" id="mobileTocClose" aria-label="Close">×</button>
+            </h3>
+            <a href="#step-0" data-phase="prep"><span class="phase-dot prep"></span>Step 0: What I Open First</a>
+            <a href="#step-1" data-phase="prerun"><span class="phase-dot prerun"></span>Step 1: Spec Sheet at Line</a>
+            <a href="#step-2" data-phase="prerun"><span class="phase-dot prerun"></span>Step 2: Component Verification</a>
+            <a href="#step-3" data-phase="prerun"><span class="phase-dot prerun"></span>Step 3: Batch Code Setup</a>
+            <a href="#step-4" data-phase="prerun"><span class="phase-dot prerun"></span>Step 4: Equipment Calibration</a>
+            <a href="#step-5" data-phase="prerun"><span class="phase-dot prerun"></span>Step 5: Line Config + Sanitation</a>
+            <a href="#step-6" data-phase="prerun"><span class="phase-dot prerun"></span>Step 6: Batch Record/MO</a>
+            <a href="#step-7" data-phase="inprocess"><span class="phase-dot inprocess"></span>Step 7: Begin QA Docs</a>
+            <a href="#step-8" data-phase="inprocess"><span class="phase-dot inprocess"></span>Step 8: In-Process Checks</a>
+            <a href="#step-9" data-phase="inprocess"><span class="phase-dot inprocess"></span>Step 9: Defect Classification</a>
+            <a href="#step-10" data-phase="inprocess"><span class="phase-dot inprocess"></span>Step 10: Product Standards</a>
+            <a href="#step-11" data-phase="inprocess"><span class="phase-dot inprocess"></span>Step 11: End of Run</a>
+            <a href="#step-12" data-phase="final"><span class="phase-dot final"></span>Step 12: Save Docs</a>
+            <a href="#step-13" data-phase="final"><span class="phase-dot final"></span>Step 13: Attach to Monday</a>
+        </div>
+    </div>
+
     <script>
         mermaid.initialize({
             startOnLoad: true,
@@ -1205,6 +1545,135 @@ flowchart LR
                 curve: 'basis'
             }
         });
+
+        (function() {
+            const progressBar = document.getElementById('progressBar');
+            const sections = document.querySelectorAll('.section[id^="step-"]');
+            const sidebarLinks = document.querySelectorAll('.sidebar-toc a');
+            const mobileLinks = document.querySelectorAll('.mobile-toc-panel a');
+            const mobileTocToggle = document.getElementById('mobileTocToggle');
+            const mobileTocOverlay = document.getElementById('mobileTocOverlay');
+            const mobileTocClose = document.getElementById('mobileTocClose');
+
+            const phaseColors = {
+                prep: '#579bfc',
+                prerun: '#fdab3d',
+                inprocess: '#00c875',
+                final: '#9d50dd'
+            };
+
+            function getPhaseForProgress(progress) {
+                if (progress < 0.07) return 'prep';
+                if (progress < 0.5) return 'prerun';
+                if (progress < 0.85) return 'inprocess';
+                return 'final';
+            }
+
+            function updateProgressBar() {
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const progress = Math.min(scrollTop / docHeight, 1);
+                const percentage = progress * 100;
+
+                progressBar.style.width = percentage + '%';
+                progressBar.style.background = phaseColors[getPhaseForProgress(progress)];
+            }
+
+            function updateActiveSection() {
+                let currentSection = null;
+                const scrollPos = window.scrollY + 100;
+
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionBottom = sectionTop + section.offsetHeight;
+
+                    if (scrollPos >= sectionTop && scrollPos < sectionBottom) {
+                        currentSection = section;
+                    }
+                });
+
+                sections.forEach(s => s.classList.remove('active'));
+                if (currentSection) {
+                    currentSection.classList.add('active');
+                }
+
+                const currentId = currentSection ? currentSection.id : null;
+
+                sidebarLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (currentId && link.getAttribute('href') === '#' + currentId) {
+                        link.classList.add('active');
+                    }
+                });
+
+                mobileLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (currentId && link.getAttribute('href') === '#' + currentId) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+
+            sections.forEach(section => {
+                const h2 = section.querySelector('h2');
+                if (h2 && section.id) {
+                    h2.style.position = 'relative';
+                    const btn = document.createElement('button');
+                    btn.className = 'copy-link-btn';
+                    btn.textContent = 'Copy link';
+                    btn.onclick = function(e) {
+                        e.preventDefault();
+                        const url = window.location.origin + window.location.pathname + '#' + section.id;
+                        navigator.clipboard.writeText(url).then(() => {
+                            btn.textContent = 'Copied!';
+                            btn.classList.add('copied');
+                            setTimeout(() => {
+                                btn.textContent = 'Copy link';
+                                btn.classList.remove('copied');
+                            }, 2000);
+                        });
+                    };
+                    h2.appendChild(btn);
+                }
+            });
+
+            if (mobileTocToggle && mobileTocOverlay) {
+                mobileTocToggle.onclick = function() {
+                    mobileTocOverlay.classList.add('active');
+                };
+
+                mobileTocClose.onclick = function() {
+                    mobileTocOverlay.classList.remove('active');
+                };
+
+                mobileTocOverlay.onclick = function(e) {
+                    if (e.target === mobileTocOverlay) {
+                        mobileTocOverlay.classList.remove('active');
+                    }
+                };
+
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileTocOverlay.classList.remove('active');
+                    });
+                });
+            }
+
+            let ticking = false;
+            window.addEventListener('scroll', function() {
+                if (!ticking) {
+                    window.requestAnimationFrame(function() {
+                        updateProgressBar();
+                        updateActiveSection();
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            });
+
+            updateProgressBar();
+            updateActiveSection();
+        })();
     </script>
 </body>
 </html>
