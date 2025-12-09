@@ -380,6 +380,7 @@
             font-size: 1.1em;
         }
     </style>
+    <link rel="stylesheet" href="/css/share.css">
 </head>
 <body>
 <nav style="position: sticky; top: 0; z-index: 100; background: #0f0f23; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #2a2a4a;">
@@ -412,7 +413,7 @@
 
     <!-- The Problem -->
     <div class="section">
-        <h2>The Problem to Solve</h2>
+        <h2 id="problem-to-solve">The Problem to Solve</h2>
         <p>Your documentation reveals a <strong>process enforcement gap</strong>, not a process design gap. Jen's 13-step QA procedure exists on paper but isn't being followed consistently.</p>
 
         <div class="stats-grid">
@@ -473,7 +474,7 @@ flowchart LR
 
     <!-- Role Overview -->
     <div class="section">
-        <h2>Role Overview</h2>
+        <h2 id="role-overview">Role Overview</h2>
         <p>This role is the <strong>enforcement layer</strong> between your well-documented QA process and actual compliance on the production floor.</p>
 
         <div class="mermaid">
@@ -511,7 +512,7 @@ flowchart TB
 
     <!-- Why Not Jen -->
     <div class="section">
-        <h2>Why This Is a Separate Role</h2>
+        <h2 id="separate-role">Why This Is a Separate Role</h2>
         <p>Jen's job is <strong>floor QA</strong> - physically inspecting products. This role is <strong>systems compliance</strong> - configuring tools and enforcing process.</p>
 
         <div class="mermaid">
@@ -588,7 +589,7 @@ flowchart LR
 
     <!-- Core Competencies -->
     <div class="section">
-        <h2>Core Competencies Required</h2>
+        <h2 id="core-competencies">Core Competencies Required</h2>
 
         <div class="competency-grid">
             <div class="competency-card required">
@@ -645,7 +646,7 @@ mindmap
 
     <!-- Personality Traits -->
     <div class="section">
-        <h2>Personality Traits</h2>
+        <h2 id="personality-traits">Personality Traits</h2>
 
         <div class="stats-grid">
             <div class="stat-card purple">
@@ -674,7 +675,7 @@ mindmap
 
     <!-- How They Fit -->
     <div class="section">
-        <h2>How They Fit Into Current Flow</h2>
+        <h2 id="current-flow">How They Fit Into Current Flow</h2>
 
         <div class="mermaid">
 flowchart TB
@@ -717,7 +718,7 @@ flowchart TB
 
     <!-- Responsibilities Timeline -->
     <div class="section">
-        <h2>Onboarding & Responsibilities Timeline</h2>
+        <h2 id="onboarding-timeline">Onboarding & Responsibilities Timeline</h2>
 
         <div class="mermaid">
 gantt
@@ -790,7 +791,7 @@ gantt
 
     <!-- Job Titles -->
     <div class="section">
-        <h2>Suggested Job Titles</h2>
+        <h2 id="job-titles">Suggested Job Titles</h2>
         <p>Choose based on scope and how you want the role perceived:</p>
 
         <div class="title-options">
@@ -819,7 +820,7 @@ gantt
 
     <!-- Interview Questions -->
     <div class="section">
-        <h2>Interview Questions</h2>
+        <h2 id="interview-questions">Interview Questions</h2>
         <p>Questions designed to assess fit for this specific role:</p>
 
         <div class="question-card">
@@ -855,7 +856,7 @@ gantt
 
     <!-- Success Metrics -->
     <div class="section">
-        <h2>Success Metrics for This Role</h2>
+        <h2 id="success-metrics">Success Metrics for This Role</h2>
         <p>How you'll know the hire is working:</p>
 
         <div class="mermaid">
@@ -907,7 +908,7 @@ xychart-beta
 
     <!-- Summary -->
     <div class="section">
-        <h2>Summary</h2>
+        <h2 id="summary">Summary</h2>
 
         <div class="insight-card good">
             <h4>Bottom Line</h4>
@@ -938,7 +939,7 @@ flowchart LR
     style O2 fill:#00c875,color:#000
         </div>
 
-        <h3>Related Documentation</h3>
+        <h3 id="related-docs">Related Documentation</h3>
         <ul>
             <li><a href="/qa_manager_procedure.html">QA Manager Procedure (Steps 0-13)</a> - The process this role will enforce</li>
             <li><a href="/team_performance_analysis.html">Team Performance Analysis</a> - The data showing the compliance gap</li>
@@ -965,5 +966,6 @@ flowchart LR
             }
         });
     </script>
+    <script src="/js/share.js"></script>
 </body>
 </html>

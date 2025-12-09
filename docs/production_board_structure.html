@@ -384,6 +384,7 @@
             }
         }
     </style>
+    <link rel="stylesheet" href="/css/share.css">
 </head>
 <body>
     <nav class="nav">
@@ -447,7 +448,7 @@
 
     <!-- Workflow Overview -->
     <div class="section">
-        <h2>Workflow Overview</h2>
+        <h2 id="workflow-overview">Workflow Overview</h2>
         <p>Items flow through groups representing production stages:</p>
         <div class="mermaid">
 flowchart LR
@@ -481,7 +482,7 @@ flowchart LR
 
     <!-- Board Relationships -->
     <div class="section">
-        <h2>Board Relationships</h2>
+        <h2 id="board-relationships">Board Relationships</h2>
         <p>The Production board connects to several related boards via board relations and mirrors:</p>
         <div class="mermaid">
 flowchart TB
@@ -524,7 +525,7 @@ flowchart TB
 
     <!-- Column Data Flow -->
     <div class="section">
-        <h2>Column Data Architecture</h2>
+        <h2 id="column-architecture">Column Data Architecture</h2>
         <div class="mermaid">
 flowchart LR
     subgraph Input["Input Data"]
@@ -563,7 +564,7 @@ flowchart LR
 
     <!-- Groups Table -->
     <div class="section">
-        <h2>Groups (6)</h2>
+        <h2 id="groups">Groups (6)</h2>
         <div class="table-wrapper">
         <table>
             <thead>
@@ -618,7 +619,7 @@ flowchart LR
 
     <!-- Columns Table -->
     <div class="section">
-        <h2>Columns (36)</h2>
+        <h2 id="columns">Columns (36)</h2>
         <div class="table-wrapper">
         <table>
             <thead>
@@ -672,7 +673,7 @@ flowchart LR
 
     <!-- Views -->
     <div class="section">
-        <h2>Views (18)</h2>
+        <h2 id="views">Views (18)</h2>
         <div class="views-grid">
             <div class="view-card">
                 <div class="view-name">Production Queue</div>
@@ -751,7 +752,7 @@ flowchart LR
 
     <!-- Owners -->
     <div class="section">
-        <h2>Board Owners</h2>
+        <h2 id="board-owners">Board Owners</h2>
         <div class="table-wrapper">
         <table>
             <thead>
@@ -779,7 +780,7 @@ flowchart LR
 
     <!-- API Reference -->
     <div class="section">
-        <h2>API Reference</h2>
+        <h2 id="api-reference">API Reference</h2>
         <p>GraphQL query used to generate this documentation:</p>
         <pre style="background:#0f0f23; padding:15px; border-radius:8px; overflow-x:auto;">
 query GetBoardStructure {
@@ -824,5 +825,6 @@ query GetBoardStructure {
             }
         });
     </script>
+    <script src="/js/share.js"></script>
 </body>
 </html>
