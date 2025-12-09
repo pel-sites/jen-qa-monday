@@ -356,6 +356,7 @@
             font-weight: bold;
         }
     </style>
+    <link rel="stylesheet" href="/css/share.css">
 </head>
 <body>
 <nav style="position: sticky; top: 0; z-index: 100; background: #0f0f23; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #2a2a4a;">
@@ -388,7 +389,7 @@
 
     <!-- Assessment Summary -->
     <div class="section">
-        <h2>Current State Assessment</h2>
+        <h2 id="current-state">Current State Assessment</h2>
         <p>Based on analysis of 95 FULFILLED items, the QA workflow has significant gaps between documented process and actual execution.</p>
 
         <div class="stats-grid">
@@ -444,7 +445,7 @@ flowchart LR
 
     <!-- Strategic Overview -->
     <div class="section">
-        <h2>Strategic Overview</h2>
+        <h2 id="strategic-overview">Strategic Overview</h2>
         <p>The improvement plan focuses on three pillars: <strong>Accountability</strong>, <strong>Enforcement</strong>, and <strong>Visibility</strong>.</p>
 
         <div class="mermaid">
@@ -474,12 +475,12 @@ flowchart TB
 
     <!-- Priority Actions -->
     <div class="section">
-        <h2>Prioritized Action Plan</h2>
+        <h2 id="action-plan">Prioritized Action Plan</h2>
         <p>Actions ranked by impact and implementation complexity:</p>
 
         <div class="priority-grid">
             <div class="priority-card p1">
-                <h3><span class="number">1</span> Fix Ownership Problem</h3>
+                <h3 id="fix-ownership"><span class="number">1</span> Fix Ownership Problem</h3>
                 <p>The data shows unassigned items have only 25% QA DOCS completion vs 67% for assigned items.</p>
                 <ul>
                     <li>Assign owners to all active production items</li>
@@ -492,7 +493,7 @@ flowchart TB
             </div>
 
             <div class="priority-card p1">
-                <h3><span class="number">2</span> Block FULFILLED Without QA DOCS</h3>
+                <h3 id="block-fulfilled"><span class="number">2</span> Block FULFILLED Without QA DOCS</h3>
                 <p>Currently 60% of items skip the final documentation step.</p>
                 <ul>
                     <li>Add Monday.com automation rule</li>
@@ -505,7 +506,7 @@ flowchart TB
             </div>
 
             <div class="priority-card p2">
-                <h3><span class="number">3</span> Create & Link QA Template</h3>
+                <h3 id="create-qa-template"><span class="number">3</span> Create & Link QA Template</h3>
                 <p>No QA Inspection Report template is linked in Monday.com.</p>
                 <ul>
                     <li>Create official QA Inspection Report template</li>
@@ -518,7 +519,7 @@ flowchart TB
             </div>
 
             <div class="priority-card p2">
-                <h3><span class="number">4</span> Training & Communication</h3>
+                <h3 id="training-communication"><span class="number">4</span> Training & Communication</h3>
                 <p>Team may not know the full process or why it matters.</p>
                 <ul>
                     <li>Send clear communication about new requirements</li>
@@ -531,7 +532,7 @@ flowchart TB
             </div>
 
             <div class="priority-card p3">
-                <h3><span class="number">5</span> Build QA Dashboard</h3>
+                <h3 id="build-qa-dashboard"><span class="number">5</span> Build QA Dashboard</h3>
                 <p>No visibility into compliance rates currently.</p>
                 <ul>
                     <li>Create Monday.com dashboard view</li>
@@ -544,7 +545,7 @@ flowchart TB
             </div>
 
             <div class="priority-card p4">
-                <h3><span class="number">6</span> Backfill Historical Data</h3>
+                <h3 id="backfill-historical"><span class="number">6</span> Backfill Historical Data</h3>
                 <p>57 FULFILLED items currently missing QA DOCS.</p>
                 <ul>
                     <li>Identify items with docs in Google Drive</li>
@@ -560,7 +561,7 @@ flowchart TB
 
     <!-- Implementation Phases -->
     <div class="section">
-        <h2>Implementation Roadmap</h2>
+        <h2 id="implementation-roadmap">Implementation Roadmap</h2>
 
         <div class="mermaid">
 gantt
@@ -647,7 +648,7 @@ gantt
 
     <!-- Automation Details -->
     <div class="section">
-        <h2>Monday.com Automations to Create</h2>
+        <h2 id="monday-automations">Monday.com Automations to Create</h2>
 
         <div class="mermaid">
 flowchart LR
@@ -703,7 +704,7 @@ flowchart LR
 
     <!-- Success Metrics -->
     <div class="section">
-        <h2>Success Metrics</h2>
+        <h2 id="success-metrics">Success Metrics</h2>
         <p>How we'll measure improvement:</p>
 
         <div class="mermaid">
@@ -716,7 +717,7 @@ xychart-beta
     line "Spec Sheet" [16, 30, 50, 70, 85]
         </div>
 
-        <h3>Key Performance Indicators</h3>
+        <h3 id="kpis">Key Performance Indicators</h3>
 
         <div class="success-metric">
             <div>
@@ -769,7 +770,7 @@ xychart-beta
 
     <!-- Risk Assessment -->
     <div class="section">
-        <h2>Risk Assessment</h2>
+        <h2 id="risk-assessment">Risk Assessment</h2>
 
         <div class="mermaid">
 quadrantChart
@@ -827,7 +828,7 @@ quadrantChart
 
     <!-- Summary -->
     <div class="section">
-        <h2>Executive Summary</h2>
+        <h2 id="executive-summary">Executive Summary</h2>
 
         <div class="insight-card good">
             <h4>Bottom Line</h4>
@@ -861,14 +862,14 @@ flowchart LR
     style L2 fill:#00c875,color:#000
         </div>
 
-        <h3>Quick Wins</h3>
+        <h3 id="quick-wins">Quick Wins</h3>
         <ol>
             <li><strong>Owner Assignment</strong> - Items with owners are 2.7x more likely to have complete documentation</li>
             <li><strong>Block FULFILLED</strong> - Single automation eliminates 60% non-compliance</li>
             <li><strong>Template Link</strong> - Removes friction from Step 13</li>
         </ol>
 
-        <h3>Related Documentation</h3>
+        <h3 id="related-docs">Related Documentation</h3>
         <ul>
             <li><a href="/qa_manager_procedure.html">QA Manager Procedure (Steps 0-13)</a></li>
             <li><a href="/team_performance_analysis.html">Team Performance Analysis (Data)</a></li>
@@ -895,5 +896,6 @@ flowchart LR
             }
         });
     </script>
+    <script src="/js/share.js"></script>
 </body>
 </html>

@@ -309,6 +309,7 @@
             text-decoration: underline;
         }
     </style>
+    <link rel="stylesheet" href="/css/share.css">
 </head>
 <body>
 <nav style="position: sticky; top: 0; z-index: 100; background: #0f0f23; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #2a2a4a;">
@@ -341,7 +342,7 @@
 
     <!-- Executive Summary -->
     <div class="section">
-        <h2>Executive Summary</h2>
+        <h2 id="executive-summary">Executive Summary</h2>
         <p>Analysis of <strong>95 FULFILLED items</strong> on the Production Board reveals significant data quality gaps, particularly in QA documentation and owner assignment.</p>
 
         <div class="stats-grid">
@@ -374,7 +375,7 @@
 
     <!-- Data Flow Problem -->
     <div class="section">
-        <h2>The Documentation Gap</h2>
+        <h2 id="documentation-gap">The Documentation Gap</h2>
         <p>Items are being marked as FULFILLED without completing the QA documentation workflow:</p>
 
         <div class="mermaid">
@@ -402,7 +403,7 @@ flowchart LR
 
     <!-- Field Completeness -->
     <div class="section">
-        <h2>Field Completeness Breakdown</h2>
+        <h2 id="field-completeness">Field Completeness Breakdown</h2>
         <p>How complete is each field across all 95 FULFILLED items:</p>
 
         <table>
@@ -514,7 +515,7 @@ flowchart LR
 
     <!-- Accountability Problem -->
     <div class="section">
-        <h2>The Accountability Problem</h2>
+        <h2 id="accountability-problem">The Accountability Problem</h2>
         <p>Without owners assigned, there's no accountability for incomplete documentation:</p>
 
         <div class="mermaid">
@@ -535,7 +536,7 @@ pie showData
 
     <!-- Owner Performance -->
     <div class="section">
-        <h2>Performance by Owner</h2>
+        <h2 id="performance-by-owner">Performance by Owner</h2>
         <p>Comparing documentation completion rates by assigned owner:</p>
 
         <div class="mermaid">
@@ -655,7 +656,7 @@ xychart-beta
 
     <!-- Worst Offenders -->
     <div class="section">
-        <h2>Items Missing Multiple Fields</h2>
+        <h2 id="items-missing-fields">Items Missing Multiple Fields</h2>
         <p>These FULFILLED items have the most incomplete data (missing 5+ key fields):</p>
 
         <table>
@@ -722,7 +723,7 @@ xychart-beta
 
     <!-- Root Cause Analysis -->
     <div class="section">
-        <h2>Root Cause Analysis</h2>
+        <h2 id="root-cause-analysis">Root Cause Analysis</h2>
 
         <div class="mermaid">
 flowchart TD
@@ -764,7 +765,7 @@ flowchart TD
 
     <!-- Recommendations -->
     <div class="section">
-        <h2>Recommendations</h2>
+        <h2 id="recommendations">Recommendations</h2>
 
         <div class="recommendations">
             <div class="rec-card priority-1">
@@ -825,7 +826,7 @@ flowchart TD
 
     <!-- Data Source -->
     <div class="section">
-        <h2>Data Source</h2>
+        <h2 id="data-source">Data Source</h2>
         <p>This analysis was generated using the Monday.com GraphQL API:</p>
         <pre style="background:#0f0f23; padding:15px; border-radius:8px; overflow-x:auto;">
 Board: Production (ID: 9304930311)
@@ -860,5 +861,6 @@ Fields checked: QA DOCS, Spec Sheet, Owners, QTY, PRODUCED, DAY, LINE
             }
         });
     </script>
+    <script src="/js/share.js"></script>
 </body>
 </html>

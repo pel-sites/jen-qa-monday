@@ -552,6 +552,7 @@
             }
         }
     </style>
+    <link rel="stylesheet" href="/css/share.css">
 </head>
 <body>
     <nav class="nav">
@@ -588,7 +589,7 @@
 
     <!-- User Story -->
     <div class="section">
-        <h2>User Story</h2>
+        <h2 id="user-story">User Story</h2>
         <div class="user-story">
             <strong>AS A</strong> QA Manager (Jen)<br><br>
             <strong>I WANT</strong> a clear workflow with linked templates, spec sheets, and upload destinations<br><br>
@@ -605,7 +606,7 @@
 
     <!-- System Architecture -->
     <div class="section">
-        <h2>Current System Architecture</h2>
+        <h2 id="system-architecture">Current System Architecture</h2>
         <p>Four interconnected Monday.com boards handle different aspects of the production and QA process:</p>
         <div class="mermaid">
 flowchart TB
@@ -640,7 +641,7 @@ flowchart TB
 
     <!-- Data Flow -->
     <div class="section">
-        <h2>QA Documentation Flow</h2>
+        <h2 id="documentation-flow">QA Documentation Flow</h2>
         <p>How QA documentation should flow through the system:</p>
         <div class="mermaid">
 flowchart LR
@@ -688,7 +689,7 @@ flowchart LR
 
     <!-- Jen's 13-Step Workflow -->
     <div class="section">
-        <h2>Jen's 13-Step QA Workflow</h2>
+        <h2 id="qa-workflow">Jen's 13-Step QA Workflow</h2>
         <p>Mapping each step to Monday.com capabilities:</p>
 
         <div class="mermaid">
@@ -753,7 +754,7 @@ flowchart TB
 
     <!-- Board Details -->
     <div class="section">
-        <h2>Board Structure Analysis</h2>
+        <h2 id="board-structure-analysis">Board Structure Analysis</h2>
 
         <div class="board-card">
             <h4>
@@ -876,7 +877,7 @@ flowchart TB
 
     <!-- Gap Analysis -->
     <div class="section">
-        <h2>Gap Analysis</h2>
+        <h2 id="gap-analysis">Gap Analysis</h2>
 
         <div class="mermaid">
 flowchart TB
@@ -972,7 +973,7 @@ flowchart TB
 
     <!-- Items in QA Status -->
     <div class="section">
-        <h2>Current Items in QA Status</h2>
+        <h2 id="current-items-qa">Current Items in QA Status</h2>
         <p>These 7 items are currently in QA status but have no QA documentation attached:</p>
         <div class="table-wrapper">
         <table>
@@ -1026,7 +1027,7 @@ flowchart TB
 
     <!-- Proposed Solution -->
     <div class="section">
-        <h2>Recommended Actions</h2>
+        <h2 id="recommended-actions">Recommended Actions</h2>
         <div class="recommendations">
             <div class="rec-card priority-high">
                 <h4>1. Add QA Inspection Template Link</h4>
@@ -1085,7 +1086,7 @@ flowchart TB
 
     <!-- Proposed Workflow -->
     <div class="section">
-        <h2>Proposed Workflow (After Fixes)</h2>
+        <h2 id="proposed-workflow">Proposed Workflow (After Fixes)</h2>
         <div class="mermaid">
 flowchart LR
     subgraph Morning["Morning Setup"]
@@ -1126,7 +1127,7 @@ flowchart LR
 
     <!-- Questions -->
     <div class="section">
-        <h2>Open Questions</h2>
+        <h2 id="open-questions">Open Questions</h2>
         <div class="checklist">
             <div class="checklist-item">
                 <div class="check-box"></div>
@@ -1183,5 +1184,6 @@ flowchart LR
             }
         });
     </script>
+    <script src="/js/share.js"></script>
 </body>
 </html>
