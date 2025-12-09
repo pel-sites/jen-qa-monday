@@ -79,8 +79,40 @@
 
         .toc-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 10px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px 20px;
+        }
+
+        .toc-column {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .toc-column-header {
+            font-weight: 600;
+            font-size: 0.85em;
+            padding: 8px 12px;
+            border-radius: 6px;
+            text-align: center;
+            margin-bottom: 4px;
+        }
+
+        .toc-column-header.prep { background: var(--blue); color: #fff; }
+        .toc-column-header.prerun { background: var(--orange); color: #000; }
+        .toc-column-header.inprocess { background: var(--green); color: #000; }
+        .toc-column-header.final { background: var(--purple); color: #fff; }
+
+        @media (max-width: 900px) {
+            .toc-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .toc-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .toc a {
@@ -587,20 +619,32 @@ flowchart LR
     <div class="toc">
         <h3>Table of Contents</h3>
         <div class="toc-grid">
-            <a href="#step-0"><span class="phase-label phase-prep">PREP</span> Step 0: What I Open First</a>
-            <a href="#step-1"><span class="phase-label phase-prerun">PRE-RUN</span> Step 1: Spec Sheet at Line</a>
-            <a href="#step-2"><span class="phase-label phase-prerun">PRE-RUN</span> Step 2: Component Verification</a>
-            <a href="#step-3"><span class="phase-label phase-prerun">PRE-RUN</span> Step 3: Batch Code Setup</a>
-            <a href="#step-4"><span class="phase-label phase-prerun">PRE-RUN</span> Step 4: Equipment Calibration</a>
-            <a href="#step-5"><span class="phase-label phase-prerun">PRE-RUN</span> Step 5: Line Config + Sanitation</a>
-            <a href="#step-6"><span class="phase-label phase-prerun">PRE-RUN</span> Step 6: Batch Record/MO Verification</a>
-            <a href="#step-7"><span class="phase-label phase-inprocess">IN-PROCESS</span> Step 7: Begin QA Documentation</a>
-            <a href="#step-8"><span class="phase-label phase-inprocess">IN-PROCESS</span> Step 8: In-Process QA Checks</a>
-            <a href="#step-9"><span class="phase-label phase-inprocess">IN-PROCESS</span> Step 9: Defect Classification</a>
-            <a href="#step-10"><span class="phase-label phase-inprocess">IN-PROCESS</span> Step 10: Product Standards Check</a>
-            <a href="#step-11"><span class="phase-label phase-inprocess">IN-PROCESS</span> Step 11: End of Run Close-out</a>
-            <a href="#step-12"><span class="phase-label phase-final">FINAL</span> Step 12: Save Documentation</a>
-            <a href="#step-13"><span class="phase-label phase-final">FINAL</span> Step 13: Attach to Monday.com</a>
+            <div class="toc-column">
+                <div class="toc-column-header prep">PREPARATION</div>
+                <a href="#step-0">Step 0: What I Open First</a>
+            </div>
+            <div class="toc-column">
+                <div class="toc-column-header prerun">PRE-RUN</div>
+                <a href="#step-1">Step 1: Spec Sheet at Line</a>
+                <a href="#step-2">Step 2: Component Verification</a>
+                <a href="#step-3">Step 3: Batch Code Setup</a>
+                <a href="#step-4">Step 4: Equipment Calibration</a>
+                <a href="#step-5">Step 5: Line Config + Sanitation</a>
+                <a href="#step-6">Step 6: Batch Record/MO Verification</a>
+            </div>
+            <div class="toc-column">
+                <div class="toc-column-header inprocess">IN-PROCESS</div>
+                <a href="#step-7">Step 7: Begin QA Documentation</a>
+                <a href="#step-8">Step 8: In-Process QA Checks</a>
+                <a href="#step-9">Step 9: Defect Classification</a>
+                <a href="#step-10">Step 10: Product Standards Check</a>
+                <a href="#step-11">Step 11: End of Run Close-out</a>
+            </div>
+            <div class="toc-column">
+                <div class="toc-column-header final">FINAL</div>
+                <a href="#step-12">Step 12: Save Documentation</a>
+                <a href="#step-13">Step 13: Attach to Monday.com</a>
+            </div>
         </div>
     </div>
 
