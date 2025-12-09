@@ -251,6 +251,31 @@
         }
 
         a { color: #66ccff; }
+
+        .tldr {
+            background: var(--color-surface-raised, #1e2a47);
+            border-left: 4px solid var(--color-accent, #9d50dd);
+            padding: var(--space-6, 1.5rem);
+            margin: var(--space-8, 2rem) 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .tldr h2 {
+            font-size: var(--text-lg, 1.125rem);
+            margin: 0 0 var(--space-4, 1rem) 0;
+            color: var(--color-accent, #9d50dd);
+        }
+        .tldr ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .tldr li {
+            margin: 8px 0;
+        }
+        .tldr .read-time {
+            margin: var(--space-4, 1rem) 0 0 0;
+            font-size: var(--text-sm, 0.875rem);
+            color: var(--color-text-muted, #a0a0a0);
+        }
     </style>
 </head>
 <body>
@@ -270,6 +295,17 @@
         <div class="subtitle">FULFILLED Items Data Quality Report - Production Board</div>
         <div class="date">Generated: December 8, 2025 | Data Source: Monday.com API</div>
     </div>
+
+    <section class="tldr">
+        <h2>TL;DR</h2>
+        <ul>
+            <li><strong>60% of FULFILLED items missing QA DOCS</strong> - 57 of 95 items have no documentation attached</li>
+            <li><strong>63% have no owner assigned</strong> - No accountability for documentation gaps</li>
+            <li><strong>Owner assignment = 2.7x better compliance</strong> - Items with owners have 67% QA DOCS rate vs 25% unassigned</li>
+            <li><strong>Top performer: Moo Elixir team</strong> - 67% QA DOCS, 100% Spec Sheet completion</li>
+        </ul>
+        <p class="read-time">Full read: ~8 minutes</p>
+    </section>
 
     <!-- Executive Summary -->
     <div class="section">
