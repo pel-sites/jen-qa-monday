@@ -5,16 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QA Workflow Analysis - Jen's User Story</title>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="/css/shared.css">
     <style>
+        /* Page-specific styles for QA Workflow Analysis */
         :root {
-            --gap-red: #df2f4a;
-            --exists-green: #00c875;
-            --warning-orange: #fdab3d;
-            --info-blue: #579bfc;
-            --purple: #9d50dd;
+            /* Page-specific color aliases for gap analysis */
+            --gap-red: var(--color-critical);
+            --exists-green: var(--color-success);
+            --warning-orange: var(--color-warning);
+            --info-blue: var(--color-info);
         }
-
-        * { box-sizing: border-box; }
 
         .nav {
             background: #0f0f23;
