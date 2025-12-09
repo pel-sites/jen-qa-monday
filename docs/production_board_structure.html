@@ -256,6 +256,72 @@
             margin-top: 30px;
             text-align: center;
         }
+
+        .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .header {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 1.5em;
+            }
+
+            .meta-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .meta-card .value {
+                font-size: 18px;
+            }
+
+            .section {
+                padding: 15px;
+            }
+
+            .views-grid {
+                grid-template-columns: 1fr;
+            }
+
+            table {
+                font-size: 14px;
+            }
+
+            th, td {
+                padding: 8px;
+            }
+
+            pre {
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .meta-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .meta-card .value {
+                font-size: 16px;
+            }
+
+            th, td {
+                padding: 6px;
+            }
+
+            .badge {
+                font-size: 10px;
+                padding: 3px 6px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -426,6 +492,7 @@ flowchart LR
     <!-- Groups Table -->
     <div class="section">
         <h2>Groups (6)</h2>
+        <div class="table-wrapper">
         <table>
             <thead>
                 <tr>
@@ -474,11 +541,13 @@ flowchart LR
                 </tr>
             </tbody>
         </table>
+        </div>
     </div>
 
     <!-- Columns Table -->
     <div class="section">
         <h2>Columns (36)</h2>
+        <div class="table-wrapper">
         <table>
             <thead>
                 <tr>
@@ -526,6 +595,7 @@ flowchart LR
                 <tr><td>PO(s)</td><td><code>lookup_mkvkmj5m</code></td><td><span class="badge badge-mirror">mirror</span></td></tr>
             </tbody>
         </table>
+        </div>
     </div>
 
     <!-- Views -->
@@ -610,6 +680,7 @@ flowchart LR
     <!-- Owners -->
     <div class="section">
         <h2>Board Owners</h2>
+        <div class="table-wrapper">
         <table>
             <thead>
                 <tr>
@@ -631,6 +702,7 @@ flowchart LR
                 </tr>
             </tbody>
         </table>
+        </div>
     </div>
 
     <!-- API Reference -->

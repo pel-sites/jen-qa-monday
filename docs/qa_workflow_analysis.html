@@ -388,6 +388,108 @@
             background: #df2f4a;
             border-color: #df2f4a;
         }
+
+        .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .header {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .header .subtitle {
+                font-size: 1em;
+            }
+
+            .section {
+                padding: 15px;
+            }
+
+            .user-story {
+                padding: 15px;
+                font-size: 1em;
+            }
+
+            .workflow-step {
+                flex-direction: column;
+            }
+
+            .step-number {
+                min-width: unset;
+                padding: 10px;
+                font-size: 1.2em;
+            }
+
+            .step-status {
+                padding: 10px;
+            }
+
+            .recommendations {
+                grid-template-columns: 1fr;
+            }
+
+            .column-list {
+                grid-template-columns: 1fr;
+            }
+
+            table {
+                font-size: 14px;
+            }
+
+            th, td {
+                padding: 10px 8px;
+            }
+
+            .gap-card, .exists-card {
+                padding: 15px;
+            }
+
+            div[style*="grid-template-columns: 1fr 1fr"] {
+                display: block !important;
+            }
+
+            div[style*="grid-template-columns: 1fr 1fr"] > div {
+                margin-bottom: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.5em;
+            }
+
+            .status-badge {
+                font-size: 10px;
+                padding: 3px 8px;
+            }
+
+            th, td {
+                padding: 8px 6px;
+            }
+
+            .board-card {
+                padding: 15px;
+            }
+
+            .rec-card {
+                padding: 15px;
+            }
+
+            code {
+                font-size: 0.8em;
+                padding: 1px 4px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -738,6 +840,7 @@ flowchart TB
     style M5 fill:#fdab3d,color:#000
         </div>
 
+        <div class="table-wrapper">
         <table>
             <thead>
                 <tr>
@@ -792,12 +895,14 @@ flowchart TB
                 </tr>
             </tbody>
         </table>
+        </div>
     </div>
 
     <!-- Items in QA Status -->
     <div class="section">
         <h2>Current Items in QA Status</h2>
         <p>These 7 items are currently in QA status but have no QA documentation attached:</p>
+        <div class="table-wrapper">
         <table>
             <thead>
                 <tr>
@@ -844,6 +949,7 @@ flowchart TB
                 </tr>
             </tbody>
         </table>
+        </div>
     </div>
 
     <!-- Proposed Solution -->
