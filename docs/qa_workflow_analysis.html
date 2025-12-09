@@ -360,6 +360,57 @@
             text-decoration: underline;
         }
 
+        .tldr {
+            background: linear-gradient(135deg, rgba(157, 80, 221, 0.15) 0%, rgba(223, 47, 74, 0.1) 100%);
+            border: 1px solid var(--purple);
+            border-radius: 12px;
+            padding: 25px 30px;
+            margin-bottom: 30px;
+        }
+
+        .tldr h2 {
+            margin: 0 0 15px 0;
+            color: var(--purple);
+            font-size: 1.3em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tldr h2::before {
+            content: "⚡";
+        }
+
+        .tldr ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .tldr li {
+            margin: 10px 0;
+        }
+
+        .tldr strong {
+            color: var(--gap-red);
+        }
+
+        .tldr .read-time {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(157, 80, 221, 0.3);
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        .tldr a {
+            color: var(--info-blue);
+            text-decoration: none;
+        }
+
+        .tldr a:hover {
+            text-decoration: underline;
+        }
+
         .checklist {
             background: #0f0f23;
             border-radius: 8px;
@@ -523,6 +574,17 @@
         <div class="subtitle">Mapping Jen's 13-Step QA Process to Monday.com</div>
         <div class="date">Generated: December 8, 2025</div>
     </div>
+
+    <section id="tldr" class="tldr">
+        <h2>TL;DR</h2>
+        <ul>
+            <li><strong>2 critical gaps:</strong> No QA template link in Monday.com, QA DOCS column never used</li>
+            <li><strong>4 boards</strong> involved: Production, BBT, Finalization, EPOs-Materials</li>
+            <li><strong>7 items</strong> currently in QA status with zero documentation attached</li>
+            <li><strong>Fix priority:</strong> Add QA template link, enforce QA DOCS upload before FULFILLED</li>
+        </ul>
+        <p class="read-time">Full read: ~10 minutes | <a href="/production_board_structure.html">See Board Structure</a></p>
+    </section>
 
     <!-- User Story -->
     <div class="section">

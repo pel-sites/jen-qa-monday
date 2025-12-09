@@ -257,6 +257,57 @@
         }
 
         a { color: #66ccff; }
+
+        .tldr {
+            background: linear-gradient(135deg, rgba(223, 47, 74, 0.15) 0%, rgba(253, 171, 61, 0.1) 100%);
+            border: 1px solid var(--critical);
+            border-radius: 12px;
+            padding: 25px 30px;
+            margin-bottom: 30px;
+        }
+
+        .tldr h2 {
+            margin: 0 0 15px 0;
+            color: var(--critical);
+            font-size: 1.3em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tldr h2::before {
+            content: "⚡";
+        }
+
+        .tldr ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .tldr li {
+            margin: 10px 0;
+        }
+
+        .tldr strong {
+            color: var(--critical);
+        }
+
+        .tldr .read-time {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(223, 47, 74, 0.3);
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        .tldr a {
+            color: var(--info);
+            text-decoration: none;
+        }
+
+        .tldr a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -276,6 +327,17 @@
         <div class="subtitle">FULFILLED Items Data Quality Report - Production Board</div>
         <div class="date">Generated: December 8, 2025 | Data Source: Monday.com API</div>
     </div>
+
+    <section id="tldr" class="tldr">
+        <h2>TL;DR</h2>
+        <ul>
+            <li><strong>60%</strong> of FULFILLED items are missing QA documentation</li>
+            <li><strong>63%</strong> have no owner assigned (root cause of compliance gap)</li>
+            <li><strong>Key insight:</strong> Items with owners are 2.7x more likely to have complete docs</li>
+            <li><strong>Action needed:</strong> Block FULFILLED status without QA DOCS, require owner assignment</li>
+        </ul>
+        <p class="read-time">Full read: ~8 minutes | <a href="/next_steps_roadmap.html">See Roadmap</a></p>
+    </section>
 
     <!-- Executive Summary -->
     <div class="section">
