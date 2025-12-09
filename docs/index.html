@@ -127,17 +127,13 @@
             opacity: 0.7;
             margin-bottom: 40px;
         }
-        .card {
-            background: #16213e;
-            border-radius: 12px;
-            padding: 25px;
-            margin: 20px 0;
-            border: 1px solid #2a2a4a;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
         .card:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+        .card.dimmed:hover {
+            transform: none;
+            box-shadow: none;
         }
         .card h2 {
             margin: 0 0 10px 0;
@@ -192,6 +188,103 @@
             color: #888;
             margin-left: 10px;
         }
+
+        .audience-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        .audience-selector-label {
+            width: 100%;
+            text-align: center;
+            font-size: 0.9em;
+            opacity: 0.7;
+            margin-bottom: 5px;
+        }
+        .audience-btn {
+            background: rgba(157, 80, 221, 0.15);
+            border: 1px solid rgba(157, 80, 221, 0.4);
+            color: #eee;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95em;
+            font-family: inherit;
+            transition: all 0.2s ease;
+            min-height: 44px;
+            min-width: 44px;
+        }
+        .audience-btn:hover {
+            background: rgba(157, 80, 221, 0.3);
+            border-color: rgba(157, 80, 221, 0.6);
+        }
+        .audience-btn:focus {
+            outline: 2px solid #9d50dd;
+            outline-offset: 2px;
+        }
+        .audience-btn[aria-pressed="true"] {
+            background: #9d50dd;
+            border-color: #9d50dd;
+            color: #fff;
+            font-weight: 500;
+        }
+        .audience-btn[aria-pressed="true"]:hover {
+            background: #7b3aab;
+            border-color: #7b3aab;
+        }
+        .card {
+            background: #16213e;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 1px solid #2a2a4a;
+            transition: transform 0.2s, box-shadow 0.2s, opacity 0.3s ease;
+        }
+        .card.dimmed {
+            opacity: 0.4;
+        }
+        .card.highlighted {
+            border-color: #9d50dd;
+            box-shadow: 0 0 0 1px #9d50dd, 0 4px 15px rgba(157, 80, 221, 0.2);
+        }
+        .recommended-badge {
+            display: none;
+            background: #9d50dd;
+            color: #fff;
+            font-size: 0.7em;
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-left: 10px;
+            vertical-align: middle;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .card.highlighted .recommended-badge {
+            display: inline-block;
+        }
+        .clear-filter {
+            display: none;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85em;
+            font-family: inherit;
+            transition: all 0.2s ease;
+            margin-left: 10px;
+        }
+        .clear-filter:hover {
+            border-color: rgba(255, 255, 255, 0.5);
+            color: #fff;
+        }
+        .clear-filter.visible {
+            display: inline-block;
+        }
+
         .footer {
             text-align: center;
             margin-top: 40px;
@@ -253,42 +346,50 @@
         <h1>Jen QA Monday</h1>
         <p class="subtitle">QA Workflow Documentation for Pure Earth Labs</p>
 
+        <div class="audience-selector" role="group" aria-label="Select your role">
+            <span class="audience-selector-label">I am a...</span>
+            <button class="audience-btn" data-audience="stakeholder" aria-pressed="false">Stakeholder</button>
+            <button class="audience-btn" data-audience="staff" aria-pressed="false">Current Staff</button>
+            <button class="audience-btn" data-audience="newhire" aria-pressed="false">New Hire / Candidate</button>
+            <button class="clear-filter" aria-label="Clear selection">Show All</button>
+        </div>
+
         <div class="intro">
             <p>Start with the <strong>QA Manager Procedure</strong> for the complete workflow, then review <strong>Team Performance Analysis</strong> for current metrics. Continue through the analysis and roadmap sections, with technical reference and hiring docs at the end.</p>
         </div>
 
-        <div class="card">
-            <h2>QA Manager Procedure <span class="badge">START HERE</span></h2>
+        <div class="card" data-audiences="staff newhire">
+            <h2>QA Manager Procedure <span class="badge">START HERE</span><span class="recommended-badge">Recommended</span></h2>
             <p>Step-by-step operational SOP for the QA Manager role, covering daily procedures and responsibilities.</p>
             <a href="/qa_manager_procedure.html">View Procedure</a>
         </div>
 
-        <div class="card">
-            <h2>Team Performance Analysis</h2>
+        <div class="card" data-audiences="stakeholder">
+            <h2>Team Performance Analysis<span class="recommended-badge">Recommended</span></h2>
             <p>Current metrics and data analysis of team QA performance, identifying trends and areas for improvement.</p>
             <a href="/team_performance_analysis.html">View Analysis</a>
         </div>
 
-        <div class="card">
-            <h2>QA Workflow Analysis</h2>
+        <div class="card" data-audiences="">
+            <h2>QA Workflow Analysis<span class="recommended-badge">Recommended</span></h2>
             <p>Complete analysis of Jen's 13-step QA process mapped to Monday.com, including gap analysis and recommendations.</p>
             <a href="/qa_workflow_analysis.html">View Analysis</a>
         </div>
 
-        <div class="card">
-            <h2>Next Steps Roadmap</h2>
+        <div class="card" data-audiences="stakeholder">
+            <h2>Next Steps Roadmap<span class="recommended-badge">Recommended</span></h2>
             <p>Action plan for implementing QA workflow improvements and addressing identified gaps.</p>
             <a href="/next_steps_roadmap.html">View Roadmap</a>
         </div>
 
-        <div class="card">
-            <h2>Production Board Structure</h2>
+        <div class="card" data-audiences="">
+            <h2>Production Board Structure<span class="recommended-badge">Recommended</span></h2>
             <p>Technical documentation of the Production board including columns, groups, views, and board relationships.</p>
             <a href="/production_board_structure.html">View Structure</a>
         </div>
 
-        <div class="card">
-            <h2>Ideal Candidate Profile</h2>
+        <div class="card" data-audiences="newhire">
+            <h2>Ideal Candidate Profile<span class="recommended-badge">Recommended</span></h2>
             <p>Profile and requirements for hiring QA team members aligned with Pure Earth Labs' workflow.</p>
             <a href="/ideal_candidate_profile.html">View Profile</a>
         </div>
@@ -299,5 +400,51 @@
             <p>Last updated: December 2025</p>
         </div>
     </div>
+
+    <script>
+        (function() {
+            const STORAGE_KEY = 'jen-qa-audience';
+            const audienceBtns = document.querySelectorAll('.audience-btn');
+            const clearBtn = document.querySelector('.clear-filter');
+            const cards = document.querySelectorAll('.card[data-audiences]');
+
+            function applyFilter(audience) {
+                cards.forEach(card => {
+                    const cardAudiences = card.dataset.audiences.split(' ').filter(Boolean);
+                    const isRelevant = !audience || cardAudiences.includes(audience);
+
+                    card.classList.toggle('dimmed', !isRelevant && audience);
+                    card.classList.toggle('highlighted', isRelevant && audience);
+                });
+
+                audienceBtns.forEach(btn => {
+                    const isActive = btn.dataset.audience === audience;
+                    btn.setAttribute('aria-pressed', isActive);
+                });
+
+                clearBtn.classList.toggle('visible', !!audience);
+
+                if (audience) {
+                    try { localStorage.setItem(STORAGE_KEY, audience); } catch(e) {}
+                } else {
+                    try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+                }
+            }
+
+            audienceBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const current = btn.getAttribute('aria-pressed') === 'true';
+                    applyFilter(current ? null : btn.dataset.audience);
+                });
+            });
+
+            clearBtn.addEventListener('click', () => applyFilter(null));
+
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                if (saved) applyFilter(saved);
+            } catch(e) {}
+        })();
+    </script>
 </body>
 </html>
