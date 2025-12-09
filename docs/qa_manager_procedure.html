@@ -7,258 +7,167 @@
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✓</text></svg>">
     <meta name="description" content="Complete 13-step QA Standard Operating Procedure for Pure Earth Labs production. Checklists, tolerances, defect classification, and Loom callouts.">
-    <link rel="stylesheet" href="/css/shared.css">
     <style>
-        /* Page-specific styles for QA Manager Procedure */
+        :root {
+            --purple: #9d50dd;
+            --green: #00c875;
+            --orange: #fdab3d;
+            --red: #df2f4a;
+            --blue: #579bfc;
+            --dark-bg: #1a1a2e;
+            --card-bg: #16213e;
+            --darker-bg: #0f0f23;
+        }
+
+        * { box-sizing: border-box; }
 
         body {
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Reading Progress Bar */
-        .reading-progress {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: var(--darker-bg);
-            z-index: 1001;
-        }
-
-        .reading-progress-bar {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg,
-                var(--color-info) 0%,
-                var(--color-info) 7%,
-                var(--color-warning) 7%,
-                var(--color-warning) 50%,
-                var(--color-success) 50%,
-                var(--color-success) 85%,
-                var(--color-accent) 85%
-            );
-            background-size: 100% 100%;
-            transition: width 100ms ease-out;
-        }
-
-        /* Main Layout */
-        .page-layout {
-            display: flex;
-            max-width: var(--max-width);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: var(--space-5);
+            padding: 20px;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, var(--card-bg) 100%);
+            color: #eee;
+            line-height: 1.6;
         }
 
-        .main-content {
-            flex: 1;
-            min-width: 0;
-            max-width: 100%;
+        h1, h2, h3, h4 { color: #fff; }
+
+        .header {
+            background: linear-gradient(135deg, var(--purple) 0%, var(--blue) 100%);
+            padding: 40px;
+            border-radius: 16px;
+            margin-bottom: 40px;
+            text-align: center;
         }
 
-        @media (min-width: 1200px) {
-            .page-layout {
-                padding-left: 280px;
-            }
+        .header h1 { margin: 0 0 10px 0; font-size: 2.5em; }
+        .header .subtitle { font-size: 1.2em; opacity: 0.9; }
+        .header .meta { margin-top: 15px; opacity: 0.7; font-size: 0.9em; }
 
-            .main-content {
-                max-width: var(--content-width);
-                margin: 0 auto;
-            }
+        .toc {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border: 1px solid #2a2a4a;
         }
 
-        /* Section h2 with step badge layout */
-        .section h2 {
-            display: flex;
-            align-items: center;
-            gap: var(--space-4);
-        }
-
-        /* Step badges */
-        .step-badge {
-            background: var(--color-accent);
-            color: #fff;
-            padding: var(--space-2) var(--space-4);
-            border-radius: var(--radius-full);
-            font-size: var(--text-sm);
-            font-weight: 600;
-            white-space: nowrap;
-        }
-
-        .step-badge.prep { background: var(--color-info); }
-        .step-badge.prerun { background: var(--color-warning); color: #000; }
-        .step-badge.inprocess { background: var(--color-success); color: #000; }
-        .step-badge.final { background: var(--color-accent); }
-
-        /* Table of Contents - Inline (mobile/tablet) */
-        .toc-inline {
-            background: var(--color-surface);
-            padding: var(--space-6);
-            border-radius: var(--radius-lg);
-            margin-bottom: var(--space-8);
-            border: 1px solid var(--color-border);
-        }
-
-        .toc-inline h3 {
-            margin-top: 0;
-            color: var(--color-accent);
-        }
+        .toc h3 { margin-top: 0; color: var(--purple); }
 
         .toc-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: var(--space-3);
+            gap: 10px;
         }
 
-        .toc-inline a {
-            color: var(--color-text);
+        .toc a {
+            color: #eee;
             text-decoration: none;
-            padding: var(--space-2) var(--space-3);
-            border-radius: var(--radius-md);
+            padding: 8px 12px;
+            border-radius: 6px;
             display: block;
-            transition: background var(--transition-fast);
+            transition: background 0.2s;
         }
 
-        .toc-inline a:hover {
-            background: var(--darker-bg);
-            text-decoration: none;
-        }
+        .toc a:hover { background: var(--darker-bg); }
 
-        .toc-inline .phase-label {
-            font-size: var(--text-xs);
+        .toc .phase-label {
+            font-size: 0.75em;
             padding: 2px 8px;
-            border-radius: var(--radius-full);
-            margin-right: var(--space-2);
+            border-radius: 10px;
+            margin-right: 8px;
         }
 
-        /* Sticky TOC Sidebar */
-        .toc-sidebar {
-            display: none;
+        .phase-prep { background: var(--blue); }
+        .phase-prerun { background: var(--orange); color: #000; }
+        .phase-inprocess { background: var(--green); color: #000; }
+        .phase-final { background: var(--purple); }
+
+        .section {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border: 1px solid #2a2a4a;
         }
 
-        @media (min-width: 1200px) {
-            .toc-inline {
-                display: none;
-            }
-
-            .toc-sidebar {
-                display: block;
-                position: fixed;
-                top: 60px;
-                left: 0;
-                width: 260px;
-                height: calc(100vh - 60px);
-                overflow-y: auto;
-                padding: var(--space-5);
-                background: var(--darker-bg);
-                border-right: 1px solid var(--color-border);
-                z-index: 99;
-            }
-
-            .toc-sidebar h3 {
-                font-size: var(--text-sm);
-                color: var(--color-text-muted);
-                text-transform: uppercase;
-                letter-spacing: 0.05em;
-                margin: 0 0 var(--space-4) 0;
-            }
-
-            .toc-sidebar-list {
-                list-style: none;
-                padding: 0;
-                margin: 0;
-            }
-
-            .toc-sidebar-list li {
-                margin: 0;
-            }
-
-            .toc-sidebar-list a {
-                display: flex;
-                align-items: center;
-                gap: var(--space-2);
-                padding: var(--space-2) var(--space-3);
-                color: var(--color-text-muted);
-                text-decoration: none;
-                font-size: var(--text-sm);
-                border-radius: var(--radius-md);
-                border-left: 2px solid transparent;
-                transition: all var(--transition-fast);
-            }
-
-            .toc-sidebar-list a:hover {
-                color: var(--color-text);
-                background: var(--color-surface);
-                text-decoration: none;
-            }
-
-            .toc-sidebar-list a.active {
-                color: var(--color-text);
-                background: var(--color-surface);
-                border-left-color: var(--color-accent);
-                font-weight: 500;
-            }
-
-            .toc-sidebar-list .phase-dot {
-                width: 8px;
-                height: 8px;
-                border-radius: 50%;
-                flex-shrink: 0;
-            }
-
-            .toc-sidebar-list .phase-dot.prep { background: var(--color-info); }
-            .toc-sidebar-list .phase-dot.prerun { background: var(--color-warning); }
-            .toc-sidebar-list .phase-dot.inprocess { background: var(--color-success); }
-            .toc-sidebar-list .phase-dot.final { background: var(--color-accent); }
+        .section h2 {
+            margin-top: 0;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--purple);
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
-        /* Phase Overview */
+        .step-badge {
+            background: var(--purple);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .step-badge.prep { background: var(--blue); }
+        .step-badge.prerun { background: var(--orange); color: #000; }
+        .step-badge.inprocess { background: var(--green); color: #000; }
+        .step-badge.final { background: var(--purple); }
+
+        .mermaid {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+
+        /* Simple phase overview */
         .phase-overview {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0;
             flex-wrap: wrap;
-            margin: var(--space-5) 0;
+            margin: 20px 0;
         }
 
         .phase-box {
-            padding: var(--space-5) var(--space-8);
-            border-radius: var(--radius-lg);
+            padding: 20px 30px;
+            border-radius: 12px;
             text-align: center;
             min-width: 180px;
         }
 
-        .phase-box h4 { margin: 0 0 var(--space-1) 0; font-size: var(--text-lg); }
-        .phase-box p { margin: 0; opacity: 0.9; font-size: var(--text-sm); }
+        .phase-box h4 { margin: 0 0 5px 0; font-size: 1.1em; }
+        .phase-box p { margin: 0; opacity: 0.9; font-size: 0.9em; }
 
-        .phase-box.prep { background: var(--color-info); color: #fff; }
-        .phase-box.prerun { background: var(--color-warning); color: #000; }
-        .phase-box.inprocess { background: var(--color-success); color: #000; }
-        .phase-box.final { background: var(--color-accent); color: #fff; }
+        .phase-box.prep { background: var(--blue); color: #fff; }
+        .phase-box.prerun { background: var(--orange); color: #000; }
+        .phase-box.inprocess { background: var(--green); color: #000; }
+        .phase-box.final { background: var(--purple); color: #fff; }
 
         .phase-arrow {
             font-size: 2em;
             color: #666;
-            padding: 0 var(--space-3);
+            padding: 0 10px;
         }
 
-        /* Expand button */
         .expand-btn {
             display: block;
-            margin: var(--space-5) auto 0;
+            margin: 20px auto 0;
             background: var(--darker-bg);
-            border: 1px solid var(--color-border-light);
-            color: var(--color-text);
-            padding: var(--space-3) var(--space-5);
-            border-radius: var(--radius-md);
+            border: 1px solid #444;
+            color: #eee;
+            padding: 10px 20px;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: var(--text-sm);
-            transition: background var(--transition-fast);
+            font-size: 0.9em;
+            transition: background 0.2s;
         }
 
-        .expand-btn:hover { background: var(--color-surface-raised); }
+        .expand-btn:hover { background: #1a1a3a; }
 
         /* Modal */
         .modal-overlay {
@@ -272,26 +181,26 @@
             z-index: 1000;
             justify-content: center;
             align-items: center;
-            padding: var(--space-5);
+            padding: 20px;
         }
 
         .modal-overlay.active { display: flex; }
 
         .modal-content {
             background: #fff;
-            border-radius: var(--radius-lg);
+            border-radius: 12px;
             max-width: 95vw;
             max-height: 90vh;
             overflow: auto;
             position: relative;
-            padding: var(--space-8);
+            padding: 30px;
         }
 
         .modal-close {
             position: absolute;
-            top: var(--space-3);
-            right: var(--space-4);
-            background: var(--color-critical);
+            top: 10px;
+            right: 15px;
+            background: var(--red);
             color: #fff;
             border: none;
             width: 36px;
@@ -308,103 +217,83 @@
             min-width: 1000px;
         }
 
-        /* Section Focus & scroll-margin */
-        .section {
-            scroll-margin-top: 80px;
-            transition: border-left-color var(--transition-base), background var(--transition-base);
-            border-left: 4px solid transparent;
-        }
-
-        .section.active {
-            border-left-color: var(--color-accent);
-            background: linear-gradient(90deg, rgba(157, 80, 221, 0.05) 0%, var(--color-surface) 100%);
-        }
-
-        /* Anchor highlight animation */
-        @keyframes anchor-flash {
-            0% { background: rgba(157, 80, 221, 0.3); }
-            100% { background: transparent; }
-        }
-
-        .section.anchor-highlight {
-            animation: anchor-flash 1.5s ease-out;
-        }
-
-        /* Section header with copy link */
-        .section-header {
-            display: flex;
-            align-items: center;
-            gap: var(--space-3);
-            position: relative;
-        }
-
-        .section h2 {
-            flex: 1;
-        }
-
-        .copy-link-btn {
-            opacity: 0;
+        .checklist {
             background: var(--darker-bg);
-            border: 1px solid var(--color-border);
-            color: var(--color-text-muted);
-            padding: var(--space-2);
-            border-radius: var(--radius-md);
-            cursor: pointer;
-            transition: opacity var(--transition-fast), background var(--transition-fast), color var(--transition-fast);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .checklist-item {
             display: flex;
-            align-items: center;
-            justify-content: center;
+            align-items: flex-start;
+            padding: 12px 0;
+            border-bottom: 1px solid #2a2a4a;
         }
 
-        .section:hover .copy-link-btn {
-            opacity: 1;
+        .checklist-item:last-child { border-bottom: none; }
+
+        .check-box {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--purple);
+            border-radius: 4px;
+            margin-right: 15px;
+            flex-shrink: 0;
+            margin-top: 2px;
         }
 
-        .copy-link-btn:hover {
-            background: var(--color-accent);
-            color: #fff;
-            border-color: var(--color-accent);
-        }
-
-        .copy-link-btn svg {
-            width: 16px;
-            height: 16px;
-        }
-
-        .copy-link-btn.copied {
-            background: var(--color-success);
-            color: #000;
-            border-color: var(--color-success);
-        }
-
-        /* Subsections */
         .subsection {
             background: var(--darker-bg);
-            border-radius: var(--radius-md);
-            padding: var(--space-5);
-            margin: var(--space-5) 0;
-            border-left: 4px solid var(--color-accent);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid var(--purple);
         }
 
         .subsection h4 {
-            margin: 0 0 var(--space-4) 0;
-            color: var(--color-accent);
+            margin: 0 0 15px 0;
+            color: var(--purple);
         }
 
         .subsection.important {
-            border-left-color: var(--color-critical);
+            border-left-color: var(--red);
             background: linear-gradient(135deg, rgba(223, 47, 74, 0.1) 0%, var(--darker-bg) 100%);
         }
 
-        .subsection.important h4 { color: var(--color-critical); }
+        .subsection.important h4 { color: var(--red); }
 
-        /* Loom Callout */
+        .non-negotiable {
+            background: linear-gradient(135deg, rgba(223, 47, 74, 0.2) 0%, rgba(223, 47, 74, 0.1) 100%);
+            border: 1px solid var(--red);
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .non-negotiable::before {
+            content: "!";
+            background: var(--red);
+            color: #fff;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
         .loom-callout {
             background: linear-gradient(135deg, rgba(87, 155, 252, 0.2) 0%, rgba(87, 155, 252, 0.1) 100%);
-            border: 1px solid var(--color-info);
-            border-radius: var(--radius-md);
-            padding: var(--space-3) var(--space-4);
-            margin: var(--space-3) 0;
+            border: 1px solid var(--blue);
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin: 10px 0;
             font-style: italic;
         }
 
@@ -412,233 +301,104 @@
             content: "Say on Loom: ";
             font-weight: 600;
             font-style: normal;
-            color: var(--color-info);
+            color: var(--blue);
         }
 
-        /* Defect table colors */
-        .defect-table td:first-child { font-weight: 600; }
-        .defect-acceptable { color: var(--color-success); }
-        .defect-borderline { color: #9cd326; }
-        .defect-minor { color: var(--color-warning); }
-        .defect-major { color: #ff642e; }
-        .defect-critical { color: var(--color-critical); }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
 
-        /* Naming convention box */
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #333;
+        }
+
+        th {
+            background: var(--darker-bg);
+            color: var(--purple);
+            font-weight: 600;
+        }
+
+        tr:hover { background: rgba(157, 80, 221, 0.1); }
+
+        .defect-table td:first-child {
+            font-weight: 600;
+        }
+
+        .defect-acceptable { color: var(--green); }
+        .defect-borderline { color: #9cd326; }
+        .defect-minor { color: var(--orange); }
+        .defect-major { color: #ff642e; }
+        .defect-critical { color: var(--red); }
+
         .naming-convention {
             background: var(--darker-bg);
-            padding: var(--space-5);
-            border-radius: var(--radius-md);
-            font-family: var(--font-mono);
-            font-size: var(--text-lg);
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'SF Mono', Monaco, monospace;
+            font-size: 1.1em;
             text-align: center;
-            margin: var(--space-4) 0;
-            border: 2px dashed var(--color-accent);
+            margin: 15px 0;
+            border: 2px dashed var(--purple);
         }
 
-        /* Photo grid */
         .photo-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: var(--space-3);
-            margin: var(--space-4) 0;
+            gap: 10px;
+            margin: 15px 0;
         }
 
         .photo-item {
             background: var(--darker-bg);
-            padding: var(--space-3);
-            border-radius: var(--radius-md);
+            padding: 12px;
+            border-radius: 6px;
             text-align: center;
-            border: 1px solid var(--color-border);
+            border: 1px solid #2a2a4a;
         }
 
-        /* Tolerance box */
         .tolerance-box {
             display: inline-block;
             background: var(--darker-bg);
-            padding: var(--space-1) var(--space-3);
-            border-radius: var(--radius-sm);
-            font-family: var(--font-mono);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-family: monospace;
             margin: 2px;
         }
 
-        /* Responsive nav adjustment for progress bar */
-        nav {
-            top: 3px !important;
-        }
-
-        /* Interactive Checkboxes */
-        .checkbox {
-            width: 24px;
-            height: 24px;
-            min-width: 24px;
-            border: 2px solid var(--color-border-light);
-            border-radius: var(--radius-sm);
-            background: transparent;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all var(--transition-fast);
-            padding: 0;
-        }
-
-        .checkbox:hover {
-            border-color: var(--color-accent);
-            background: rgba(157, 80, 221, 0.1);
-        }
-
-        .checkbox:focus {
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(157, 80, 221, 0.3);
-        }
-
-        .checkbox[aria-pressed="true"] {
-            background: var(--color-success);
-            border-color: var(--color-success);
-        }
-
-        .checkbox-icon {
-            width: 16px;
-            height: 16px;
-            stroke: transparent;
-            stroke-width: 3;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            fill: none;
-        }
-
-        .checkbox[aria-pressed="true"] .checkbox-icon {
-            stroke: #000;
-        }
-
-        /* Checkmark animation */
-        .checkbox-icon path {
-            stroke-dasharray: 24;
-            stroke-dashoffset: 24;
-            transition: stroke-dashoffset 0.2s ease-out;
-        }
-
-        .checkbox[aria-pressed="true"] .checkbox-icon path {
-            stroke-dashoffset: 0;
-        }
-
-        /* Scale bounce on check */
-        @keyframes checkbox-bounce {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.15); }
-            100% { transform: scale(1); }
-        }
-
-        .checkbox.just-checked {
-            animation: checkbox-bounce 0.2s ease-out;
-        }
-
-        /* Checked item styling */
-        .checklist-item.checked > div:last-child {
+        .footer {
+            text-align: center;
+            padding: 30px;
             opacity: 0.6;
+            font-size: 0.9em;
         }
 
-        .checklist-item.checked > div:last-child strong {
-            text-decoration: line-through;
-            text-decoration-color: var(--color-success);
-        }
-
-        /* Progress indicator per section */
-        .checklist-progress {
-            font-size: var(--text-sm);
-            color: var(--color-text-muted);
-            margin-bottom: var(--space-3);
-            display: flex;
-            align-items: center;
-            gap: var(--space-2);
-        }
-
-        .checklist-progress-bar {
-            flex: 1;
-            max-width: 120px;
-            height: 4px;
+        code {
             background: var(--darker-bg);
-            border-radius: 2px;
-            overflow: hidden;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'SF Mono', Monaco, monospace;
         }
 
-        .checklist-progress-fill {
-            height: 100%;
-            background: var(--color-success);
-            transition: width 0.3s ease-out;
-            width: 0%;
-        }
-
-        /* Reset button */
-        .reset-progress-btn {
-            display: block;
-            margin: var(--space-8) auto;
-            background: transparent;
-            border: 1px solid var(--color-border);
-            color: var(--color-text-muted);
-            padding: var(--space-2) var(--space-4);
-            border-radius: var(--radius-md);
-            cursor: pointer;
-            font-size: var(--text-sm);
-            transition: all var(--transition-fast);
-        }
-
-        .reset-progress-btn:hover {
-            border-color: var(--color-critical);
-            color: var(--color-critical);
-        }
+        ul, ol { margin: 10px 0; padding-left: 25px; }
+        li { margin: 8px 0; }
     </style>
 </head>
 <body>
-<!-- Reading Progress Bar -->
-<div class="reading-progress">
-    <div class="reading-progress-bar" id="progressBar"></div>
-</div>
-
-<nav class="nav">
-    <div class="nav-inner">
-        <a href="/" class="nav-brand">Jen QA Monday</a>
-        <button class="nav-toggle" aria-label="Toggle menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-        <ul class="nav-links">
-            <li><a href="/">Home</a></li>
-            <li><a href="/qa_manager_procedure.html" class="active">Procedure</a></li>
-            <li><a href="/qa_workflow_analysis.html">Workflow</a></li>
-            <li><a href="/team_performance_analysis.html">Performance</a></li>
-            <li><a href="/next_steps_roadmap.html">Roadmap</a></li>
-            <li><a href="/production_board_structure.html">Board</a></li>
-            <li><a href="/ideal_candidate_profile.html">Candidate</a></li>
-        </ul>
+<nav style="position: sticky; top: 0; z-index: 100; background: #0f0f23; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #2a2a4a;">
+    <a href="/" style="color: #9d50dd; text-decoration: none; font-weight: 500;">← Home</a>
+    <div style="display: flex; gap: 20px; font-size: 0.9em;">
+        <a href="/qa_manager_procedure.html" style="color: #00c875; text-decoration: none; font-weight: 500;">Procedure</a>
+        <a href="/qa_workflow_analysis.html" style="color: #eee; text-decoration: none; opacity: 0.8;">Analysis</a>
+        <a href="/production_board_structure.html" style="color: #eee; text-decoration: none; opacity: 0.8;">Board</a>
+        <a href="/team_performance_analysis.html" style="color: #eee; text-decoration: none; opacity: 0.8;">Performance</a>
+        <a href="/next_steps_roadmap.html" style="color: #eee; text-decoration: none; opacity: 0.8;">Roadmap</a>
+        <a href="/ideal_candidate_profile.html" style="color: #eee; text-decoration: none; opacity: 0.8;">Candidate</a>
     </div>
 </nav>
-<script src="/js/nav.js"></script>
-
-<!-- Sticky TOC Sidebar (desktop only) -->
-<aside class="toc-sidebar">
-    <h3>Contents</h3>
-    <ul class="toc-sidebar-list">
-        <li><a href="#step-0" data-section="step-0"><span class="phase-dot prep"></span>Step 0: What I Open First</a></li>
-        <li><a href="#step-1" data-section="step-1"><span class="phase-dot prerun"></span>Step 1: Spec Sheet at Line</a></li>
-        <li><a href="#step-2" data-section="step-2"><span class="phase-dot prerun"></span>Step 2: Component Verification</a></li>
-        <li><a href="#step-3" data-section="step-3"><span class="phase-dot prerun"></span>Step 3: Batch Code Setup</a></li>
-        <li><a href="#step-4" data-section="step-4"><span class="phase-dot prerun"></span>Step 4: Equipment Calibration</a></li>
-        <li><a href="#step-5" data-section="step-5"><span class="phase-dot prerun"></span>Step 5: Line Config + Sanitation</a></li>
-        <li><a href="#step-6" data-section="step-6"><span class="phase-dot prerun"></span>Step 6: Batch Record/MO</a></li>
-        <li><a href="#step-7" data-section="step-7"><span class="phase-dot inprocess"></span>Step 7: Begin QA Docs</a></li>
-        <li><a href="#step-8" data-section="step-8"><span class="phase-dot inprocess"></span>Step 8: In-Process Checks</a></li>
-        <li><a href="#step-9" data-section="step-9"><span class="phase-dot inprocess"></span>Step 9: Defect Classification</a></li>
-        <li><a href="#step-10" data-section="step-10"><span class="phase-dot inprocess"></span>Step 10: Product Standards</a></li>
-        <li><a href="#step-11" data-section="step-11"><span class="phase-dot inprocess"></span>Step 11: Close-Out Steps</a></li>
-        <li><a href="#step-12" data-section="step-12"><span class="phase-dot final"></span>Step 12: Save Documentation</a></li>
-        <li><a href="#step-13" data-section="step-13"><span class="phase-dot final"></span>Step 13: Attach to Monday</a></li>
-    </ul>
-</aside>
-
-<div class="page-layout">
-<div class="main-content">
     <div class="header">
         <h1>QA Manager Procedure</h1>
         <div class="subtitle">Complete Standard Operating Procedure for Production QA</div>
@@ -739,8 +499,8 @@ flowchart LR
         </div>
     </div>
 
-    <!-- Table of Contents (inline for mobile/tablet) -->
-    <div class="toc-inline">
+    <!-- Table of Contents -->
+    <div class="toc">
         <h3>Table of Contents</h3>
         <div class="toc-grid">
             <a href="#step-0"><span class="phase-label phase-prep">PREP</span> Step 0: What I Open First</a>
@@ -762,14 +522,7 @@ flowchart LR
 
     <!-- STEP 0 -->
     <div class="section" id="step-0">
-        <div class="section-header">
-            <h2><span class="step-badge prep">STEP 0</span> What I Open First</h2>
-            <button class="copy-link-btn" data-section="step-0" title="Copy link to section">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                </svg>
-            </button>
-        </div>
+        <h2><span class="step-badge prep">STEP 0</span> What I Open First</h2>
 
         <div class="mermaid">
 flowchart TB
@@ -787,42 +540,30 @@ flowchart TB
     style G fill:#579bfc,color:#fff
         </div>
 
-        <div class="checklist" data-checklist="step-0">
-            <div class="checklist-progress">
-                <span class="checklist-progress-text">0/4 complete</span>
-                <div class="checklist-progress-bar"><div class="checklist-progress-fill"></div></div>
-            </div>
+        <div class="checklist">
             <div class="checklist-item">
-                <button class="checkbox" data-id="step-0-item-0" aria-pressed="false">
-                    <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
-                </button>
+                <div class="check-box"></div>
                 <div>
                     <strong>Open the Sprint + Bulk weekly sheet</strong><br/>
                     Find today's run (SKU + PO/MO)
                 </div>
             </div>
             <div class="checklist-item">
-                <button class="checkbox" data-id="step-0-item-1" aria-pressed="false">
-                    <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
-                </button>
+                <div class="check-box"></div>
                 <div>
                     <strong>Note anything special for today:</strong><br/>
                     Component change, new label, new closure, etc.
                 </div>
             </div>
             <div class="checklist-item">
-                <button class="checkbox" data-id="step-0-item-2" aria-pressed="false">
-                    <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
-                </button>
+                <div class="check-box"></div>
                 <div>
                     <strong>Open the approved, up-to-date spec sheet</strong> for today's SKU<br/>
                     <em>Note: If there is not one (Earth Harbor products don't have them yet), proceed without</em>
                 </div>
             </div>
             <div class="checklist-item">
-                <button class="checkbox" data-id="step-0-item-3" aria-pressed="false">
-                    <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
-                </button>
+                <div class="check-box"></div>
                 <div>
                     <strong>Open a new copy of the "PURE EARTH LABS Spec Sheet & Inspection Report"</strong> doc for today's PO/run
                 </div>
@@ -832,36 +573,21 @@ flowchart TB
 
     <!-- STEP 1 -->
     <div class="section" id="step-1">
-        <div class="section-header">
-            <h2><span class="step-badge prerun">STEP 1</span> Pre-Run: Spec Sheet Must Be at the Line</h2>
-            <button class="copy-link-btn" data-section="step-1" title="Copy link to section">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                </svg>
-            </button>
-        </div>
+        <h2><span class="step-badge prerun">STEP 1</span> Pre-Run: Spec Sheet Must Be at the Line</h2>
 
         <div class="non-negotiable">
             <strong>NON-NEGOTIABLE:</strong> The correct spec sheet must be at the line before any production begins.
         </div>
 
-        <div class="checklist" data-checklist="step-1">
-            <div class="checklist-progress">
-                <span class="checklist-progress-text">0/2 complete</span>
-                <div class="checklist-progress-bar"><div class="checklist-progress-fill"></div></div>
-            </div>
+        <div class="checklist">
             <div class="checklist-item">
-                <button class="checkbox" data-id="step-1-item-0" aria-pressed="false">
-                    <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
-                </button>
+                <div class="check-box"></div>
                 <div>
                     <strong>Bring the correct spec sheet to the line</strong> (printed or accessible)
                 </div>
             </div>
             <div class="checklist-item">
-                <button class="checkbox" data-id="step-1-item-1" aria-pressed="false">
-                    <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
-                </button>
+                <div class="check-box"></div>
                 <div>
                     <strong>Verify you have the most current approved version</strong>
                 </div>
@@ -875,14 +601,7 @@ flowchart TB
 
     <!-- STEP 2 -->
     <div class="section" id="step-2">
-        <div class="section-header">
-            <h2><span class="step-badge prerun">STEP 2</span> Pre-Run: Component Verification</h2>
-            <button class="copy-link-btn" data-section="step-2" title="Copy link to section">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                </svg>
-            </button>
-        </div>
+        <h2><span class="step-badge prerun">STEP 2</span> Pre-Run: Component Verification</h2>
         <p>Match staged materials to the spec sheet</p>
 
         <div class="mermaid">
@@ -964,25 +683,12 @@ flowchart TB
 
     <!-- STEP 3 -->
     <div class="section" id="step-3">
-        <div class="section-header">
-            <h2><span class="step-badge prerun">STEP 3</span> Pre-Run: Batch Code Setup Verification</h2>
-            <button class="copy-link-btn" data-section="step-3" title="Copy link to section">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                </svg>
-            </button>
-        </div>
+        <h2><span class="step-badge prerun">STEP 3</span> Pre-Run: Batch Code Setup Verification</h2>
         <p>Before production begins</p>
 
-        <div class="checklist" data-checklist="step-3">
-            <div class="checklist-progress">
-                <span class="checklist-progress-text">0/2 complete</span>
-                <div class="checklist-progress-bar"><div class="checklist-progress-fill"></div></div>
-            </div>
+        <div class="checklist">
             <div class="checklist-item">
-                <button class="checkbox" data-id="step-3-item-0" aria-pressed="false">
-                    <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
-                </button>
+                <div class="check-box"></div>
                 <div>
                     <strong>Confirm batch code standards on the form:</strong>
                     <ul>
@@ -993,9 +699,7 @@ flowchart TB
                 </div>
             </div>
             <div class="checklist-item">
-                <button class="checkbox" data-id="step-3-item-1" aria-pressed="false">
-                    <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
-                </button>
+                <div class="check-box"></div>
                 <div>
                     <strong>Verify printer is set correctly and do a test print/check:</strong>
                     <ul>
@@ -1010,32 +714,17 @@ flowchart TB
 
     <!-- STEP 4 -->
     <div class="section" id="step-4">
-        <div class="section-header">
-            <h2><span class="step-badge prerun">STEP 4</span> Pre-Run: Equipment Calibration Checks</h2>
-            <button class="copy-link-btn" data-section="step-4" title="Copy link to section">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                </svg>
-            </button>
-        </div>
+        <h2><span class="step-badge prerun">STEP 4</span> Pre-Run: Equipment Calibration Checks</h2>
 
-        <div class="checklist" data-checklist="step-4">
-            <div class="checklist-progress">
-                <span class="checklist-progress-text">0/2 complete</span>
-                <div class="checklist-progress-bar"><div class="checklist-progress-fill"></div></div>
-            </div>
+        <div class="checklist">
             <div class="checklist-item">
-                <button class="checkbox" data-id="step-4-item-0" aria-pressed="false">
-                    <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
-                </button>
+                <div class="check-box"></div>
                 <div>
                     <strong>Torque meter</strong> is calibrated and operational
                 </div>
             </div>
             <div class="checklist-item">
-                <button class="checkbox" data-id="step-4-item-1" aria-pressed="false">
-                    <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
-                </button>
+                <div class="check-box"></div>
                 <div>
                     <strong>Scale</strong> is calibrated, tared, and accurate
                 </div>
@@ -1049,38 +738,21 @@ flowchart TB
 
     <!-- STEP 5 -->
     <div class="section" id="step-5">
-        <div class="section-header">
-            <h2><span class="step-badge prerun">STEP 5</span> Pre-Run: Filling Line Configuration + Sanitation</h2>
-            <button class="copy-link-btn" data-section="step-5" title="Copy link to section">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                </svg>
-            </button>
-        </div>
+        <h2><span class="step-badge prerun">STEP 5</span> Pre-Run: Filling Line Configuration + Sanitation</h2>
 
         <div class="subsection">
             <h4>Line Setup Items (as applicable)</h4>
-            <div class="checklist" data-checklist="step-5a">
-                <div class="checklist-progress">
-                    <span class="checklist-progress-text">0/3 complete</span>
-                    <div class="checklist-progress-bar"><div class="checklist-progress-fill"></div></div>
-                </div>
+            <div class="checklist">
                 <div class="checklist-item">
-                    <button class="checkbox" data-id="step-5a-item-0" aria-pressed="false">
-                        <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
-                    </button>
+                    <div class="check-box"></div>
                     <div>Hopper mesh filter installed</div>
                 </div>
                 <div class="checklist-item">
-                    <button class="checkbox" data-id="step-5a-item-1" aria-pressed="false">
-                        <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
-                    </button>
+                    <div class="check-box"></div>
                     <div>Hopper lid secured</div>
                 </div>
                 <div class="checklist-item">
-                    <button class="checkbox" data-id="step-5a-item-2" aria-pressed="false">
-                        <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
-                    </button>
+                    <div class="check-box"></div>
                     <div>Blower attached + operational (when applicable)</div>
                 </div>
             </div>
@@ -1088,15 +760,9 @@ flowchart TB
 
         <div class="subsection">
             <h4>Sanitation Verification</h4>
-            <div class="checklist" data-checklist="step-5b">
-                <div class="checklist-progress">
-                    <span class="checklist-progress-text">0/1 complete</span>
-                    <div class="checklist-progress-bar"><div class="checklist-progress-fill"></div></div>
-                </div>
+            <div class="checklist">
                 <div class="checklist-item">
-                    <button class="checkbox" data-id="step-5b-item-0" aria-pressed="false">
-                        <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
-                    </button>
+                    <div class="check-box"></div>
                     <div>Line, hoppers, tools, surfaces sanitized per sanitation SOP and documented</div>
                 </div>
             </div>
@@ -1105,28 +771,15 @@ flowchart TB
 
     <!-- STEP 6 -->
     <div class="section" id="step-6">
-        <div class="section-header">
-            <h2><span class="step-badge prerun">STEP 6</span> Pre-Run: Batch Record / MO Verification</h2>
-            <button class="copy-link-btn" data-section="step-6" title="Copy link to section">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                </svg>
-            </button>
-        </div>
+        <h2><span class="step-badge prerun">STEP 6</span> Pre-Run: Batch Record / MO Verification</h2>
 
         <div class="non-negotiable">
             <strong>No run starts until the MO/batch record, spec sheet, and staged components all match.</strong>
         </div>
 
-        <div class="checklist" data-checklist="step-6">
-            <div class="checklist-progress">
-                <span class="checklist-progress-text">0/1 complete</span>
-                <div class="checklist-progress-bar"><div class="checklist-progress-fill"></div></div>
-            </div>
+        <div class="checklist">
             <div class="checklist-item">
-                <button class="checkbox" data-id="step-6-item-0" aria-pressed="false">
-                    <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
-                </button>
+                <div class="check-box"></div>
                 <div>
                     <strong>Verify the MO and batch record match:</strong>
                     <ul>
@@ -1144,14 +797,7 @@ flowchart TB
 
     <!-- STEP 7 -->
     <div class="section" id="step-7">
-        <div class="section-header">
-            <h2><span class="step-badge inprocess">STEP 7</span> Start of Run: Begin QA Documentation</h2>
-            <button class="copy-link-btn" data-section="step-7" title="Copy link to section">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                </svg>
-            </button>
-        </div>
+        <h2><span class="step-badge inprocess">STEP 7</span> Start of Run: Begin QA Documentation</h2>
         <p>Follow the form in order</p>
 
         <div class="subsection">
@@ -1183,14 +829,7 @@ flowchart TB
 
     <!-- STEP 8 -->
     <div class="section" id="step-8">
-        <div class="section-header">
-            <h2><span class="step-badge inprocess">STEP 8</span> In-Process QA Checks</h2>
-            <button class="copy-link-btn" data-section="step-8" title="Copy link to section">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                </svg>
-            </button>
-        </div>
+        <h2><span class="step-badge inprocess">STEP 8</span> In-Process QA Checks</h2>
         <p>Repeat at the required frequency throughout the run</p>
 
         <div class="loom-callout">
@@ -1295,14 +934,7 @@ flowchart TB
 
     <!-- STEP 9 -->
     <div class="section" id="step-9">
-        <div class="section-header">
-            <h2><span class="step-badge inprocess">STEP 9</span> Defect Classification</h2>
-            <button class="copy-link-btn" data-section="step-9" title="Copy link to section">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                </svg>
-            </button>
-        </div>
+        <h2><span class="step-badge inprocess">STEP 9</span> Defect Classification</h2>
         <p>How to log issues correctly</p>
 
         <p>When an issue is found, classify it in the defect table:</p>
@@ -1351,47 +983,28 @@ flowchart TB
 
     <!-- STEP 10 -->
     <div class="section" id="step-10">
-        <div class="section-header">
-            <h2><span class="step-badge inprocess">STEP 10</span> Product Standards Check</h2>
-            <button class="copy-link-btn" data-section="step-10" title="Copy link to section">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                </svg>
-            </button>
-        </div>
+        <h2><span class="step-badge inprocess">STEP 10</span> Product Standards Check</h2>
         <p>Compare to retention sample</p>
 
         <div class="non-negotiable">
             <strong>Always compare product to retention sample as the true standard.</strong>
         </div>
 
-        <div class="checklist" data-checklist="step-10">
-            <div class="checklist-progress">
-                <span class="checklist-progress-text">0/4 complete</span>
-                <div class="checklist-progress-bar"><div class="checklist-progress-fill"></div></div>
-            </div>
+        <div class="checklist">
             <div class="checklist-item">
-                <button class="checkbox" data-id="step-10-item-0" aria-pressed="false">
-                    <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
-                </button>
+                <div class="check-box"></div>
                 <div><strong>Appearance</strong> - Visual match to retention sample</div>
             </div>
             <div class="checklist-item">
-                <button class="checkbox" data-id="step-10-item-1" aria-pressed="false">
-                    <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
-                </button>
+                <div class="check-box"></div>
                 <div><strong>Color</strong> - Color match to retention sample</div>
             </div>
             <div class="checklist-item">
-                <button class="checkbox" data-id="step-10-item-2" aria-pressed="false">
-                    <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
-                </button>
+                <div class="check-box"></div>
                 <div><strong>Odor</strong> - Scent match to retention sample</div>
             </div>
             <div class="checklist-item">
-                <button class="checkbox" data-id="step-10-item-3" aria-pressed="false">
-                    <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
-                </button>
+                <div class="check-box"></div>
                 <div><strong>Texture/consistency</strong> - Feel and consistency match to retention sample</div>
             </div>
         </div>
@@ -1399,14 +1012,7 @@ flowchart TB
 
     <!-- STEP 11 -->
     <div class="section" id="step-11">
-        <div class="section-header">
-            <h2><span class="step-badge inprocess">STEP 11</span> End of Run: Close-Out Steps</h2>
-            <button class="copy-link-btn" data-section="step-11" title="Copy link to section">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                </svg>
-            </button>
-        </div>
+        <h2><span class="step-badge inprocess">STEP 11</span> End of Run: Close-Out Steps</h2>
 
         <div class="non-negotiable">
             <strong>Must be completed every time - no exceptions.</strong>
@@ -1472,25 +1078,12 @@ flowchart TB
 
     <!-- STEP 12 -->
     <div class="section" id="step-12">
-        <div class="section-header">
-            <h2><span class="step-badge final">STEP 12</span> Save the Documentation</h2>
-            <button class="copy-link-btn" data-section="step-12" title="Copy link to section">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                </svg>
-            </button>
-        </div>
+        <h2><span class="step-badge final">STEP 12</span> Save the Documentation</h2>
         <p>Organized Drive filing</p>
 
-        <div class="checklist" data-checklist="step-12">
-            <div class="checklist-progress">
-                <span class="checklist-progress-text">0/1 complete</span>
-                <div class="checklist-progress-bar"><div class="checklist-progress-fill"></div></div>
-            </div>
+        <div class="checklist">
             <div class="checklist-item">
-                <button class="checkbox" data-id="step-12-item-0" aria-pressed="false">
-                    <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
-                </button>
+                <div class="check-box"></div>
                 <div>Save the completed QA doc in Drive using the trained folder structure</div>
             </div>
         </div>
@@ -1518,14 +1111,7 @@ flowchart TB
 
     <!-- STEP 13 -->
     <div class="section" id="step-13">
-        <div class="section-header">
-            <h2><span class="step-badge final">STEP 13</span> Attach to Monday.com</h2>
-            <button class="copy-link-btn" data-section="step-13" title="Copy link to section">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                </svg>
-            </button>
-        </div>
+        <h2><span class="step-badge final">STEP 13</span> Attach to Monday.com</h2>
 
         <div class="non-negotiable">
             <strong>FINAL REQUIRED STEP:</strong> QA documentation must be attached to Monday.com.
@@ -1541,27 +1127,17 @@ flowchart LR
     style D fill:#9d50dd,color:#fff
         </div>
 
-        <div class="checklist" data-checklist="step-13">
-            <div class="checklist-progress">
-                <span class="checklist-progress-text">0/3 complete</span>
-                <div class="checklist-progress-bar"><div class="checklist-progress-fill"></div></div>
-            </div>
+        <div class="checklist">
             <div class="checklist-item">
-                <button class="checkbox" data-id="step-13-item-0" aria-pressed="false">
-                    <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
-                </button>
+                <div class="check-box"></div>
                 <div><strong>Open the Monday.com ticket</strong> for that specific PO</div>
             </div>
             <div class="checklist-item">
-                <button class="checkbox" data-id="step-13-item-1" aria-pressed="false">
-                    <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
-                </button>
+                <div class="check-box"></div>
                 <div><strong>Attach the final QA documentation file</strong> to the ticket (QA DOCS column)</div>
             </div>
             <div class="checklist-item">
-                <button class="checkbox" data-id="step-13-item-2" aria-pressed="false">
-                    <svg viewBox="0 0 24 24" class="checkbox-icon"><path d="M5 12l5 5L19 7" /></svg>
-                </button>
+                <div class="check-box"></div>
                 <div><strong>Confirm attachment is visible and correct</strong></div>
             </div>
         </div>
@@ -1614,14 +1190,10 @@ flowchart LR
         </div>
     </div>
 
-    <button class="reset-progress-btn" id="resetProgress">Reset All Progress</button>
-
     <div class="footer">
         <p>QA Manager Procedure | Pure Earth Labs</p>
         <p>Reference: Loom Training Script | Generated December 8, 2025</p>
     </div>
-</div>
-</div>
 
     <script>
         mermaid.initialize({
@@ -1633,246 +1205,6 @@ flowchart LR
                 curve: 'basis'
             }
         });
-
-        (function() {
-            const progressBar = document.getElementById('progressBar');
-            const sections = document.querySelectorAll('.section[id^="step-"]');
-            const tocLinks = document.querySelectorAll('.toc-sidebar-list a');
-
-            function updateProgressBar() {
-                const scrollTop = window.scrollY;
-                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-                const progress = (scrollTop / docHeight) * 100;
-                progressBar.style.width = Math.min(100, Math.max(0, progress)) + '%';
-            }
-
-            function updateActiveSection() {
-                let currentSection = null;
-                const scrollPos = window.scrollY + 100;
-
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop;
-                    const sectionBottom = sectionTop + section.offsetHeight;
-
-                    if (scrollPos >= sectionTop && scrollPos < sectionBottom) {
-                        currentSection = section.id;
-                    }
-                });
-
-                sections.forEach(section => {
-                    section.classList.toggle('active', section.id === currentSection);
-                });
-
-                tocLinks.forEach(link => {
-                    const linkSection = link.getAttribute('data-section');
-                    link.classList.toggle('active', linkSection === currentSection);
-                });
-            }
-
-            let ticking = false;
-            function onScroll() {
-                if (!ticking) {
-                    requestAnimationFrame(() => {
-                        updateProgressBar();
-                        updateActiveSection();
-                        ticking = false;
-                    });
-                    ticking = true;
-                }
-            }
-
-            window.addEventListener('scroll', onScroll, { passive: true });
-
-            updateProgressBar();
-            updateActiveSection();
-
-            function handleAnchorHighlight() {
-                const hash = window.location.hash;
-                if (hash) {
-                    const targetSection = document.querySelector(hash);
-                    if (targetSection && targetSection.classList.contains('section')) {
-                        targetSection.classList.add('anchor-highlight');
-                        setTimeout(() => {
-                            targetSection.classList.remove('anchor-highlight');
-                        }, 1500);
-                    }
-                }
-            }
-
-            handleAnchorHighlight();
-            window.addEventListener('hashchange', handleAnchorHighlight);
-
-            document.querySelectorAll('.copy-link-btn').forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const sectionId = this.getAttribute('data-section');
-                    const url = window.location.origin + window.location.pathname + '#' + sectionId;
-
-                    navigator.clipboard.writeText(url).then(() => {
-                        this.classList.add('copied');
-                        setTimeout(() => {
-                            this.classList.remove('copied');
-                        }, 1500);
-                    }).catch(() => {
-                        const input = document.createElement('input');
-                        input.value = url;
-                        document.body.appendChild(input);
-                        input.select();
-                        document.execCommand('copy');
-                        document.body.removeChild(input);
-                        this.classList.add('copied');
-                        setTimeout(() => {
-                            this.classList.remove('copied');
-                        }, 1500);
-                    });
-                });
-            });
-
-            tocLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    const targetId = this.getAttribute('href');
-                    const targetSection = document.querySelector(targetId);
-                    if (targetSection) {
-                        e.preventDefault();
-                        targetSection.scrollIntoView({ behavior: 'smooth' });
-                        history.pushState(null, null, targetId);
-                    }
-                });
-            });
-        })();
-
-        // Interactive Checkboxes
-        (function() {
-            const STORAGE_KEY = 'qa-procedure-checklist';
-
-            // Load saved state from localStorage
-            function loadState() {
-                try {
-                    const saved = localStorage.getItem(STORAGE_KEY);
-                    return saved ? JSON.parse(saved) : {};
-                } catch (e) {
-                    return {};
-                }
-            }
-
-            // Save state to localStorage
-            function saveState(state) {
-                try {
-                    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-                } catch (e) {
-                    console.warn('Could not save checklist state');
-                }
-            }
-
-            // Update progress display for a checklist
-            function updateProgress(checklist) {
-                const checkboxes = checklist.querySelectorAll('.checkbox');
-                const checked = checklist.querySelectorAll('.checkbox[aria-pressed="true"]').length;
-                const total = checkboxes.length;
-
-                const progressText = checklist.querySelector('.checklist-progress-text');
-                const progressFill = checklist.querySelector('.checklist-progress-fill');
-
-                if (progressText) {
-                    progressText.textContent = `${checked}/${total} complete`;
-                }
-                if (progressFill) {
-                    progressFill.style.width = total > 0 ? `${(checked / total) * 100}%` : '0%';
-                }
-            }
-
-            // Initialize checkbox state from storage
-            function initializeCheckboxes() {
-                const state = loadState();
-                const checkboxes = document.querySelectorAll('.checkbox[data-id]');
-
-                checkboxes.forEach(checkbox => {
-                    const id = checkbox.getAttribute('data-id');
-                    const isChecked = state[id] === true;
-
-                    checkbox.setAttribute('aria-pressed', isChecked.toString());
-                    if (isChecked) {
-                        checkbox.closest('.checklist-item')?.classList.add('checked');
-                    }
-                });
-
-                // Update all progress displays
-                document.querySelectorAll('.checklist[data-checklist]').forEach(updateProgress);
-            }
-
-            // Toggle checkbox
-            function toggleCheckbox(checkbox) {
-                const id = checkbox.getAttribute('data-id');
-                const isCurrentlyChecked = checkbox.getAttribute('aria-pressed') === 'true';
-                const newState = !isCurrentlyChecked;
-
-                // Update aria-pressed
-                checkbox.setAttribute('aria-pressed', newState.toString());
-
-                // Update parent item styling
-                const item = checkbox.closest('.checklist-item');
-                if (item) {
-                    item.classList.toggle('checked', newState);
-                }
-
-                // Add bounce animation on check
-                if (newState) {
-                    checkbox.classList.add('just-checked');
-                    setTimeout(() => checkbox.classList.remove('just-checked'), 200);
-                }
-
-                // Save to localStorage
-                const state = loadState();
-                state[id] = newState;
-                saveState(state);
-
-                // Update progress
-                const checklist = checkbox.closest('.checklist[data-checklist]');
-                if (checklist) {
-                    updateProgress(checklist);
-                }
-            }
-
-            // Reset all progress
-            function resetProgress() {
-                if (confirm('Reset all checklist progress? This cannot be undone.')) {
-                    localStorage.removeItem(STORAGE_KEY);
-
-                    document.querySelectorAll('.checkbox[data-id]').forEach(checkbox => {
-                        checkbox.setAttribute('aria-pressed', 'false');
-                        checkbox.closest('.checklist-item')?.classList.remove('checked');
-                    });
-
-                    document.querySelectorAll('.checklist[data-checklist]').forEach(updateProgress);
-                }
-            }
-
-            // Event listeners
-            document.addEventListener('click', function(e) {
-                const checkbox = e.target.closest('.checkbox[data-id]');
-                if (checkbox) {
-                    toggleCheckbox(checkbox);
-                }
-            });
-
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    const checkbox = e.target.closest('.checkbox[data-id]');
-                    if (checkbox) {
-                        e.preventDefault();
-                        toggleCheckbox(checkbox);
-                    }
-                }
-            });
-
-            const resetBtn = document.getElementById('resetProgress');
-            if (resetBtn) {
-                resetBtn.addEventListener('click', resetProgress);
-            }
-
-            // Initialize on load
-            initializeCheckboxes();
-        })();
     </script>
 </body>
 </html>

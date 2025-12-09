@@ -7,19 +7,25 @@
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✓</text></svg>">
     <meta name="description" content="Data quality report showing 60% of FULFILLED items missing QA DOCS, 63% without owner assignment, and team performance breakdown.">
-    <link rel="stylesheet" href="/css/shared.css">
     <style>
-        /* Page-specific styles for Team Performance Analysis */
-
-        body {
-            max-width: 1600px;
-            margin: 0 auto;
-            padding: var(--space-5);
+        :root {
+            --critical: #df2f4a;
+            --warning: #fdab3d;
+            --good: #00c875;
+            --info: #579bfc;
+            --purple: #9d50dd;
         }
 
-        /* Header variant for critical/alert theme */
-        .header {
-            background: linear-gradient(135deg, var(--color-critical) 0%, var(--color-warning) 100%);
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #eee;
+            line-height: 1.6;
         }
 
         h1, h2, h3 { color: #fff; margin-top: 2em; }
@@ -251,70 +257,25 @@
         }
 
         a { color: #66ccff; }
-
-        .tldr {
-            background: var(--color-surface-raised, #1e2a47);
-            border-left: 4px solid var(--color-accent, #9d50dd);
-            padding: var(--space-6, 1.5rem);
-            margin: var(--space-8, 2rem) 0;
-            border-radius: 0 8px 8px 0;
-        }
-        .tldr h2 {
-            font-size: var(--text-lg, 1.125rem);
-            margin: 0 0 var(--space-4, 1rem) 0;
-            color: var(--color-accent, #9d50dd);
-        }
-        .tldr ul {
-            margin: 0;
-            padding-left: 20px;
-        }
-        .tldr li {
-            margin: 8px 0;
-        }
-        .tldr .read-time {
-            margin: var(--space-4, 1rem) 0 0 0;
-            font-size: var(--text-sm, 0.875rem);
-            color: var(--color-text-muted, #a0a0a0);
-        }
     </style>
 </head>
 <body>
-<nav class="nav">
-    <div class="nav-inner">
-        <a href="/" class="nav-brand">Jen QA Monday</a>
-        <button class="nav-toggle" aria-label="Toggle menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-        <ul class="nav-links">
-            <li><a href="/">Home</a></li>
-            <li><a href="/qa_manager_procedure.html">Procedure</a></li>
-            <li><a href="/qa_workflow_analysis.html">Workflow</a></li>
-            <li><a href="/team_performance_analysis.html" class="active">Performance</a></li>
-            <li><a href="/next_steps_roadmap.html">Roadmap</a></li>
-            <li><a href="/production_board_structure.html">Board</a></li>
-            <li><a href="/ideal_candidate_profile.html">Candidate</a></li>
-        </ul>
+<nav style="position: sticky; top: 0; z-index: 100; background: #0f0f23; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #2a2a4a;">
+    <a href="/" style="color: #9d50dd; text-decoration: none; font-weight: 500;">← Home</a>
+    <div style="display: flex; gap: 20px; font-size: 0.9em;">
+        <a href="/qa_manager_procedure.html" style="color: #eee; text-decoration: none; opacity: 0.8;">Procedure</a>
+        <a href="/qa_workflow_analysis.html" style="color: #eee; text-decoration: none; opacity: 0.8;">Analysis</a>
+        <a href="/production_board_structure.html" style="color: #eee; text-decoration: none; opacity: 0.8;">Board</a>
+        <a href="/team_performance_analysis.html" style="color: #00c875; text-decoration: none; font-weight: 500;">Performance</a>
+        <a href="/next_steps_roadmap.html" style="color: #eee; text-decoration: none; opacity: 0.8;">Roadmap</a>
+        <a href="/ideal_candidate_profile.html" style="color: #eee; text-decoration: none; opacity: 0.8;">Candidate</a>
     </div>
 </nav>
-<script src="/js/nav.js"></script>
     <div class="header">
         <h1>Team Performance Analysis</h1>
         <div class="subtitle">FULFILLED Items Data Quality Report - Production Board</div>
         <div class="date">Generated: December 8, 2025 | Data Source: Monday.com API</div>
     </div>
-
-    <section class="tldr">
-        <h2>TL;DR</h2>
-        <ul>
-            <li><strong>60% of FULFILLED items missing QA DOCS</strong> - 57 of 95 items have no documentation attached</li>
-            <li><strong>63% have no owner assigned</strong> - No accountability for documentation gaps</li>
-            <li><strong>Owner assignment = 2.7x better compliance</strong> - Items with owners have 67% QA DOCS rate vs 25% unassigned</li>
-            <li><strong>Top performer: Moo Elixir team</strong> - 67% QA DOCS, 100% Spec Sheet completion</li>
-        </ul>
-        <p class="read-time">Full read: ~8 minutes</p>
-    </section>
 
     <!-- Executive Summary -->
     <div class="section">

@@ -5,17 +5,113 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Production Board Documentation</title>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    <link rel="stylesheet" href="/css/shared.css">
     <style>
-        /* Page-specific styles for Production Board Structure */
         :root {
-            /* Page-specific color aliases for board statuses */
-            --blocked: var(--color-critical);
+            --blocked: #df2f4a;
             --lab-bulk: #ff007f;
-            --this-week: var(--color-accent);
-            --next-week: var(--color-warning);
+            --this-week: #9d50dd;
+            --next-week: #fdab3d;
             --future: #66ccff;
             --completed: #9cd326;
+        }
+
+        .nav {
+            background: #0f0f23;
+            padding: 15px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #2a2a4a;
+        }
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-brand {
+            color: #9d50dd;
+            font-weight: 600;
+            font-size: 1.1em;
+            text-decoration: none;
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .nav-links a {
+            color: #eee;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+        .nav-links a:hover {
+            background: #16213e;
+        }
+        .nav-links a.active {
+            background: #9d50dd;
+            color: #fff;
+        }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 5px;
+            gap: 5px;
+        }
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #eee;
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #0f0f23;
+                flex-direction: column;
+                padding: 0;
+                gap: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease-out;
+                border-bottom: 1px solid #2a2a4a;
+            }
+            .nav-links.active {
+                max-height: 300px;
+            }
+            .nav-links li {
+                border-top: 1px solid #2a2a4a;
+            }
+            .nav-links a {
+                display: block;
+                padding: 15px 20px;
+                border-radius: 0;
+            }
+            .nav {
+                position: relative;
+            }
         }
 
         body {
@@ -236,69 +332,28 @@
                 padding: 3px 6px;
             }
         }
-
-        .tldr {
-            background: var(--color-surface-raised, #1e2a47);
-            border-left: 4px solid var(--color-accent, #9d50dd);
-            padding: var(--space-6, 1.5rem);
-            margin: var(--space-8, 2rem) 0;
-            border-radius: 0 8px 8px 0;
-        }
-        .tldr h2 {
-            font-size: var(--text-lg, 1.125rem);
-            margin: 0 0 var(--space-4, 1rem) 0;
-            color: var(--color-accent, #9d50dd);
-        }
-        .tldr ul {
-            margin: 0;
-            padding-left: 20px;
-        }
-        .tldr li {
-            margin: 8px 0;
-        }
-        .tldr .read-time {
-            margin: var(--space-4, 1rem) 0 0 0;
-            font-size: var(--text-sm, 0.875rem);
-            color: var(--color-text-muted, #a0a0a0);
-        }
     </style>
 </head>
 <body>
     <nav class="nav">
-        <div class="nav-inner">
+        <div class="nav-container">
             <a href="/" class="nav-brand">Jen QA Monday</a>
-            <button class="nav-toggle" aria-label="Toggle menu">
+            <div class="hamburger" onclick="this.classList.toggle('active'); document.querySelector('.nav-links').classList.toggle('active');">
                 <span></span>
                 <span></span>
                 <span></span>
-            </button>
+            </div>
             <ul class="nav-links">
                 <li><a href="/">Home</a></li>
-                <li><a href="/qa_manager_procedure.html">Procedure</a></li>
                 <li><a href="/qa_workflow_analysis.html">Workflow</a></li>
-                <li><a href="/team_performance_analysis.html">Performance</a></li>
-                <li><a href="/next_steps_roadmap.html">Roadmap</a></li>
-                <li><a href="/production_board_structure.html" class="active">Board</a></li>
-                <li><a href="/ideal_candidate_profile.html">Candidate</a></li>
+                <li><a href="/production_board_structure.html" class="active">Board Structure</a></li>
             </ul>
         </div>
     </nav>
-    <script src="/js/nav.js"></script>
     <div class="header">
         <h1>Production Board Documentation</h1>
         <p>Monday.com Board Structure & Data Flow Analysis</p>
     </div>
-
-    <section class="tldr">
-        <h2>TL;DR</h2>
-        <ul>
-            <li><strong>Board ID: 9304930311</strong> - Production board with 123 items across 6 workflow groups</li>
-            <li><strong>Key column: QA DOCS</strong> - <code>file_mktcs58s</code> is where QA inspection reports should be attached</li>
-            <li><strong>5 connected boards</strong> - Prod Deals, EPOs Materials, BBT, Equipment, and Subitems</li>
-            <li><strong>36 columns, 18 views</strong> - Including mirrors from BBT for bulk status and materials tracking</li>
-        </ul>
-        <p class="read-time">Full read: ~5 minutes</p>
-    </section>
 
     <!-- Board Metadata -->
     <div class="meta-grid">

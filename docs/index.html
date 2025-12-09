@@ -3,622 +3,301 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jen QA Monday - Pure Earth Labs QA Documentation</title>
-    <link rel="stylesheet" href="/css/shared.css">
+    <title>Jen QA Monday - Documentation</title>
     <style>
-        /* ==========================================================================
-           Animations - Entrance & Ambient
-           ========================================================================== */
+        * { box-sizing: border-box; }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .nav {
+            background: #0f0f23;
+            padding: 15px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #2a2a4a;
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes subtleFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-4px); }
-        }
-
-        @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
-        }
-
-        @keyframes pulseGlow {
-            0%, 100% { box-shadow: 0 0 20px rgba(157, 80, 221, 0.1); }
-            50% { box-shadow: 0 0 30px rgba(157, 80, 221, 0.2); }
-        }
-
-        /* ==========================================================================
-           Hero Section
-           ========================================================================== */
-
-        .hero {
-            text-align: center;
-            padding: var(--space-12) var(--space-5);
-            margin-bottom: var(--space-10);
-            position: relative;
-        }
-
-        .hero h1 {
-            font-size: var(--text-4xl);
-            margin-bottom: var(--space-3);
-            color: #fff;
-            animation: fadeInUp 0.6s ease-out;
-            /* Subtle gradient text */
-            background: linear-gradient(135deg, #fff 0%, var(--color-accent) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero-tagline {
-            font-size: var(--text-xl);
-            color: var(--color-text-muted);
-            margin-bottom: var(--space-8);
-            animation: fadeInUp 0.6s ease-out 0.1s both;
-        }
-
-        /* ==========================================================================
-           Audience Items - Interactive & Discoverable
-           ========================================================================== */
-
-        .audience-list {
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-brand {
+            color: #9d50dd;
+            font-weight: 600;
+            font-size: 1.1em;
+            text-decoration: none;
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .nav-links a {
+            color: #eee;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+        .nav-links a:hover {
+            background: #16213e;
+        }
+        .nav-links a.active {
+            background: #9d50dd;
+            color: #fff;
+        }
+        .hamburger {
+            display: none;
             flex-direction: column;
-            gap: var(--space-3);
-            max-width: 500px;
+            cursor: pointer;
+            padding: 5px;
+            gap: 5px;
+        }
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #eee;
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #0f0f23;
+                flex-direction: column;
+                padding: 0;
+                gap: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease-out;
+                border-bottom: 1px solid #2a2a4a;
+            }
+            .nav-links.active {
+                max-height: 300px;
+            }
+            .nav-links li {
+                border-top: 1px solid #2a2a4a;
+            }
+            .nav-links a {
+                display: block;
+                padding: 15px 20px;
+                border-radius: 0;
+            }
+            .nav {
+                position: relative;
+            }
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #eee;
+            min-height: 100vh;
+            margin: 0;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 800px;
             margin: 0 auto;
         }
-
-        .audience-item {
-            display: flex;
-            align-items: center;
-            gap: var(--space-3);
-            padding: var(--space-3) var(--space-5);
-            background: var(--color-surface);
-            border-radius: var(--radius-md);
-            border: 1px solid var(--color-border);
-            font-size: var(--text-sm);
-            color: var(--color-text-muted);
-            cursor: default;
-            transition: all var(--transition-base);
-            position: relative;
-            overflow: hidden;
-            /* Staggered entrance */
-            animation: fadeInUp 0.5s ease-out both;
-        }
-
-        .audience-item:nth-child(1) { animation-delay: 0.2s; }
-        .audience-item:nth-child(2) { animation-delay: 0.3s; }
-        .audience-item:nth-child(3) { animation-delay: 0.4s; }
-
-        .audience-item::before {
-            content: "";
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            background: var(--color-accent);
-            transform: scaleY(0);
-            transition: transform var(--transition-base);
-        }
-
-        .audience-item:hover {
-            border-color: var(--color-accent);
-            background: var(--color-surface-raised);
-            transform: translateX(4px);
-        }
-
-        .audience-item:hover::before {
-            transform: scaleY(1);
-        }
-
-        .audience-item strong {
-            color: var(--color-text);
-            transition: color var(--transition-fast);
-        }
-
-        .audience-item:hover strong {
-            color: var(--color-accent);
-        }
-
-        /* ==========================================================================
-           Section Labels
-           ========================================================================== */
-
-        .section-label {
-            font-size: var(--text-sm);
-            font-weight: 600;
-            color: var(--color-accent);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: var(--space-5);
-            display: flex;
-            align-items: center;
-            gap: var(--space-3);
-            animation: fadeIn 0.5s ease-out 0.5s both;
-        }
-
-        .section-label::after {
-            content: "";
-            flex: 1;
-            height: 1px;
-            background: linear-gradient(90deg, var(--color-border) 0%, transparent 100%);
-        }
-
-        /* ==========================================================================
-           Path Cards - The Journey
-           ========================================================================== */
-
-        .path-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: var(--space-5);
-            margin-bottom: var(--space-10);
-        }
-
-        .path-card {
-            background: var(--color-surface);
-            border-radius: var(--radius-lg);
-            padding: var(--space-6);
-            border: 1px solid var(--color-border);
-            transition: all var(--transition-base);
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            text-decoration: none;
-            overflow: hidden;
-            /* Staggered entrance */
-            animation: fadeInUp 0.5s ease-out both;
-        }
-
-        .path-card:nth-child(1) { animation-delay: 0.55s; }
-        .path-card:nth-child(2) { animation-delay: 0.65s; }
-        .path-card:nth-child(3) { animation-delay: 0.75s; }
-        .path-card:nth-child(4) { animation-delay: 0.85s; }
-
-        /* Subtle gradient overlay on hover */
-        .path-card::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(157, 80, 221, 0.05) 0%, transparent 50%);
-            opacity: 0;
-            transition: opacity var(--transition-base);
-        }
-
-        /* Bottom accent line */
-        .path-card::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--color-accent), var(--color-info));
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform var(--transition-base);
-        }
-
-        .path-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg), 0 0 40px rgba(157, 80, 221, 0.1);
-            border-color: var(--color-border-light);
-        }
-
-        .path-card:hover::before {
-            opacity: 1;
-        }
-
-        .path-card:hover::after {
-            transform: scaleX(1);
-        }
-
-        .path-card-number {
-            position: absolute;
-            top: var(--space-4);
-            right: var(--space-4);
-            width: 32px;
-            height: 32px;
-            background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-info) 100%);
-            color: #fff;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: var(--text-sm);
-            transition: transform var(--transition-base), box-shadow var(--transition-base);
-        }
-
-        .path-card:hover .path-card-number {
-            transform: scale(1.1) rotate(5deg);
-            box-shadow: 0 4px 12px rgba(157, 80, 221, 0.4);
-        }
-
-        .path-card h3 {
-            color: #fff;
-            margin: 0 0 var(--space-2) 0;
-            font-size: var(--text-lg);
-            padding-right: var(--space-10);
-            transition: color var(--transition-fast);
-            position: relative;
-            z-index: 1;
-        }
-
-        .path-card:hover h3 {
-            color: var(--color-accent);
-        }
-
-        .path-card p {
-            color: var(--color-text-muted);
-            font-size: var(--text-sm);
-            margin: 0 0 var(--space-4) 0;
-            flex: 1;
-            position: relative;
-            z-index: 1;
-        }
-
-        .path-card-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        .read-time {
-            font-size: var(--text-xs);
-            color: var(--color-text-muted);
-            display: flex;
-            align-items: center;
-            gap: var(--space-2);
-        }
-
-        .read-time::before {
-            content: "";
-            width: 12px;
-            height: 12px;
-            border: 1.5px solid currentColor;
-            border-radius: 50%;
-            position: relative;
-        }
-
-        .read-time::after {
-            content: "";
-            position: absolute;
-            width: 5px;
-            height: 1.5px;
-            background: currentColor;
-            margin-left: -10px;
-            margin-top: -2px;
-            transform-origin: left center;
-            transform: rotate(-45deg);
-        }
-
-        /* Arrow indicator that appears on hover */
-        .path-card-arrow {
-            opacity: 0;
-            transform: translateX(-8px);
-            transition: all var(--transition-base);
-            color: var(--color-accent);
-            font-size: var(--text-lg);
-        }
-
-        .path-card:hover .path-card-arrow {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .path-card .btn {
-            font-size: var(--text-sm);
-            padding: var(--space-2) var(--space-4);
-        }
-
-        .flow-indicator {
-            display: none;
-        }
-
-        /* ==========================================================================
-           Reference Cards
-           ========================================================================== */
-
-        .reference-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: var(--space-5);
-            margin-bottom: var(--space-8);
-            animation: fadeInUp 0.5s ease-out 0.95s both;
-        }
-
-        .ref-card {
-            background: var(--color-surface);
-            border-radius: var(--radius-lg);
-            padding: var(--space-5);
-            border: 1px solid var(--color-border);
-            transition: all var(--transition-base);
-            position: relative;
-            text-decoration: none;
-        }
-
-        .ref-card::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: var(--color-border-light);
-            transition: background var(--transition-base);
-        }
-
-        .ref-card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-            border-color: var(--color-border-light);
-        }
-
-        .ref-card:hover::before {
-            background: var(--color-accent);
-        }
-
-        .ref-card h3 {
-            color: var(--color-text);
-            margin: 0 0 var(--space-2) 0;
-            font-size: var(--text-base);
-            transition: color var(--transition-fast);
-        }
-
-        .ref-card:hover h3 {
-            color: var(--color-accent);
-        }
-
-        .ref-card p {
-            color: var(--color-text-muted);
-            font-size: var(--text-sm);
-            margin: 0 0 var(--space-3) 0;
-        }
-
-        .ref-card-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .ref-card .btn {
-            font-size: var(--text-xs);
-            padding: var(--space-1) var(--space-3);
-            background: var(--color-surface-raised);
-            border: 1px solid var(--color-border);
-        }
-
-        .ref-card .btn:hover {
-            background: var(--color-border);
-        }
-
-        /* ==========================================================================
-           Footer - With Personality
-           ========================================================================== */
-
-        .footer-enhanced {
+        h1 {
             text-align: center;
-            padding: var(--space-10) var(--space-5);
-            margin-top: var(--space-12);
-            border-top: 1px solid var(--color-border);
-            animation: fadeIn 0.5s ease-out 1.1s both;
+            margin-bottom: 10px;
         }
-
-        .footer-brand {
-            font-size: var(--text-lg);
-            font-weight: 600;
-            color: var(--color-text);
-            margin-bottom: var(--space-2);
+        .subtitle {
+            text-align: center;
+            opacity: 0.7;
+            margin-bottom: 40px;
         }
-
-        .footer-brand span {
-            color: var(--color-accent);
+        .card {
+            background: #16213e;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 1px solid #2a2a4a;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
-
-        .footer-tagline {
-            font-size: var(--text-sm);
-            color: var(--color-text-muted);
-            margin-bottom: var(--space-4);
-            font-style: italic;
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
         }
-
-        .footer-links {
-            font-size: var(--text-sm);
-            color: var(--color-text-muted);
+        .card h2 {
+            margin: 0 0 10px 0;
+            color: #9d50dd;
         }
-
-        .footer-links a {
-            color: var(--color-accent);
-            transition: color var(--transition-fast);
+        .card p {
+            margin: 0 0 15px 0;
+            opacity: 0.8;
         }
-
-        .footer-links a:hover {
+        .card a {
+            display: inline-block;
+            background: #9d50dd;
             color: #fff;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
         }
-
-        .footer-craft {
-            margin-top: var(--space-6);
-            font-size: var(--text-xs);
-            color: var(--color-text-muted);
+        .card a:hover {
+            background: #7b3aab;
+        }
+        .badge {
+            display: inline-block;
+            background: #28a745;
+            color: #fff;
+            font-size: 0.75em;
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+        .intro {
+            background: rgba(157, 80, 221, 0.1);
+            border: 1px solid rgba(157, 80, 221, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .intro p {
+            margin: 0;
+            line-height: 1.6;
+        }
+        .card.placeholder {
             opacity: 0.6;
         }
-
-        .footer-craft span {
-            display: inline-block;
-            transition: transform var(--transition-fast);
+        .card.placeholder a {
+            background: #555;
+            cursor: not-allowed;
+        }
+        .coming-soon {
+            font-size: 0.8em;
+            color: #888;
+            margin-left: 10px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.9em;
+        }
+        .footer p {
+            margin: 5px 0;
+            opacity: 0.7;
+        }
+        .footer a {
+            color: #9d50dd;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
         }
 
-        .footer-craft:hover span {
-            transform: scale(1.2);
-        }
-
-        @media (max-width: 640px) {
-            .hero {
-                padding: var(--space-8) var(--space-4);
+        @media (max-width: 480px) {
+            body {
+                padding: 20px 10px;
             }
 
-            .hero h1 {
-                font-size: var(--text-2xl);
+            h1 {
+                font-size: 1.5em;
             }
 
-            .hero-tagline {
-                font-size: var(--text-lg);
+            .card {
+                padding: 20px;
             }
 
-            .audience-item {
-                padding: var(--space-2) var(--space-4);
-                font-size: var(--text-xs);
+            .card h2 {
+                font-size: 1.2em;
             }
 
-            .path-grid,
-            .reference-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .path-card,
-            .ref-card {
-                padding: var(--space-5);
+            .card a {
+                display: block;
+                text-align: center;
             }
         }
     </style>
 </head>
 <body>
     <nav class="nav">
-        <div class="nav-inner">
+        <div class="nav-container">
             <a href="/" class="nav-brand">Jen QA Monday</a>
-            <button class="nav-toggle" aria-label="Toggle menu">
+            <div class="hamburger" onclick="this.classList.toggle('active'); document.querySelector('.nav-links').classList.toggle('active');">
                 <span></span>
                 <span></span>
                 <span></span>
-            </button>
+            </div>
             <ul class="nav-links">
                 <li><a href="/" class="active">Home</a></li>
-                <li><a href="/qa_manager_procedure.html">Procedure</a></li>
                 <li><a href="/qa_workflow_analysis.html">Workflow</a></li>
-                <li><a href="/team_performance_analysis.html">Performance</a></li>
-                <li><a href="/next_steps_roadmap.html">Roadmap</a></li>
-                <li><a href="/production_board_structure.html">Board</a></li>
-                <li><a href="/ideal_candidate_profile.html">Candidate</a></li>
+                <li><a href="/production_board_structure.html">Board Structure</a></li>
             </ul>
         </div>
     </nav>
-    <script src="/js/nav.js"></script>
-
     <div class="container">
-        <div class="hero">
-            <h1>Jen QA Monday</h1>
-            <p class="hero-tagline">Everyone aligned on QA. One page.</p>
+        <h1>Jen QA Monday</h1>
+        <p class="subtitle">QA Workflow Documentation for Pure Earth Labs</p>
 
-            <div class="audience-list">
-                <div class="audience-item">
-                    <strong>Stakeholders</strong>
-                    <span>Get the big picture in 30 seconds</span>
-                </div>
-                <div class="audience-item">
-                    <strong>Staff</strong>
-                    <span>Reference the process when you need it</span>
-                </div>
-                <div class="audience-item">
-                    <strong>New hires</strong>
-                    <span>Learn what success looks like</span>
-                </div>
-            </div>
+        <div class="intro">
+            <p>Start with the <strong>QA Manager Procedure</strong> for the complete workflow, then review <strong>Team Performance Analysis</strong> for current metrics. Continue through the analysis and roadmap sections, with technical reference and hiring docs at the end.</p>
         </div>
 
-        <div class="section-label">Start Here</div>
-
-        <div class="path-grid">
-            <a href="/qa_manager_procedure.html" class="path-card">
-                <span class="path-card-number">1</span>
-                <h3>QA Manager Procedure</h3>
-                <p>The complete 14-step SOP. Daily procedures, responsibilities, and how everything fits together.</p>
-                <div class="path-card-footer">
-                    <span class="read-time">15 min read</span>
-                    <span class="path-card-arrow">&rarr;</span>
-                </div>
-            </a>
-
-            <a href="/team_performance_analysis.html" class="path-card">
-                <span class="path-card-number">2</span>
-                <h3>Team Performance</h3>
-                <p>Current metrics and data analysis. What's working, what's not, and where to focus.</p>
-                <div class="path-card-footer">
-                    <span class="read-time">5 min read</span>
-                    <span class="path-card-arrow">&rarr;</span>
-                </div>
-            </a>
-
-            <a href="/qa_workflow_analysis.html" class="path-card">
-                <span class="path-card-number">3</span>
-                <h3>Workflow Analysis</h3>
-                <p>Mapping the 13-step process to Monday.com. Gap analysis and recommendations.</p>
-                <div class="path-card-footer">
-                    <span class="read-time">10 min read</span>
-                    <span class="path-card-arrow">&rarr;</span>
-                </div>
-            </a>
-
-            <a href="/next_steps_roadmap.html" class="path-card">
-                <span class="path-card-number">4</span>
-                <h3>Next Steps</h3>
-                <p>The action plan. What we're doing to improve and when it happens.</p>
-                <div class="path-card-footer">
-                    <span class="read-time">5 min read</span>
-                    <span class="path-card-arrow">&rarr;</span>
-                </div>
-            </a>
+        <div class="card">
+            <h2>QA Manager Procedure <span class="badge">START HERE</span></h2>
+            <p>Step-by-step operational SOP for the QA Manager role, covering daily procedures and responsibilities.</p>
+            <a href="/qa_manager_procedure.html">View Procedure</a>
         </div>
 
-        <div class="section-label">Reference</div>
-
-        <div class="reference-grid">
-            <a href="/production_board_structure.html" class="ref-card">
-                <h3>Production Board Structure</h3>
-                <p>Technical docs: columns, groups, views, and board relationships in Monday.com.</p>
-                <div class="ref-card-footer">
-                    <span class="read-time">8 min read</span>
-                </div>
-            </a>
-
-            <a href="/ideal_candidate_profile.html" class="ref-card">
-                <h3>Ideal Candidate Profile</h3>
-                <p>Hiring docs: who we need, required skills, and interview questions.</p>
-                <div class="ref-card-footer">
-                    <span class="read-time">7 min read</span>
-                </div>
-            </a>
+        <div class="card">
+            <h2>Team Performance Analysis</h2>
+            <p>Current metrics and data analysis of team QA performance, identifying trends and areas for improvement.</p>
+            <a href="/team_performance_analysis.html">View Analysis</a>
         </div>
 
-        <footer class="footer-enhanced">
-            <div class="footer-brand">Pure Earth Labs <span>QA</span></div>
-            <p class="footer-tagline">"Everyone aligned. One page."</p>
-            <p class="footer-links">
-                <a href="https://earthharbor.com" target="_blank" rel="noopener noreferrer">earthharbor.com</a>
-                &nbsp;&middot;&nbsp;
-                <a href="mailto:qa@pureearthlabs.com">qa@pureearthlabs.com</a>
-            </p>
-            <p class="footer-craft">Made with <span>care</span></p>
-        </footer>
+        <div class="card">
+            <h2>QA Workflow Analysis</h2>
+            <p>Complete analysis of Jen's 13-step QA process mapped to Monday.com, including gap analysis and recommendations.</p>
+            <a href="/qa_workflow_analysis.html">View Analysis</a>
+        </div>
+
+        <div class="card">
+            <h2>Next Steps Roadmap</h2>
+            <p>Action plan for implementing QA workflow improvements and addressing identified gaps.</p>
+            <a href="/next_steps_roadmap.html">View Roadmap</a>
+        </div>
+
+        <div class="card">
+            <h2>Production Board Structure</h2>
+            <p>Technical documentation of the Production board including columns, groups, views, and board relationships.</p>
+            <a href="/production_board_structure.html">View Structure</a>
+        </div>
+
+        <div class="card">
+            <h2>Ideal Candidate Profile</h2>
+            <p>Profile and requirements for hiring QA team members aligned with Pure Earth Labs' workflow.</p>
+            <a href="/ideal_candidate_profile.html">View Profile</a>
+        </div>
+
+        <div class="footer">
+            <p>Pure Earth Labs QA Documentation</p>
+            <p><a href="https://earthharbor.com" target="_blank" rel="noopener noreferrer">earthharbor.com</a> | Questions? Contact <a href="mailto:qa@pureearthlabs.com">qa@pureearthlabs.com</a></p>
+            <p>Last updated: December 2025</p>
+        </div>
     </div>
 </body>
 </html>
