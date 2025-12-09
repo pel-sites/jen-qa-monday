@@ -431,14 +431,16 @@
     <link rel="stylesheet" href="/css/share.css">
 </head>
 <body>
-<nav style="position: sticky; top: 0; z-index: 100; background: #0f0f23; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #2a2a4a;">
-    <a href="./index.html" style="color: #9d50dd; text-decoration: none; font-weight: 500;">← Home</a>
-    <div style="display: flex; gap: 20px; font-size: 0.9em;">
-        <a href="./qa_manager_procedure.html" style="color: #eee; text-decoration: none; opacity: 0.8;">Procedure</a>
-        <a href="./qa_workflow_analysis.html" style="color: #eee; text-decoration: none; opacity: 0.8;">Analysis</a>
-        <a href="./team_performance_analysis.html" style="color: #eee; text-decoration: none; opacity: 0.8;">Performance</a>
-        <a href="./next_steps_roadmap.html" style="color: #eee; text-decoration: none; opacity: 0.8;">Roadmap</a>
-        <a href="./ideal_candidate_profile.html" style="color: #00c875; text-decoration: none; font-weight: 500;">Candidate</a>
+<nav style="position: sticky; top: 0; z-index: 100; background: #0f0f23; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #2a2a4a; gap: 12px;">
+    <a href="./index.html" style="color: #9d50dd; text-decoration: none; font-weight: 500; white-space: nowrap; flex-shrink: 0;">← Home</a>
+    <div class="nav-scroll-container" style="overflow: hidden; flex: 1; min-width: 0;">
+        <div class="nav-scroll" style="display: flex; gap: 20px; font-size: 0.9em; padding-right: 20px;">
+            <a href="./qa_manager_procedure.html" style="color: #eee; text-decoration: none; opacity: 0.8; white-space: nowrap;">Procedure</a>
+            <a href="./qa_workflow_analysis.html" style="color: #eee; text-decoration: none; opacity: 0.8; white-space: nowrap;">Analysis</a>
+            <a href="./team_performance_analysis.html" style="color: #eee; text-decoration: none; opacity: 0.8; white-space: nowrap;">Performance</a>
+            <a href="./next_steps_roadmap.html" style="color: #eee; text-decoration: none; opacity: 0.8; white-space: nowrap;">Roadmap</a>
+            <a href="./ideal_candidate_profile.html" style="color: #00c875; text-decoration: none; font-weight: 500; white-space: nowrap;">Candidate</a>
+        </div>
     </div>
 </nav>
     <div class="header">
