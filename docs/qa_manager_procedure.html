@@ -12,9 +12,60 @@
         /* Page-specific styles for QA Manager Procedure */
 
         body {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Reading Progress Bar */
+        .reading-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--darker-bg);
+            z-index: 1001;
+        }
+
+        .reading-progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg,
+                var(--color-info) 0%,
+                var(--color-info) 7%,
+                var(--color-warning) 7%,
+                var(--color-warning) 50%,
+                var(--color-success) 50%,
+                var(--color-success) 85%,
+                var(--color-accent) 85%
+            );
+            background-size: 100% 100%;
+            transition: width 100ms ease-out;
+        }
+
+        /* Main Layout */
+        .page-layout {
+            display: flex;
             max-width: var(--max-width);
             margin: 0 auto;
             padding: var(--space-5);
+        }
+
+        .main-content {
+            flex: 1;
+            min-width: 0;
+            max-width: 100%;
+        }
+
+        @media (min-width: 1200px) {
+            .page-layout {
+                padding-left: 280px;
+            }
+
+            .main-content {
+                max-width: var(--content-width);
+                margin: 0 auto;
+            }
         }
 
         /* Section h2 with step badge layout */
@@ -40,8 +91,8 @@
         .step-badge.inprocess { background: var(--color-success); color: #000; }
         .step-badge.final { background: var(--color-accent); }
 
-        /* Table of Contents */
-        .toc {
+        /* Table of Contents - Inline (mobile/tablet) */
+        .toc-inline {
             background: var(--color-surface);
             padding: var(--space-6);
             border-radius: var(--radius-lg);
@@ -49,7 +100,7 @@
             border: 1px solid var(--color-border);
         }
 
-        .toc h3 {
+        .toc-inline h3 {
             margin-top: 0;
             color: var(--color-accent);
         }
@@ -60,7 +111,7 @@
             gap: var(--space-3);
         }
 
-        .toc a {
+        .toc-inline a {
             color: var(--color-text);
             text-decoration: none;
             padding: var(--space-2) var(--space-3);
@@ -69,16 +120,97 @@
             transition: background var(--transition-fast);
         }
 
-        .toc a:hover {
+        .toc-inline a:hover {
             background: var(--darker-bg);
             text-decoration: none;
         }
 
-        .toc .phase-label {
+        .toc-inline .phase-label {
             font-size: var(--text-xs);
             padding: 2px 8px;
             border-radius: var(--radius-full);
             margin-right: var(--space-2);
+        }
+
+        /* Sticky TOC Sidebar */
+        .toc-sidebar {
+            display: none;
+        }
+
+        @media (min-width: 1200px) {
+            .toc-inline {
+                display: none;
+            }
+
+            .toc-sidebar {
+                display: block;
+                position: fixed;
+                top: 60px;
+                left: 0;
+                width: 260px;
+                height: calc(100vh - 60px);
+                overflow-y: auto;
+                padding: var(--space-5);
+                background: var(--darker-bg);
+                border-right: 1px solid var(--color-border);
+                z-index: 99;
+            }
+
+            .toc-sidebar h3 {
+                font-size: var(--text-sm);
+                color: var(--color-text-muted);
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                margin: 0 0 var(--space-4) 0;
+            }
+
+            .toc-sidebar-list {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            .toc-sidebar-list li {
+                margin: 0;
+            }
+
+            .toc-sidebar-list a {
+                display: flex;
+                align-items: center;
+                gap: var(--space-2);
+                padding: var(--space-2) var(--space-3);
+                color: var(--color-text-muted);
+                text-decoration: none;
+                font-size: var(--text-sm);
+                border-radius: var(--radius-md);
+                border-left: 2px solid transparent;
+                transition: all var(--transition-fast);
+            }
+
+            .toc-sidebar-list a:hover {
+                color: var(--color-text);
+                background: var(--color-surface);
+                text-decoration: none;
+            }
+
+            .toc-sidebar-list a.active {
+                color: var(--color-text);
+                background: var(--color-surface);
+                border-left-color: var(--color-accent);
+                font-weight: 500;
+            }
+
+            .toc-sidebar-list .phase-dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                flex-shrink: 0;
+            }
+
+            .toc-sidebar-list .phase-dot.prep { background: var(--color-info); }
+            .toc-sidebar-list .phase-dot.prerun { background: var(--color-warning); }
+            .toc-sidebar-list .phase-dot.inprocess { background: var(--color-success); }
+            .toc-sidebar-list .phase-dot.final { background: var(--color-accent); }
         }
 
         /* Phase Overview */
@@ -176,6 +308,75 @@
             min-width: 1000px;
         }
 
+        /* Section Focus & scroll-margin */
+        .section {
+            scroll-margin-top: 80px;
+            transition: border-left-color var(--transition-base), background var(--transition-base);
+            border-left: 4px solid transparent;
+        }
+
+        .section.active {
+            border-left-color: var(--color-accent);
+            background: linear-gradient(90deg, rgba(157, 80, 221, 0.05) 0%, var(--color-surface) 100%);
+        }
+
+        /* Anchor highlight animation */
+        @keyframes anchor-flash {
+            0% { background: rgba(157, 80, 221, 0.3); }
+            100% { background: transparent; }
+        }
+
+        .section.anchor-highlight {
+            animation: anchor-flash 1.5s ease-out;
+        }
+
+        /* Section header with copy link */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            position: relative;
+        }
+
+        .section h2 {
+            flex: 1;
+        }
+
+        .copy-link-btn {
+            opacity: 0;
+            background: var(--darker-bg);
+            border: 1px solid var(--color-border);
+            color: var(--color-text-muted);
+            padding: var(--space-2);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: opacity var(--transition-fast), background var(--transition-fast), color var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .section:hover .copy-link-btn {
+            opacity: 1;
+        }
+
+        .copy-link-btn:hover {
+            background: var(--color-accent);
+            color: #fff;
+            border-color: var(--color-accent);
+        }
+
+        .copy-link-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .copy-link-btn.copied {
+            background: var(--color-success);
+            color: #000;
+            border-color: var(--color-success);
+        }
+
         /* Subsections */
         .subsection {
             background: var(--darker-bg);
@@ -259,9 +460,19 @@
             font-family: var(--font-mono);
             margin: 2px;
         }
+
+        /* Responsive nav adjustment for progress bar */
+        nav {
+            top: 3px !important;
+        }
     </style>
 </head>
 <body>
+<!-- Reading Progress Bar -->
+<div class="reading-progress">
+    <div class="reading-progress-bar" id="progressBar"></div>
+</div>
+
 <nav class="nav">
     <div class="nav-inner">
         <a href="/" class="nav-brand">Jen QA Monday</a>
@@ -282,6 +493,30 @@
     </div>
 </nav>
 <script src="/js/nav.js"></script>
+
+<!-- Sticky TOC Sidebar (desktop only) -->
+<aside class="toc-sidebar">
+    <h3>Contents</h3>
+    <ul class="toc-sidebar-list">
+        <li><a href="#step-0" data-section="step-0"><span class="phase-dot prep"></span>Step 0: What I Open First</a></li>
+        <li><a href="#step-1" data-section="step-1"><span class="phase-dot prerun"></span>Step 1: Spec Sheet at Line</a></li>
+        <li><a href="#step-2" data-section="step-2"><span class="phase-dot prerun"></span>Step 2: Component Verification</a></li>
+        <li><a href="#step-3" data-section="step-3"><span class="phase-dot prerun"></span>Step 3: Batch Code Setup</a></li>
+        <li><a href="#step-4" data-section="step-4"><span class="phase-dot prerun"></span>Step 4: Equipment Calibration</a></li>
+        <li><a href="#step-5" data-section="step-5"><span class="phase-dot prerun"></span>Step 5: Line Config + Sanitation</a></li>
+        <li><a href="#step-6" data-section="step-6"><span class="phase-dot prerun"></span>Step 6: Batch Record/MO</a></li>
+        <li><a href="#step-7" data-section="step-7"><span class="phase-dot inprocess"></span>Step 7: Begin QA Docs</a></li>
+        <li><a href="#step-8" data-section="step-8"><span class="phase-dot inprocess"></span>Step 8: In-Process Checks</a></li>
+        <li><a href="#step-9" data-section="step-9"><span class="phase-dot inprocess"></span>Step 9: Defect Classification</a></li>
+        <li><a href="#step-10" data-section="step-10"><span class="phase-dot inprocess"></span>Step 10: Product Standards</a></li>
+        <li><a href="#step-11" data-section="step-11"><span class="phase-dot inprocess"></span>Step 11: Close-Out Steps</a></li>
+        <li><a href="#step-12" data-section="step-12"><span class="phase-dot final"></span>Step 12: Save Documentation</a></li>
+        <li><a href="#step-13" data-section="step-13"><span class="phase-dot final"></span>Step 13: Attach to Monday</a></li>
+    </ul>
+</aside>
+
+<div class="page-layout">
+<div class="main-content">
     <div class="header">
         <h1>QA Manager Procedure</h1>
         <div class="subtitle">Complete Standard Operating Procedure for Production QA</div>
@@ -382,8 +617,8 @@ flowchart LR
         </div>
     </div>
 
-    <!-- Table of Contents -->
-    <div class="toc">
+    <!-- Table of Contents (inline for mobile/tablet) -->
+    <div class="toc-inline">
         <h3>Table of Contents</h3>
         <div class="toc-grid">
             <a href="#step-0"><span class="phase-label phase-prep">PREP</span> Step 0: What I Open First</a>
@@ -405,7 +640,14 @@ flowchart LR
 
     <!-- STEP 0 -->
     <div class="section" id="step-0">
-        <h2><span class="step-badge prep">STEP 0</span> What I Open First</h2>
+        <div class="section-header">
+            <h2><span class="step-badge prep">STEP 0</span> What I Open First</h2>
+            <button class="copy-link-btn" data-section="step-0" title="Copy link to section">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                </svg>
+            </button>
+        </div>
 
         <div class="mermaid">
 flowchart TB
@@ -456,7 +698,14 @@ flowchart TB
 
     <!-- STEP 1 -->
     <div class="section" id="step-1">
-        <h2><span class="step-badge prerun">STEP 1</span> Pre-Run: Spec Sheet Must Be at the Line</h2>
+        <div class="section-header">
+            <h2><span class="step-badge prerun">STEP 1</span> Pre-Run: Spec Sheet Must Be at the Line</h2>
+            <button class="copy-link-btn" data-section="step-1" title="Copy link to section">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                </svg>
+            </button>
+        </div>
 
         <div class="non-negotiable">
             <strong>NON-NEGOTIABLE:</strong> The correct spec sheet must be at the line before any production begins.
@@ -484,7 +733,14 @@ flowchart TB
 
     <!-- STEP 2 -->
     <div class="section" id="step-2">
-        <h2><span class="step-badge prerun">STEP 2</span> Pre-Run: Component Verification</h2>
+        <div class="section-header">
+            <h2><span class="step-badge prerun">STEP 2</span> Pre-Run: Component Verification</h2>
+            <button class="copy-link-btn" data-section="step-2" title="Copy link to section">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                </svg>
+            </button>
+        </div>
         <p>Match staged materials to the spec sheet</p>
 
         <div class="mermaid">
@@ -566,7 +822,14 @@ flowchart TB
 
     <!-- STEP 3 -->
     <div class="section" id="step-3">
-        <h2><span class="step-badge prerun">STEP 3</span> Pre-Run: Batch Code Setup Verification</h2>
+        <div class="section-header">
+            <h2><span class="step-badge prerun">STEP 3</span> Pre-Run: Batch Code Setup Verification</h2>
+            <button class="copy-link-btn" data-section="step-3" title="Copy link to section">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                </svg>
+            </button>
+        </div>
         <p>Before production begins</p>
 
         <div class="checklist">
@@ -597,7 +860,14 @@ flowchart TB
 
     <!-- STEP 4 -->
     <div class="section" id="step-4">
-        <h2><span class="step-badge prerun">STEP 4</span> Pre-Run: Equipment Calibration Checks</h2>
+        <div class="section-header">
+            <h2><span class="step-badge prerun">STEP 4</span> Pre-Run: Equipment Calibration Checks</h2>
+            <button class="copy-link-btn" data-section="step-4" title="Copy link to section">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                </svg>
+            </button>
+        </div>
 
         <div class="checklist">
             <div class="checklist-item">
@@ -621,7 +891,14 @@ flowchart TB
 
     <!-- STEP 5 -->
     <div class="section" id="step-5">
-        <h2><span class="step-badge prerun">STEP 5</span> Pre-Run: Filling Line Configuration + Sanitation</h2>
+        <div class="section-header">
+            <h2><span class="step-badge prerun">STEP 5</span> Pre-Run: Filling Line Configuration + Sanitation</h2>
+            <button class="copy-link-btn" data-section="step-5" title="Copy link to section">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                </svg>
+            </button>
+        </div>
 
         <div class="subsection">
             <h4>Line Setup Items (as applicable)</h4>
@@ -654,7 +931,14 @@ flowchart TB
 
     <!-- STEP 6 -->
     <div class="section" id="step-6">
-        <h2><span class="step-badge prerun">STEP 6</span> Pre-Run: Batch Record / MO Verification</h2>
+        <div class="section-header">
+            <h2><span class="step-badge prerun">STEP 6</span> Pre-Run: Batch Record / MO Verification</h2>
+            <button class="copy-link-btn" data-section="step-6" title="Copy link to section">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                </svg>
+            </button>
+        </div>
 
         <div class="non-negotiable">
             <strong>No run starts until the MO/batch record, spec sheet, and staged components all match.</strong>
@@ -680,7 +964,14 @@ flowchart TB
 
     <!-- STEP 7 -->
     <div class="section" id="step-7">
-        <h2><span class="step-badge inprocess">STEP 7</span> Start of Run: Begin QA Documentation</h2>
+        <div class="section-header">
+            <h2><span class="step-badge inprocess">STEP 7</span> Start of Run: Begin QA Documentation</h2>
+            <button class="copy-link-btn" data-section="step-7" title="Copy link to section">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                </svg>
+            </button>
+        </div>
         <p>Follow the form in order</p>
 
         <div class="subsection">
@@ -712,7 +1003,14 @@ flowchart TB
 
     <!-- STEP 8 -->
     <div class="section" id="step-8">
-        <h2><span class="step-badge inprocess">STEP 8</span> In-Process QA Checks</h2>
+        <div class="section-header">
+            <h2><span class="step-badge inprocess">STEP 8</span> In-Process QA Checks</h2>
+            <button class="copy-link-btn" data-section="step-8" title="Copy link to section">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                </svg>
+            </button>
+        </div>
         <p>Repeat at the required frequency throughout the run</p>
 
         <div class="loom-callout">
@@ -817,7 +1115,14 @@ flowchart TB
 
     <!-- STEP 9 -->
     <div class="section" id="step-9">
-        <h2><span class="step-badge inprocess">STEP 9</span> Defect Classification</h2>
+        <div class="section-header">
+            <h2><span class="step-badge inprocess">STEP 9</span> Defect Classification</h2>
+            <button class="copy-link-btn" data-section="step-9" title="Copy link to section">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                </svg>
+            </button>
+        </div>
         <p>How to log issues correctly</p>
 
         <p>When an issue is found, classify it in the defect table:</p>
@@ -866,7 +1171,14 @@ flowchart TB
 
     <!-- STEP 10 -->
     <div class="section" id="step-10">
-        <h2><span class="step-badge inprocess">STEP 10</span> Product Standards Check</h2>
+        <div class="section-header">
+            <h2><span class="step-badge inprocess">STEP 10</span> Product Standards Check</h2>
+            <button class="copy-link-btn" data-section="step-10" title="Copy link to section">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                </svg>
+            </button>
+        </div>
         <p>Compare to retention sample</p>
 
         <div class="non-negotiable">
@@ -895,7 +1207,14 @@ flowchart TB
 
     <!-- STEP 11 -->
     <div class="section" id="step-11">
-        <h2><span class="step-badge inprocess">STEP 11</span> End of Run: Close-Out Steps</h2>
+        <div class="section-header">
+            <h2><span class="step-badge inprocess">STEP 11</span> End of Run: Close-Out Steps</h2>
+            <button class="copy-link-btn" data-section="step-11" title="Copy link to section">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                </svg>
+            </button>
+        </div>
 
         <div class="non-negotiable">
             <strong>Must be completed every time - no exceptions.</strong>
@@ -961,7 +1280,14 @@ flowchart TB
 
     <!-- STEP 12 -->
     <div class="section" id="step-12">
-        <h2><span class="step-badge final">STEP 12</span> Save the Documentation</h2>
+        <div class="section-header">
+            <h2><span class="step-badge final">STEP 12</span> Save the Documentation</h2>
+            <button class="copy-link-btn" data-section="step-12" title="Copy link to section">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                </svg>
+            </button>
+        </div>
         <p>Organized Drive filing</p>
 
         <div class="checklist">
@@ -994,7 +1320,14 @@ flowchart TB
 
     <!-- STEP 13 -->
     <div class="section" id="step-13">
-        <h2><span class="step-badge final">STEP 13</span> Attach to Monday.com</h2>
+        <div class="section-header">
+            <h2><span class="step-badge final">STEP 13</span> Attach to Monday.com</h2>
+            <button class="copy-link-btn" data-section="step-13" title="Copy link to section">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                </svg>
+            </button>
+        </div>
 
         <div class="non-negotiable">
             <strong>FINAL REQUIRED STEP:</strong> QA documentation must be attached to Monday.com.
@@ -1077,6 +1410,8 @@ flowchart LR
         <p>QA Manager Procedure | Pure Earth Labs</p>
         <p>Reference: Loom Training Script | Generated December 8, 2025</p>
     </div>
+</div>
+</div>
 
     <script>
         mermaid.initialize({
@@ -1088,6 +1423,113 @@ flowchart LR
                 curve: 'basis'
             }
         });
+
+        (function() {
+            const progressBar = document.getElementById('progressBar');
+            const sections = document.querySelectorAll('.section[id^="step-"]');
+            const tocLinks = document.querySelectorAll('.toc-sidebar-list a');
+
+            function updateProgressBar() {
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const progress = (scrollTop / docHeight) * 100;
+                progressBar.style.width = Math.min(100, Math.max(0, progress)) + '%';
+            }
+
+            function updateActiveSection() {
+                let currentSection = null;
+                const scrollPos = window.scrollY + 100;
+
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionBottom = sectionTop + section.offsetHeight;
+
+                    if (scrollPos >= sectionTop && scrollPos < sectionBottom) {
+                        currentSection = section.id;
+                    }
+                });
+
+                sections.forEach(section => {
+                    section.classList.toggle('active', section.id === currentSection);
+                });
+
+                tocLinks.forEach(link => {
+                    const linkSection = link.getAttribute('data-section');
+                    link.classList.toggle('active', linkSection === currentSection);
+                });
+            }
+
+            let ticking = false;
+            function onScroll() {
+                if (!ticking) {
+                    requestAnimationFrame(() => {
+                        updateProgressBar();
+                        updateActiveSection();
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            }
+
+            window.addEventListener('scroll', onScroll, { passive: true });
+
+            updateProgressBar();
+            updateActiveSection();
+
+            function handleAnchorHighlight() {
+                const hash = window.location.hash;
+                if (hash) {
+                    const targetSection = document.querySelector(hash);
+                    if (targetSection && targetSection.classList.contains('section')) {
+                        targetSection.classList.add('anchor-highlight');
+                        setTimeout(() => {
+                            targetSection.classList.remove('anchor-highlight');
+                        }, 1500);
+                    }
+                }
+            }
+
+            handleAnchorHighlight();
+            window.addEventListener('hashchange', handleAnchorHighlight);
+
+            document.querySelectorAll('.copy-link-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const sectionId = this.getAttribute('data-section');
+                    const url = window.location.origin + window.location.pathname + '#' + sectionId;
+
+                    navigator.clipboard.writeText(url).then(() => {
+                        this.classList.add('copied');
+                        setTimeout(() => {
+                            this.classList.remove('copied');
+                        }, 1500);
+                    }).catch(() => {
+                        const input = document.createElement('input');
+                        input.value = url;
+                        document.body.appendChild(input);
+                        input.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(input);
+                        this.classList.add('copied');
+                        setTimeout(() => {
+                            this.classList.remove('copied');
+                        }, 1500);
+                    });
+                });
+            });
+
+            tocLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    if (targetSection) {
+                        e.preventDefault();
+                        targetSection.scrollIntoView({ behavior: 'smooth' });
+                        history.pushState(null, null, targetId);
+                    }
+                });
+            });
+        })();
     </script>
 </body>
 </html>
