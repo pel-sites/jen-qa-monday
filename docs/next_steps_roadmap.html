@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Next Steps Roadmap - QA Workflow Improvement Plan</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✓</text></svg>">
+    <meta name="description" content="Prioritized QA workflow improvement plan with implementation phases, Monday.com automations, success metrics, and risk assessment.">
+    <link rel="stylesheet" href="/css/shared.css">
+    <style>
+        /* Page-specific styles for Next Steps Roadmap */
+
+        body {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: var(--space-5);
+        }
+
+        /* Header variant - blue accent */
+        .header {
+            background: linear-gradient(135deg, var(--color-info) 0%, var(--color-accent) 100%);
+        }
+
+        h1, h2, h3 { color: #fff; margin-top: 2em; }
+        h1 { margin-top: 0; }
+
+        .header {
+            background: linear-gradient(135deg, #9d50dd 0%, #579bfc 100%);
+            padding: 40px;
+            border-radius: 16px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .header h1 { margin: 0 0 10px 0; font-size: 2.5em; }
+        .header .subtitle { font-size: 1.2em; opacity: 0.9; }
+        .header .date { margin-top: 15px; opacity: 0.7; font-size: 0.9em; }
+
+        .section {
+            background: #16213e;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border: 1px solid #2a2a4a;
+        }
+
+        .section h2 {
+            margin-top: 0;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--purple);
+        }
+
+        .mermaid {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .stat-card {
+            background: #0f0f23;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-card .value {
+            font-size: 2.5em;
+            font-weight: bold;
+            line-height: 1;
+        }
+
+        .stat-card .label {
+            font-size: 0.9em;
+            opacity: 0.7;
+            margin-top: 10px;
+        }
+
+        .stat-card.critical { border-top: 4px solid var(--critical); }
+        .stat-card.critical .value { color: var(--critical); }
+
+        .stat-card.warning { border-top: 4px solid var(--warning); }
+        .stat-card.warning .value { color: var(--warning); }
+
+        .stat-card.good { border-top: 4px solid var(--good); }
+        .stat-card.good .value { color: var(--good); }
+
+        .stat-card.info { border-top: 4px solid var(--info); }
+        .stat-card.info .value { color: var(--info); }
+
+        .stat-card.purple { border-top: 4px solid var(--purple); }
+        .stat-card.purple .value { color: var(--purple); }
+
+        .priority-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin: 25px 0;
+        }
+
+        .priority-card {
+            background: #0f0f23;
+            border-radius: 12px;
+            padding: 25px;
+            position: relative;
+        }
+
+        .priority-card h3 {
+            margin: 0 0 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .priority-card .number {
+            background: var(--purple);
+            color: #fff;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .priority-card.p1 { border-left: 4px solid var(--critical); }
+        .priority-card.p1 .number { background: var(--critical); }
+
+        .priority-card.p2 { border-left: 4px solid var(--warning); }
+        .priority-card.p2 .number { background: var(--warning); color: #000; }
+
+        .priority-card.p3 { border-left: 4px solid var(--info); }
+        .priority-card.p3 .number { background: var(--info); }
+
+        .priority-card.p4 { border-left: 4px solid var(--good); }
+        .priority-card.p4 .number { background: var(--good); color: #000; }
+
+        .priority-card ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .priority-card li { margin: 8px 0; }
+
+        .priority-card .impact {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #2a2a4a;
+            font-size: 0.9em;
+        }
+
+        .priority-card .impact strong {
+            color: var(--good);
+        }
+
+        .insight-card {
+            background: #0f0f23;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid var(--purple);
+        }
+
+        .insight-card h4 {
+            margin: 0 0 10px 0;
+            color: var(--purple);
+        }
+
+        .insight-card.critical { border-left-color: var(--critical); }
+        .insight-card.critical h4 { color: var(--critical); }
+
+        .insight-card.warning { border-left-color: var(--warning); }
+        .insight-card.warning h4 { color: var(--warning); }
+
+        .insight-card.good { border-left-color: var(--good); }
+        .insight-card.good h4 { color: var(--good); }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-critical { background: var(--critical); color: #fff; }
+        .badge-warning { background: var(--warning); color: #000; }
+        .badge-good { background: var(--good); color: #000; }
+        .badge-info { background: var(--info); color: #fff; }
+        .badge-purple { background: var(--purple); color: #fff; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #333;
+        }
+
+        th {
+            background: #0f0f23;
+            font-weight: 600;
+            color: var(--purple);
+        }
+
+        tr:hover { background: #1f1f3a; }
+
+        code {
+            background: #0f0f23;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'SF Mono', Monaco, monospace;
+            font-size: 0.9em;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            opacity: 0.6;
+            font-size: 0.9em;
+        }
+
+        a { color: #66ccff; }
+
+        .phase-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .phase-badge {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist li {
+            padding: 12px 15px;
+            background: #0f0f23;
+            margin: 8px 0;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .checklist li::before {
+            content: "[ ]";
+            font-family: monospace;
+            color: var(--purple);
+        }
+
+        .success-metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: #0f0f23;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+        .success-metric .current {
+            color: var(--critical);
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .success-metric .arrow {
+            color: var(--warning);
+            font-size: 1.5em;
+        }
+
+        .success-metric .target {
+            color: var(--good);
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<nav style="position: sticky; top: 0; z-index: 100; background: #0f0f23; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #2a2a4a;">
+    <a href="/" style="color: #9d50dd; text-decoration: none; font-weight: 500;">← Home</a>
+    <div style="display: flex; gap: 20px; font-size: 0.9em;">
+        <a href="/qa_manager_procedure.html" style="color: #eee; text-decoration: none; opacity: 0.8;">Procedure</a>
+        <a href="/qa_workflow_analysis.html" style="color: #eee; text-decoration: none; opacity: 0.8;">Analysis</a>
+        <a href="/production_board_structure.html" style="color: #eee; text-decoration: none; opacity: 0.8;">Board</a>
+        <a href="/team_performance_analysis.html" style="color: #eee; text-decoration: none; opacity: 0.8;">Performance</a>
+        <a href="/next_steps_roadmap.html" style="color: #00c875; text-decoration: none; font-weight: 500;">Roadmap</a>
+        <a href="/ideal_candidate_profile.html" style="color: #eee; text-decoration: none; opacity: 0.8;">Candidate</a>
+    </div>
+</nav>
+    <div class="header">
+        <h1>Next Steps Roadmap</h1>
+        <div class="subtitle">QA Workflow Improvement Plan for Pure Earth Labs</div>
+        <div class="date">Generated: December 8, 2025 | Based on Team Performance Analysis</div>
+    </div>
+
+    <!-- Assessment Summary -->
+    <div class="section">
+        <h2>Current State Assessment</h2>
+        <p>Based on analysis of 95 FULFILLED items, the QA workflow has significant gaps between documented process and actual execution.</p>
+
+        <div class="stats-grid">
+            <div class="stat-card critical">
+                <div class="value">60%</div>
+                <div class="label">Items Missing QA DOCS</div>
+            </div>
+            <div class="stat-card critical">
+                <div class="value">63%</div>
+                <div class="label">Items Without Owner</div>
+            </div>
+            <div class="stat-card warning">
+                <div class="value">84%</div>
+                <div class="label">Missing Spec Sheets</div>
+            </div>
+            <div class="stat-card info">
+                <div class="value">13</div>
+                <div class="label">Steps in QA Process</div>
+            </div>
+        </div>
+
+        <div class="mermaid">
+flowchart LR
+    subgraph Current["Current Reality"]
+        C1["Good: Process is<br/>well documented"]
+        C2["Bad: 60% skip<br/>QA DOCS step"]
+        C3["Bad: No enforcement<br/>mechanism"]
+        C4["Bad: No accountability<br/>(63% unassigned)"]
+    end
+
+    subgraph Gap["The Gap"]
+        G1["Process exists<br/>on paper"]
+        G2["Monday.com isn't<br/>enforcing it"]
+    end
+
+    C1 --> G1
+    C2 --> G2
+    C3 --> G2
+    C4 --> G2
+
+    style C1 fill:#00c875,color:#000
+    style C2 fill:#df2f4a,color:#fff
+    style C3 fill:#df2f4a,color:#fff
+    style C4 fill:#df2f4a,color:#fff
+    style G2 fill:#fdab3d,color:#000
+        </div>
+
+        <div class="insight-card">
+            <h4>Key Insight</h4>
+            <p>The documentation is solid (Jen's 13-step process). The problem is <strong>enforcement and tooling</strong>. Monday.com allows items to reach FULFILLED status without completing required documentation steps.</p>
+        </div>
+    </div>
+
+    <!-- Strategic Overview -->
+    <div class="section">
+        <h2>Strategic Overview</h2>
+        <p>The improvement plan focuses on three pillars: <strong>Accountability</strong>, <strong>Enforcement</strong>, and <strong>Visibility</strong>.</p>
+
+        <div class="mermaid">
+flowchart TB
+    subgraph Pillars["Three Pillars of Improvement"]
+        direction TB
+        P1["<strong>ACCOUNTABILITY</strong><br/>Assign owners to all items<br/>Track by person"]
+        P2["<strong>ENFORCEMENT</strong><br/>Block incomplete items<br/>Require QA DOCS"]
+        P3["<strong>VISIBILITY</strong><br/>Dashboard & reporting<br/>Track compliance"]
+    end
+
+    subgraph Outcomes["Expected Outcomes"]
+        O1["QA DOCS: 40% → 95%"]
+        O2["Owner Assignment: 37% → 100%"]
+        O3["Audit Trail: None → Complete"]
+    end
+
+    P1 --> O2
+    P2 --> O1
+    P3 --> O3
+
+    style P1 fill:#9d50dd,color:#fff
+    style P2 fill:#579bfc,color:#fff
+    style P3 fill:#00c875,color:#000
+        </div>
+    </div>
+
+    <!-- Priority Actions -->
+    <div class="section">
+        <h2>Prioritized Action Plan</h2>
+        <p>Actions ranked by impact and implementation complexity:</p>
+
+        <div class="priority-grid">
+            <div class="priority-card p1">
+                <h3><span class="number">1</span> Fix Ownership Problem</h3>
+                <p>The data shows unassigned items have only 25% QA DOCS completion vs 67% for assigned items.</p>
+                <ul>
+                    <li>Assign owners to all active production items</li>
+                    <li>Make owner assignment mandatory for new items</li>
+                    <li>Add automation: block status change without owner</li>
+                </ul>
+                <div class="impact">
+                    <strong>Impact:</strong> Establishes accountability. Items with owners are 2.7x more likely to have complete docs.
+                </div>
+            </div>
+
+            <div class="priority-card p1">
+                <h3><span class="number">2</span> Block FULFILLED Without QA DOCS</h3>
+                <p>Currently 60% of items skip the final documentation step.</p>
+                <ul>
+                    <li>Add Monday.com automation rule</li>
+                    <li>Prevent status change to FULFILLED if QA DOCS empty</li>
+                    <li>Show clear error message with instructions</li>
+                </ul>
+                <div class="impact">
+                    <strong>Impact:</strong> Eliminates the biggest compliance gap immediately.
+                </div>
+            </div>
+
+            <div class="priority-card p2">
+                <h3><span class="number">3</span> Create & Link QA Template</h3>
+                <p>No QA Inspection Report template is linked in Monday.com.</p>
+                <ul>
+                    <li>Create official QA Inspection Report template</li>
+                    <li>Add link column to Production board</li>
+                    <li>Pre-populate template link on all items</li>
+                </ul>
+                <div class="impact">
+                    <strong>Impact:</strong> Removes friction from Step 13 of Jen's process.
+                </div>
+            </div>
+
+            <div class="priority-card p2">
+                <h3><span class="number">4</span> Training & Communication</h3>
+                <p>Team may not know the full process or why it matters.</p>
+                <ul>
+                    <li>Send clear communication about new requirements</li>
+                    <li>Share link to QA Manager Procedure doc</li>
+                    <li>Explain the "why" behind QA documentation</li>
+                </ul>
+                <div class="impact">
+                    <strong>Impact:</strong> Gets buy-in and reduces resistance to new rules.
+                </div>
+            </div>
+
+            <div class="priority-card p3">
+                <h3><span class="number">5</span> Build QA Dashboard</h3>
+                <p>No visibility into compliance rates currently.</p>
+                <ul>
+                    <li>Create Monday.com dashboard view</li>
+                    <li>Show: FULFILLED items missing QA DOCS</li>
+                    <li>Track completion rates by person/week</li>
+                </ul>
+                <div class="impact">
+                    <strong>Impact:</strong> Enables ongoing monitoring and accountability.
+                </div>
+            </div>
+
+            <div class="priority-card p4">
+                <h3><span class="number">6</span> Backfill Historical Data</h3>
+                <p>57 FULFILLED items currently missing QA DOCS.</p>
+                <ul>
+                    <li>Identify items with docs in Google Drive</li>
+                    <li>Bulk upload to Monday.com QA DOCS column</li>
+                    <li>Flag items with no documentation anywhere</li>
+                </ul>
+                <div class="impact">
+                    <strong>Impact:</strong> Improves historical data quality for audits.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Implementation Phases -->
+    <div class="section">
+        <h2>Implementation Roadmap</h2>
+
+        <div class="mermaid">
+gantt
+    title QA Workflow Improvement Phases
+    dateFormat  YYYY-MM-DD
+
+    section Phase 1: Foundation
+    Assign owners to active items       :p1a, 2025-12-09, 3d
+    Create owner-required automation    :p1b, after p1a, 2d
+
+    section Phase 2: Enforcement
+    Block FULFILLED without QA DOCS     :p2a, after p1b, 2d
+    Create QA template link column      :p2b, after p1b, 2d
+    Team communication                  :p2c, after p2a, 3d
+
+    section Phase 3: Visibility
+    Build compliance dashboard          :p3a, after p2c, 3d
+    Setup weekly report automation      :p3b, after p3a, 2d
+
+    section Phase 4: Cleanup
+    Backfill historical data            :p4a, after p3b, 5d
+    Review and iterate                  :p4b, after p4a, 3d
+        </div>
+
+        <!-- Phase 1 -->
+        <div class="insight-card" style="border-left-color: var(--critical);">
+            <div class="phase-header">
+                <span class="phase-badge" style="background: var(--critical); color: #fff;">PHASE 1</span>
+                <h4 style="margin: 0; color: var(--critical);">Foundation - Establish Accountability</h4>
+            </div>
+            <p>Before enforcing rules, ensure every item has someone responsible.</p>
+            <ul class="checklist">
+                <li>Audit all active items and assign owners</li>
+                <li>Create automation: require owner before item leaves BACKLOG</li>
+                <li>Set up auto-assignment rules based on LINE or product type</li>
+            </ul>
+        </div>
+
+        <!-- Phase 2 -->
+        <div class="insight-card" style="border-left-color: var(--warning);">
+            <div class="phase-header">
+                <span class="phase-badge" style="background: var(--warning); color: #000;">PHASE 2</span>
+                <h4 style="margin: 0; color: var(--warning);">Enforcement - Block Incomplete Items</h4>
+            </div>
+            <p>Implement hard stops that prevent workflow shortcuts.</p>
+            <ul class="checklist">
+                <li>Add automation: block FULFILLED if QA DOCS is empty</li>
+                <li>Create QA Template Link column with pre-populated URL</li>
+                <li>Send team communication explaining new requirements</li>
+                <li>Share link to <a href="/qa_manager_procedure.html">QA Manager Procedure</a></li>
+            </ul>
+        </div>
+
+        <!-- Phase 3 -->
+        <div class="insight-card" style="border-left-color: var(--info);">
+            <div class="phase-header">
+                <span class="phase-badge" style="background: var(--info); color: #fff;">PHASE 3</span>
+                <h4 style="margin: 0; color: var(--info);">Visibility - Dashboard & Reporting</h4>
+            </div>
+            <p>Create ongoing visibility into compliance rates.</p>
+            <ul class="checklist">
+                <li>Build Monday.com dashboard showing compliance metrics</li>
+                <li>Add view: FULFILLED items missing required fields</li>
+                <li>Setup weekly automated report to QA Manager</li>
+                <li>Track improvement trends over time</li>
+            </ul>
+        </div>
+
+        <!-- Phase 4 -->
+        <div class="insight-card" style="border-left-color: var(--good);">
+            <div class="phase-header">
+                <span class="phase-badge" style="background: var(--good); color: #000;">PHASE 4</span>
+                <h4 style="margin: 0; color: var(--good);">Cleanup - Historical Data</h4>
+            </div>
+            <p>Address the backlog of incomplete documentation.</p>
+            <ul class="checklist">
+                <li>Export list of 57 items missing QA DOCS</li>
+                <li>Check Google Drive for existing documentation</li>
+                <li>Bulk upload found documents to Monday.com</li>
+                <li>Flag items with no documentation anywhere for review</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Automation Details -->
+    <div class="section">
+        <h2>Monday.com Automations to Create</h2>
+
+        <div class="mermaid">
+flowchart LR
+    subgraph Auto1["Automation 1: Owner Required"]
+        A1["Trigger: Status changes<br/>from BACKLOG"] --> A2{"Owner<br/>assigned?"}
+        A2 -->|No| A3["Block change<br/>Show error"]
+        A2 -->|Yes| A4["Allow status<br/>change"]
+    end
+
+    subgraph Auto2["Automation 2: QA DOCS Required"]
+        B1["Trigger: Status changes<br/>to FULFILLED"] --> B2{"QA DOCS<br/>attached?"}
+        B2 -->|No| B3["Block change<br/>Show error"]
+        B2 -->|Yes| B4["Allow status<br/>change"]
+    end
+
+    style A3 fill:#df2f4a,color:#fff
+    style B3 fill:#df2f4a,color:#fff
+    style A4 fill:#00c875,color:#000
+    style B4 fill:#00c875,color:#000
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Automation</th>
+                    <th>Trigger</th>
+                    <th>Condition</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Owner Required</strong></td>
+                    <td>Status changes from BACKLOG</td>
+                    <td><code>multiple_person_mks7aaxh</code> is empty</td>
+                    <td>Block change, show "Please assign an owner first"</td>
+                </tr>
+                <tr>
+                    <td><strong>QA DOCS Required</strong></td>
+                    <td>Status changes to FULFILLED</td>
+                    <td><code>file_mktcs58s</code> is empty</td>
+                    <td>Block change, show "Please attach QA documentation first"</td>
+                </tr>
+                <tr>
+                    <td><strong>Weekly Report</strong></td>
+                    <td>Every Monday 9:00 AM</td>
+                    <td>Always</td>
+                    <td>Send email with incomplete items to Jen</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Success Metrics -->
+    <div class="section">
+        <h2>Success Metrics</h2>
+        <p>How we'll measure improvement:</p>
+
+        <div class="mermaid">
+xychart-beta
+    title "Target Improvement Trajectory"
+    x-axis ["Current", "Week 2", "Week 4", "Week 6", "Week 8"]
+    y-axis "Completion %" 0 --> 100
+    line "QA DOCS" [40, 55, 70, 85, 95]
+    line "Owner Assigned" [37, 60, 80, 95, 100]
+    line "Spec Sheet" [16, 30, 50, 70, 85]
+        </div>
+
+        <h3>Key Performance Indicators</h3>
+
+        <div class="success-metric">
+            <div>
+                <strong>QA DOCS Completion Rate</strong>
+                <div style="font-size: 0.9em; opacity: 0.7;">FULFILLED items with QA documentation attached</div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <span class="current">40%</span>
+                <span class="arrow">→</span>
+                <span class="target">95%</span>
+            </div>
+        </div>
+
+        <div class="success-metric">
+            <div>
+                <strong>Owner Assignment Rate</strong>
+                <div style="font-size: 0.9em; opacity: 0.7;">Items with responsible person assigned</div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <span class="current">37%</span>
+                <span class="arrow">→</span>
+                <span class="target">100%</span>
+            </div>
+        </div>
+
+        <div class="success-metric">
+            <div>
+                <strong>Spec Sheet Attachment Rate</strong>
+                <div style="font-size: 0.9em; opacity: 0.7;">Items with spec sheet linked</div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <span class="current">16%</span>
+                <span class="arrow">→</span>
+                <span class="target">85%</span>
+            </div>
+        </div>
+
+        <div class="success-metric">
+            <div>
+                <strong>Process Compliance Score</strong>
+                <div style="font-size: 0.9em; opacity: 0.7;">Items completing full QA workflow</div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <span class="current">~30%</span>
+                <span class="arrow">→</span>
+                <span class="target">90%</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Risk Assessment -->
+    <div class="section">
+        <h2>Risk Assessment</h2>
+
+        <div class="mermaid">
+quadrantChart
+    title Risk vs Impact Matrix
+    x-axis Low Risk --> High Risk
+    y-axis Low Impact --> High Impact
+    quadrant-1 Monitor
+    quadrant-2 Prioritize
+    quadrant-3 Ignore
+    quadrant-4 Address
+    "Team Pushback": [0.7, 0.6]
+    "Automation Errors": [0.4, 0.5]
+    "Historical Data Loss": [0.3, 0.4]
+    "Training Gaps": [0.5, 0.7]
+    "Process Workarounds": [0.6, 0.8]
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Risk</th>
+                    <th>Likelihood</th>
+                    <th>Impact</th>
+                    <th>Mitigation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Team Pushback</strong></td>
+                    <td><span class="badge badge-warning">Medium</span></td>
+                    <td><span class="badge badge-warning">Medium</span></td>
+                    <td>Clear communication on "why", involve team in rollout</td>
+                </tr>
+                <tr>
+                    <td><strong>Process Workarounds</strong></td>
+                    <td><span class="badge badge-critical">High</span></td>
+                    <td><span class="badge badge-critical">High</span></td>
+                    <td>Make automations robust, monitor for unusual patterns</td>
+                </tr>
+                <tr>
+                    <td><strong>Training Gaps</strong></td>
+                    <td><span class="badge badge-warning">Medium</span></td>
+                    <td><span class="badge badge-warning">Medium</span></td>
+                    <td>Create clear documentation, Loom videos, office hours</td>
+                </tr>
+                <tr>
+                    <td><strong>Automation Errors</strong></td>
+                    <td><span class="badge badge-info">Low</span></td>
+                    <td><span class="badge badge-warning">Medium</span></td>
+                    <td>Test thoroughly before rollout, have admin override</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Summary -->
+    <div class="section">
+        <h2>Executive Summary</h2>
+
+        <div class="insight-card good">
+            <h4>Bottom Line</h4>
+            <p>The QA process documentation is solid. The gap is <strong>enforcement and tooling</strong>. By implementing owner requirements and blocking FULFILLED status without QA DOCS, we can address the biggest compliance gaps immediately.</p>
+        </div>
+
+        <div class="mermaid">
+flowchart LR
+    subgraph Now["Do Now"]
+        N1["Assign owners"]
+        N2["Block incomplete<br/>FULFILLED"]
+    end
+
+    subgraph Soon["Do Soon"]
+        S1["Link QA template"]
+        S2["Team training"]
+    end
+
+    subgraph Later["Do Later"]
+        L1["Build dashboard"]
+        L2["Backfill data"]
+    end
+
+    Now --> Soon --> Later
+
+    style N1 fill:#df2f4a,color:#fff
+    style N2 fill:#df2f4a,color:#fff
+    style S1 fill:#fdab3d,color:#000
+    style S2 fill:#fdab3d,color:#000
+    style L1 fill:#00c875,color:#000
+    style L2 fill:#00c875,color:#000
+        </div>
+
+        <h3>Quick Wins</h3>
+        <ol>
+            <li><strong>Owner Assignment</strong> - Items with owners are 2.7x more likely to have complete documentation</li>
+            <li><strong>Block FULFILLED</strong> - Single automation eliminates 60% non-compliance</li>
+            <li><strong>Template Link</strong> - Removes friction from Step 13</li>
+        </ol>
+
+        <h3>Related Documentation</h3>
+        <ul>
+            <li><a href="/qa_manager_procedure.html">QA Manager Procedure (Steps 0-13)</a></li>
+            <li><a href="/team_performance_analysis.html">Team Performance Analysis (Data)</a></li>
+            <li><a href="/production_board_structure.html">Production Board Structure</a></li>
+            <li><a href="/qa_workflow_analysis.html">QA Workflow Analysis</a></li>
+        </ul>
+    </div>
+
+    <div class="footer">
+        <p>Next Steps Roadmap | Generated December 8, 2025</p>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            },
+            gantt: {
+                useMaxWidth: true
+            }
+        });
+    </script>
+</body>
+</html>

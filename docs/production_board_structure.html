@@ -5,12 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Production Board Documentation</title>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="/css/shared.css">
     <style>
+        /* Page-specific styles for Production Board Structure */
         :root {
-            --blocked: #df2f4a;
+            /* Page-specific color aliases for board statuses */
+            --blocked: var(--color-critical);
             --lab-bulk: #ff007f;
-            --this-week: #9d50dd;
-            --next-week: #fdab3d;
+            --this-week: var(--color-accent);
+            --next-week: var(--color-warning);
             --future: #66ccff;
             --completed: #9cd326;
         }

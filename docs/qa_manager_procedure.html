@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QA Manager Procedure - Complete SOP</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✓</text></svg>">
+    <meta name="description" content="Complete 13-step QA Standard Operating Procedure for Pure Earth Labs production. Checklists, tolerances, defect classification, and Loom callouts.">
+    <link rel="stylesheet" href="/css/shared.css">
+    <style>
+        /* Page-specific styles for QA Manager Procedure */
+
+        body {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: var(--space-5);
+        }
+
+        /* Section h2 with step badge layout */
+        .section h2 {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+        }
+
+        /* Step badges */
+        .step-badge {
+            background: var(--color-accent);
+            color: #fff;
+            padding: var(--space-2) var(--space-4);
+            border-radius: var(--radius-full);
+            font-size: var(--text-sm);
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .step-badge.prep { background: var(--color-info); }
+        .step-badge.prerun { background: var(--color-warning); color: #000; }
+        .step-badge.inprocess { background: var(--color-success); color: #000; }
+        .step-badge.final { background: var(--color-accent); }
+
+        /* Table of Contents */
+        .toc {
+            background: var(--color-surface);
+            padding: var(--space-6);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--space-8);
+            border: 1px solid var(--color-border);
+        }
+
+        .toc h3 {
+            margin-top: 0;
+            color: var(--color-accent);
+        }
+
+        .toc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--space-3);
+        }
+
+        .toc a {
+            color: var(--color-text);
+            text-decoration: none;
+            padding: var(--space-2) var(--space-3);
+            border-radius: var(--radius-md);
+            display: block;
+            transition: background var(--transition-fast);
+        }
+
+        .toc a:hover {
+            background: var(--darker-bg);
+            text-decoration: none;
+        }
+
+        .toc .phase-label {
+            font-size: var(--text-xs);
+            padding: 2px 8px;
+            border-radius: var(--radius-full);
+            margin-right: var(--space-2);
+        }
+
+        /* Phase Overview */
+        .phase-overview {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            flex-wrap: wrap;
+            margin: var(--space-5) 0;
+        }
+
+        .phase-box {
+            padding: var(--space-5) var(--space-8);
+            border-radius: var(--radius-lg);
+            text-align: center;
+            min-width: 180px;
+        }
+
+        .phase-box h4 { margin: 0 0 var(--space-1) 0; font-size: var(--text-lg); }
+        .phase-box p { margin: 0; opacity: 0.9; font-size: var(--text-sm); }
+
+        .phase-box.prep { background: var(--color-info); color: #fff; }
+        .phase-box.prerun { background: var(--color-warning); color: #000; }
+        .phase-box.inprocess { background: var(--color-success); color: #000; }
+        .phase-box.final { background: var(--color-accent); color: #fff; }
+
+        .phase-arrow {
+            font-size: 2em;
+            color: #666;
+            padding: 0 var(--space-3);
+        }
+
+        /* Expand button */
+        .expand-btn {
+            display: block;
+            margin: var(--space-5) auto 0;
+            background: var(--darker-bg);
+            border: 1px solid var(--color-border-light);
+            color: var(--color-text);
+            padding: var(--space-3) var(--space-5);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-size: var(--text-sm);
+            transition: background var(--transition-fast);
+        }
+
+        .expand-btn:hover { background: var(--color-surface-raised); }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: var(--space-5);
+        }
+
+        .modal-overlay.active { display: flex; }
+
+        .modal-content {
+            background: #fff;
+            border-radius: var(--radius-lg);
+            max-width: 95vw;
+            max-height: 90vh;
+            overflow: auto;
+            position: relative;
+            padding: var(--space-8);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: var(--space-3);
+            right: var(--space-4);
+            background: var(--color-critical);
+            color: #fff;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 1.5em;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .modal-close:hover { background: #c02040; }
+
+        .modal-content .mermaid {
+            min-width: 1000px;
+        }
+
+        /* Subsections */
+        .subsection {
+            background: var(--darker-bg);
+            border-radius: var(--radius-md);
+            padding: var(--space-5);
+            margin: var(--space-5) 0;
+            border-left: 4px solid var(--color-accent);
+        }
+
+        .subsection h4 {
+            margin: 0 0 var(--space-4) 0;
+            color: var(--color-accent);
+        }
+
+        .subsection.important {
+            border-left-color: var(--color-critical);
+            background: linear-gradient(135deg, rgba(223, 47, 74, 0.1) 0%, var(--darker-bg) 100%);
+        }
+
+        .subsection.important h4 { color: var(--color-critical); }
+
+        /* Loom Callout */
+        .loom-callout {
+            background: linear-gradient(135deg, rgba(87, 155, 252, 0.2) 0%, rgba(87, 155, 252, 0.1) 100%);
+            border: 1px solid var(--color-info);
+            border-radius: var(--radius-md);
+            padding: var(--space-3) var(--space-4);
+            margin: var(--space-3) 0;
+            font-style: italic;
+        }
+
+        .loom-callout::before {
+            content: "Say on Loom: ";
+            font-weight: 600;
+            font-style: normal;
+            color: var(--color-info);
+        }
+
+        /* Defect table colors */
+        .defect-table td:first-child { font-weight: 600; }
+        .defect-acceptable { color: var(--color-success); }
+        .defect-borderline { color: #9cd326; }
+        .defect-minor { color: var(--color-warning); }
+        .defect-major { color: #ff642e; }
+        .defect-critical { color: var(--color-critical); }
+
+        /* Naming convention box */
+        .naming-convention {
+            background: var(--darker-bg);
+            padding: var(--space-5);
+            border-radius: var(--radius-md);
+            font-family: var(--font-mono);
+            font-size: var(--text-lg);
+            text-align: center;
+            margin: var(--space-4) 0;
+            border: 2px dashed var(--color-accent);
+        }
+
+        /* Photo grid */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: var(--space-3);
+            margin: var(--space-4) 0;
+        }
+
+        .photo-item {
+            background: var(--darker-bg);
+            padding: var(--space-3);
+            border-radius: var(--radius-md);
+            text-align: center;
+            border: 1px solid var(--color-border);
+        }
+
+        /* Tolerance box */
+        .tolerance-box {
+            display: inline-block;
+            background: var(--darker-bg);
+            padding: var(--space-1) var(--space-3);
+            border-radius: var(--radius-sm);
+            font-family: var(--font-mono);
+            margin: 2px;
+        }
+    </style>
+</head>
+<body>
+<nav style="position: sticky; top: 0; z-index: 100; background: #0f0f23; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #2a2a4a;">
+    <a href="/" style="color: #9d50dd; text-decoration: none; font-weight: 500;">← Home</a>
+    <div style="display: flex; gap: 20px; font-size: 0.9em;">
+        <a href="/qa_manager_procedure.html" style="color: #00c875; text-decoration: none; font-weight: 500;">Procedure</a>
+        <a href="/qa_workflow_analysis.html" style="color: #eee; text-decoration: none; opacity: 0.8;">Analysis</a>
+        <a href="/production_board_structure.html" style="color: #eee; text-decoration: none; opacity: 0.8;">Board</a>
+        <a href="/team_performance_analysis.html" style="color: #eee; text-decoration: none; opacity: 0.8;">Performance</a>
+        <a href="/next_steps_roadmap.html" style="color: #eee; text-decoration: none; opacity: 0.8;">Roadmap</a>
+        <a href="/ideal_candidate_profile.html" style="color: #eee; text-decoration: none; opacity: 0.8;">Candidate</a>
+    </div>
+</nav>
+    <div class="header">
+        <h1>QA Manager Procedure</h1>
+        <div class="subtitle">Complete Standard Operating Procedure for Production QA</div>
+        <div class="meta">Pure Earth Labs | Loom Training Script Reference</div>
+    </div>
+
+    <!-- Overview Flowchart -->
+    <div class="section">
+        <h2>Workflow Overview</h2>
+
+        <!-- Simplified Phase View -->
+        <div class="phase-overview">
+            <div class="phase-box prep">
+                <h4>PREPARATION</h4>
+                <p>Step 0</p>
+            </div>
+            <span class="phase-arrow">→</span>
+            <div class="phase-box prerun">
+                <h4>PRE-RUN</h4>
+                <p>Steps 1-6</p>
+            </div>
+            <span class="phase-arrow">→</span>
+            <div class="phase-box inprocess">
+                <h4>IN-PROCESS</h4>
+                <p>Steps 7-11</p>
+            </div>
+            <span class="phase-arrow">→</span>
+            <div class="phase-box final">
+                <h4>FINAL</h4>
+                <p>Steps 12-13</p>
+            </div>
+        </div>
+
+        <button class="expand-btn" onclick="document.getElementById('flowModal').classList.add('active')">
+            Show Detailed Workflow Diagram
+        </button>
+    </div>
+
+    <!-- Modal for full diagram -->
+    <div id="flowModal" class="modal-overlay" onclick="if(event.target === this) this.classList.remove('active')">
+        <div class="modal-content">
+            <button class="modal-close" onclick="document.getElementById('flowModal').classList.remove('active')">&times;</button>
+            <h3 style="color: #333; margin-top: 0;">Complete Workflow</h3>
+            <div class="mermaid">
+flowchart LR
+    subgraph Prep["Step 0: Preparation"]
+        P1["Open Sprint/Bulk<br/>Weekly Sheet"]
+        P2["Find Today's Run"]
+        P3["Open Spec Sheet"]
+        P4["Open QA Report<br/>Template"]
+    end
+
+    subgraph PreRun["Steps 1-6: Pre-Run"]
+        PR1["1. Spec at Line"]
+        PR2["2. Components"]
+        PR3["3. Batch Code"]
+        PR4["4. Equipment"]
+        PR5["5. Line Config"]
+        PR6["6. MO Verify"]
+    end
+
+    subgraph InProcess["Steps 7-11: In-Process"]
+        IP1["7. Start Docs"]
+        IP2["8. QA Checks"]
+        IP3["9. Defects"]
+        IP4["10. Standards"]
+        IP5["11. Close-out"]
+    end
+
+    subgraph Final["Steps 12-13: Final"]
+        F1["12. Save to Drive"]
+        F2["13. Attach to<br/>Monday.com"]
+    end
+
+    P1 --> P2 --> P3 --> P4
+    P4 --> PR1 --> PR2 --> PR3 --> PR4 --> PR5 --> PR6
+    PR6 --> IP1 --> IP2 --> IP3 --> IP4 --> IP5
+    IP5 --> F1 --> F2
+
+    style P1 fill:#579bfc,color:#fff
+    style P2 fill:#579bfc,color:#fff
+    style P3 fill:#579bfc,color:#fff
+    style P4 fill:#579bfc,color:#fff
+    style PR1 fill:#fdab3d,color:#000
+    style PR2 fill:#fdab3d,color:#000
+    style PR3 fill:#fdab3d,color:#000
+    style PR4 fill:#fdab3d,color:#000
+    style PR5 fill:#fdab3d,color:#000
+    style PR6 fill:#fdab3d,color:#000
+    style IP1 fill:#00c875,color:#000
+    style IP2 fill:#00c875,color:#000
+    style IP3 fill:#00c875,color:#000
+    style IP4 fill:#00c875,color:#000
+    style IP5 fill:#00c875,color:#000
+    style F1 fill:#9d50dd,color:#fff
+    style F2 fill:#9d50dd,color:#fff
+            </div>
+        </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="toc">
+        <h3>Table of Contents</h3>
+        <div class="toc-grid">
+            <a href="#step-0"><span class="phase-label phase-prep">PREP</span> Step 0: What I Open First</a>
+            <a href="#step-1"><span class="phase-label phase-prerun">PRE-RUN</span> Step 1: Spec Sheet at Line</a>
+            <a href="#step-2"><span class="phase-label phase-prerun">PRE-RUN</span> Step 2: Component Verification</a>
+            <a href="#step-3"><span class="phase-label phase-prerun">PRE-RUN</span> Step 3: Batch Code Setup</a>
+            <a href="#step-4"><span class="phase-label phase-prerun">PRE-RUN</span> Step 4: Equipment Calibration</a>
+            <a href="#step-5"><span class="phase-label phase-prerun">PRE-RUN</span> Step 5: Line Config + Sanitation</a>
+            <a href="#step-6"><span class="phase-label phase-prerun">PRE-RUN</span> Step 6: Batch Record/MO Verification</a>
+            <a href="#step-7"><span class="phase-label phase-inprocess">IN-PROCESS</span> Step 7: Begin QA Documentation</a>
+            <a href="#step-8"><span class="phase-label phase-inprocess">IN-PROCESS</span> Step 8: In-Process QA Checks</a>
+            <a href="#step-9"><span class="phase-label phase-inprocess">IN-PROCESS</span> Step 9: Defect Classification</a>
+            <a href="#step-10"><span class="phase-label phase-inprocess">IN-PROCESS</span> Step 10: Product Standards Check</a>
+            <a href="#step-11"><span class="phase-label phase-inprocess">IN-PROCESS</span> Step 11: End of Run Close-out</a>
+            <a href="#step-12"><span class="phase-label phase-final">FINAL</span> Step 12: Save Documentation</a>
+            <a href="#step-13"><span class="phase-label phase-final">FINAL</span> Step 13: Attach to Monday.com</a>
+        </div>
+    </div>
+
+    <!-- STEP 0 -->
+    <div class="section" id="step-0">
+        <h2><span class="step-badge prep">STEP 0</span> What I Open First</h2>
+
+        <div class="mermaid">
+flowchart TB
+    A["Open Sprint + Bulk<br/>Weekly Sheet"] --> B["Find Today's Run<br/>(SKU + PO/MO)"]
+    B --> C{"Note Anything<br/>Special?"}
+    C -->|"Component change"| D["Document Change"]
+    C -->|"New label"| D
+    C -->|"New closure"| D
+    C -->|"Normal"| E["Continue"]
+    D --> E
+    E --> F["Open Approved<br/>Spec Sheet for SKU"]
+    F --> G["Open New Copy of<br/>QA Inspection Report"]
+
+    style A fill:#579bfc,color:#fff
+    style G fill:#579bfc,color:#fff
+        </div>
+
+        <div class="checklist">
+            <div class="checklist-item">
+                <div class="check-box"></div>
+                <div>
+                    <strong>Open the Sprint + Bulk weekly sheet</strong><br/>
+                    Find today's run (SKU + PO/MO)
+                </div>
+            </div>
+            <div class="checklist-item">
+                <div class="check-box"></div>
+                <div>
+                    <strong>Note anything special for today:</strong><br/>
+                    Component change, new label, new closure, etc.
+                </div>
+            </div>
+            <div class="checklist-item">
+                <div class="check-box"></div>
+                <div>
+                    <strong>Open the approved, up-to-date spec sheet</strong> for today's SKU<br/>
+                    <em>Note: If there is not one (Earth Harbor products don't have them yet), proceed without</em>
+                </div>
+            </div>
+            <div class="checklist-item">
+                <div class="check-box"></div>
+                <div>
+                    <strong>Open a new copy of the "PURE EARTH LABS Spec Sheet & Inspection Report"</strong> doc for today's PO/run
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- STEP 1 -->
+    <div class="section" id="step-1">
+        <h2><span class="step-badge prerun">STEP 1</span> Pre-Run: Spec Sheet Must Be at the Line</h2>
+
+        <div class="non-negotiable">
+            <strong>NON-NEGOTIABLE:</strong> The correct spec sheet must be at the line before any production begins.
+        </div>
+
+        <div class="checklist">
+            <div class="checklist-item">
+                <div class="check-box"></div>
+                <div>
+                    <strong>Bring the correct spec sheet to the line</strong> (printed or accessible)
+                </div>
+            </div>
+            <div class="checklist-item">
+                <div class="check-box"></div>
+                <div>
+                    <strong>Verify you have the most current approved version</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="loom-callout">
+            "I'm verifying I have the most current approved version, and it's present at the line."
+        </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="section" id="step-2">
+        <h2><span class="step-badge prerun">STEP 2</span> Pre-Run: Component Verification</h2>
+        <p>Match staged materials to the spec sheet</p>
+
+        <div class="mermaid">
+flowchart TB
+    subgraph Staged["A) Check What's Staged"]
+        S1["Stand at staging area"]
+        S2["Verify each component<br/>matches spec sheet<br/>COMPONENTRY section"]
+    end
+
+    subgraph Components["Components to Verify"]
+        C1["Primary Container"]
+        C2["Closure<br/>(lid/pump/dropper)"]
+        C3["Overcap/Insert<br/>(if applicable)"]
+        C4["Secondary Packaging<br/>(carton)"]
+        C5["Label"]
+        C6["Additional Packaging<br/>(if any)"]
+    end
+
+    subgraph Confirm["For Each Component Confirm:"]
+        V1["Correct type matches<br/>spec references"]
+        V2["Matches vendor &<br/>reference photos"]
+        V3["No obvious damage<br/>or defects"]
+    end
+
+    subgraph Labels["B) Label Roll Verification"]
+        L1["Correct label roll<br/>at the line"]
+        L2["Labels are defect-free"]
+        L3["Labels loaded correctly<br/>on applicator"]
+    end
+
+    S1 --> S2
+    S2 --> C1 & C2 & C3 & C4 & C5 & C6
+    C1 & C2 & C3 & C4 & C5 & C6 --> V1 & V2 & V3
+    V1 & V2 & V3 --> L1 --> L2 --> L3
+
+    style S1 fill:#fdab3d,color:#000
+    style L3 fill:#fdab3d,color:#000
+        </div>
+
+        <div class="subsection">
+            <h4>A) Check What's Staged (by Line Manager or Night Stager)</h4>
+            <p>Stand at the staging area and verify every component matches the spec sheet "COMPONENTRY" section:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Component</th>
+                        <th>Verify</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Primary container</td><td>Type, vendor, reference photo match</td></tr>
+                    <tr><td>Closure (lid/pump/dropper)</td><td>Type, vendor, reference photo match</td></tr>
+                    <tr><td>Overcap/insert</td><td>If applicable - type match</td></tr>
+                    <tr><td>Secondary packaging (carton)</td><td>Correct carton for SKU</td></tr>
+                    <tr><td>Label</td><td>Correct label for SKU</td></tr>
+                    <tr><td>Additional packaging</td><td>Any extras per spec</td></tr>
+                </tbody>
+            </table>
+            <p><strong>For each component, confirm:</strong></p>
+            <ul>
+                <li>Correct component type and match to spec references (vendor, reference photos, etc.)</li>
+                <li>No obvious damage/defects before loading</li>
+            </ul>
+        </div>
+
+        <div class="subsection">
+            <h4>B) Label Roll Verification</h4>
+            <ul>
+                <li>Confirm the correct label roll is at the line</li>
+                <li>Check labels are:
+                    <ul>
+                        <li>Defect-free</li>
+                        <li>Loaded correctly on the applicator</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="section" id="step-3">
+        <h2><span class="step-badge prerun">STEP 3</span> Pre-Run: Batch Code Setup Verification</h2>
+        <p>Before production begins</p>
+
+        <div class="checklist">
+            <div class="checklist-item">
+                <div class="check-box"></div>
+                <div>
+                    <strong>Confirm batch code standards on the form:</strong>
+                    <ul>
+                        <li>Batch Code #</li>
+                        <li>Designated location</li>
+                        <li>Batch code requirements</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="checklist-item">
+                <div class="check-box"></div>
+                <div>
+                    <strong>Verify printer is set correctly and do a test print/check:</strong>
+                    <ul>
+                        <li>Legible</li>
+                        <li>Correct format</li>
+                        <li>Correct placement</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="section" id="step-4">
+        <h2><span class="step-badge prerun">STEP 4</span> Pre-Run: Equipment Calibration Checks</h2>
+
+        <div class="checklist">
+            <div class="checklist-item">
+                <div class="check-box"></div>
+                <div>
+                    <strong>Torque meter</strong> is calibrated and operational
+                </div>
+            </div>
+            <div class="checklist-item">
+                <div class="check-box"></div>
+                <div>
+                    <strong>Scale</strong> is calibrated, tared, and accurate
+                </div>
+            </div>
+        </div>
+
+        <div class="loom-callout">
+            "Torque meter is calibrated and operational. Scale is calibrated, tared, and accurate."
+        </div>
+    </div>
+
+    <!-- STEP 5 -->
+    <div class="section" id="step-5">
+        <h2><span class="step-badge prerun">STEP 5</span> Pre-Run: Filling Line Configuration + Sanitation</h2>
+
+        <div class="subsection">
+            <h4>Line Setup Items (as applicable)</h4>
+            <div class="checklist">
+                <div class="checklist-item">
+                    <div class="check-box"></div>
+                    <div>Hopper mesh filter installed</div>
+                </div>
+                <div class="checklist-item">
+                    <div class="check-box"></div>
+                    <div>Hopper lid secured</div>
+                </div>
+                <div class="checklist-item">
+                    <div class="check-box"></div>
+                    <div>Blower attached + operational (when applicable)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="subsection">
+            <h4>Sanitation Verification</h4>
+            <div class="checklist">
+                <div class="checklist-item">
+                    <div class="check-box"></div>
+                    <div>Line, hoppers, tools, surfaces sanitized per sanitation SOP and documented</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- STEP 6 -->
+    <div class="section" id="step-6">
+        <h2><span class="step-badge prerun">STEP 6</span> Pre-Run: Batch Record / MO Verification</h2>
+
+        <div class="non-negotiable">
+            <strong>No run starts until the MO/batch record, spec sheet, and staged components all match.</strong>
+        </div>
+
+        <div class="checklist">
+            <div class="checklist-item">
+                <div class="check-box"></div>
+                <div>
+                    <strong>Verify the MO and batch record match:</strong>
+                    <ul>
+                        <li>Correct SKU</li>
+                        <li>Correct packaging requirements</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="loom-callout">
+            "No run starts until the MO/batch record, spec sheet, and staged components all match."
+        </div>
+    </div>
+
+    <!-- STEP 7 -->
+    <div class="section" id="step-7">
+        <h2><span class="step-badge inprocess">STEP 7</span> Start of Run: Begin QA Documentation</h2>
+        <p>Follow the form in order</p>
+
+        <div class="subsection">
+            <h4>A) Fill Out the Top of the Document</h4>
+            <table>
+                <tbody>
+                    <tr><td>Product name</td><td><em>Enter value</em></td></tr>
+                    <tr><td>SKU code</td><td><em>Enter value</em></td></tr>
+                    <tr><td>Client/brand</td><td><em>Enter value</em></td></tr>
+                    <tr><td>Spec sheet last updated</td><td><em>Enter date</em></td></tr>
+                    <tr><td>Internal doc code (if required)</td><td><em>Enter value</em></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="subsection">
+            <h4>B) Add/Confirm Photos As You Go</h4>
+            <p>Take/attach photos as required:</p>
+            <div class="photo-grid">
+                <div class="photo-item">Primary Packaging<br/><strong>Front</strong></div>
+                <div class="photo-item">Primary Packaging<br/><strong>Back</strong></div>
+                <div class="photo-item">Primary Packaging<br/><strong>Side 1</strong></div>
+                <div class="photo-item">Primary Packaging<br/><strong>Side 2</strong></div>
+                <div class="photo-item">Secondary Packaging<br/><strong>Photos</strong></div>
+                <div class="photo-item">Additional<br/><strong>As Needed</strong></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- STEP 8 -->
+    <div class="section" id="step-8">
+        <h2><span class="step-badge inprocess">STEP 8</span> In-Process QA Checks</h2>
+        <p>Repeat at the required frequency throughout the run</p>
+
+        <div class="loom-callout">
+            "Now I'm doing my in-process checks throughout the run."
+        </div>
+
+        <div class="mermaid">
+flowchart TB
+    subgraph Checks["In-Process QA Checks"]
+        A["Fill Weight"]
+        B["Torque"]
+        C["Label Placement"]
+        D["Batch Code Clarity"]
+        E["Quality Checks"]
+        F["Thread & Finish"]
+        G["Leak Prevention"]
+        H["Component Verification"]
+    end
+
+    A --> |"Target weight<br/>Accepted range ±%"| Pass1["Pass/Fail"]
+    B --> |"Min/Max torque<br/>Required frequency"| Pass2["Pass/Fail"]
+    C --> |"Orientation<br/>±mm tolerances"| Pass3["Pass/Fail"]
+    D --> |"Legible, Complete<br/>Correct format/placement"| Pass4["Pass/Fail"]
+    E --> |"No cracks, scratches<br/>dents, residue"| Pass5["Pass/Fail"]
+    F --> |"No residue/buildup<br/>on threads"| Pass6["Pass/Fail"]
+    G --> |"Upside down test<br/>No leaking/seepage"| Pass7["Pass/Fail"]
+    H --> |"No unapproved<br/>component swaps"| Pass8["Pass/Fail"]
+
+    style A fill:#00c875,color:#000
+    style B fill:#00c875,color:#000
+    style C fill:#00c875,color:#000
+    style D fill:#00c875,color:#000
+    style E fill:#00c875,color:#000
+    style F fill:#00c875,color:#000
+    style G fill:#00c875,color:#000
+    style H fill:#00c875,color:#000
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Check</th>
+                    <th>What to Verify</th>
+                    <th>Criteria</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Fill Weight</strong></td>
+                    <td>Measure units</td>
+                    <td>
+                        <span class="tolerance-box">Target fill weight</span>
+                        <span class="tolerance-box">Accepted range/tolerance (g and/or %)</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Torque</strong></td>
+                    <td>Check closure torque with torque meter</td>
+                    <td>
+                        <span class="tolerance-box">Min torque</span>
+                        <span class="tolerance-box">Max torque</span><br/>
+                        Follow "required frequency" listed
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Label Placement</strong></td>
+                    <td>Confirm orientation and placement</td>
+                    <td>
+                        <span class="tolerance-box">Orientation standard</span><br/>
+                        <span class="tolerance-box">Vertical tolerance (± mm)</span>
+                        <span class="tolerance-box">Horizontal tolerance (± mm)</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Batch Code Clarity</strong></td>
+                    <td>Confirm batch codes</td>
+                    <td>Legible, Complete, Correct format, Correct placement</td>
+                </tr>
+                <tr>
+                    <td><strong>Quality Checks</strong></td>
+                    <td>Confirm units are free of defects</td>
+                    <td>No cracks, scratches, dents, residue/contamination</td>
+                </tr>
+                <tr>
+                    <td><strong>Thread & Finish Cleanliness</strong></td>
+                    <td>Check threads and closure interfaces</td>
+                    <td>No residue/buildup on threads or closure interfaces</td>
+                </tr>
+                <tr>
+                    <td><strong>Leak Prevention</strong></td>
+                    <td>Set aside sample, place upside down</td>
+                    <td>No leaking, No seepage</td>
+                </tr>
+                <tr>
+                    <td><strong>Ongoing Component Verification</strong></td>
+                    <td>Re-check components throughout run</td>
+                    <td>No unapproved swaps</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- STEP 9 -->
+    <div class="section" id="step-9">
+        <h2><span class="step-badge inprocess">STEP 9</span> Defect Classification</h2>
+        <p>How to log issues correctly</p>
+
+        <p>When an issue is found, classify it in the defect table:</p>
+
+        <table class="defect-table">
+            <thead>
+                <tr>
+                    <th>Classification</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="defect-acceptable">Acceptable</td>
+                    <td>Within all tolerances, no action needed</td>
+                </tr>
+                <tr>
+                    <td class="defect-borderline">Borderline but acceptable</td>
+                    <td>At edge of tolerance but still passes</td>
+                </tr>
+                <tr>
+                    <td class="defect-minor">Minor defect</td>
+                    <td>Small issue, may not affect function</td>
+                </tr>
+                <tr>
+                    <td class="defect-major">Major defect</td>
+                    <td>Significant issue requiring attention</td>
+                </tr>
+                <tr>
+                    <td class="defect-critical">Critical defect</td>
+                    <td>Serious issue, may require line stop</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="subsection important">
+            <h4>Required Documentation for Defects</h4>
+            <p>Add supporting photos and short notes on:</p>
+            <ul>
+                <li><strong>What happened</strong> - Description of the defect</li>
+                <li><strong>Where it happened</strong> - Location in run, unit numbers if applicable</li>
+                <li><strong>What was done to correct/contain it</strong> - Actions taken</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- STEP 10 -->
+    <div class="section" id="step-10">
+        <h2><span class="step-badge inprocess">STEP 10</span> Product Standards Check</h2>
+        <p>Compare to retention sample</p>
+
+        <div class="non-negotiable">
+            <strong>Always compare product to retention sample as the true standard.</strong>
+        </div>
+
+        <div class="checklist">
+            <div class="checklist-item">
+                <div class="check-box"></div>
+                <div><strong>Appearance</strong> - Visual match to retention sample</div>
+            </div>
+            <div class="checklist-item">
+                <div class="check-box"></div>
+                <div><strong>Color</strong> - Color match to retention sample</div>
+            </div>
+            <div class="checklist-item">
+                <div class="check-box"></div>
+                <div><strong>Odor</strong> - Scent match to retention sample</div>
+            </div>
+            <div class="checklist-item">
+                <div class="check-box"></div>
+                <div><strong>Texture/consistency</strong> - Feel and consistency match to retention sample</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- STEP 11 -->
+    <div class="section" id="step-11">
+        <h2><span class="step-badge inprocess">STEP 11</span> End of Run: Close-Out Steps</h2>
+
+        <div class="non-negotiable">
+            <strong>Must be completed every time - no exceptions.</strong>
+        </div>
+
+        <div class="mermaid">
+flowchart TB
+    A["Final Fill & Torque<br/>Verification"] --> B["Label Roll<br/>Reconciliation"]
+    B --> C["Component<br/>Reconciliation"]
+    C --> D["Waste<br/>Documentation"]
+    D --> E["Final Unit Count<br/>Verification"]
+    E --> F["Line Cleanup &<br/>Readiness"]
+
+    style A fill:#00c875,color:#000
+    style F fill:#00c875,color:#000
+        </div>
+
+        <div class="subsection">
+            <h4>Final Fill & Torque Verification</h4>
+            <ul>
+                <li>Confirm final units meet tolerances</li>
+                <li>If deviation occurs, document and trigger root cause evaluation</li>
+            </ul>
+        </div>
+
+        <div class="subsection">
+            <h4>Label Roll Reconciliation</h4>
+            <ul>
+                <li>Record remaining labels</li>
+                <li>Document damaged/unused rolls</li>
+            </ul>
+        </div>
+
+        <div class="subsection">
+            <h4>Component Reconciliation</h4>
+            <ul>
+                <li>Reconcile all components vs MO quantities</li>
+                <li>Document overages/shortages/discrepancies</li>
+            </ul>
+        </div>
+
+        <div class="subsection">
+            <h4>Waste Documentation</h4>
+            <ul>
+                <li>Log scrapped components/defective units per SOP</li>
+            </ul>
+        </div>
+
+        <div class="subsection">
+            <h4>Final Unit Count Verification</h4>
+            <ul>
+                <li>Confirm acceptable units match MO requirement</li>
+            </ul>
+        </div>
+
+        <div class="subsection">
+            <h4>Line Cleanup & Readiness</h4>
+            <ul>
+                <li>Confirm line is cleaned and prepped for next run per sanitation SOP</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- STEP 12 -->
+    <div class="section" id="step-12">
+        <h2><span class="step-badge final">STEP 12</span> Save the Documentation</h2>
+        <p>Organized Drive filing</p>
+
+        <div class="checklist">
+            <div class="checklist-item">
+                <div class="check-box"></div>
+                <div>Save the completed QA doc in Drive using the trained folder structure</div>
+            </div>
+        </div>
+
+        <div class="subsection">
+            <h4>Naming Convention</h4>
+            <div class="naming-convention">
+                Client_Brand – SKU – PO/MO – Date – QA Inspection Report
+            </div>
+            <p><em>Example:</em> <code>EarthHarbor – EH-SKU-001 – WO-001234 – 2025-12-08 – QA Inspection Report</code></p>
+        </div>
+
+        <div class="loom-callout">
+            Say the naming convention on Loom as you save the file.
+        </div>
+
+        <div class="subsection important">
+            <h4>Before Saving, Double-Check:</h4>
+            <ul>
+                <li>Photos attached</li>
+                <li>All required sections complete</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- STEP 13 -->
+    <div class="section" id="step-13">
+        <h2><span class="step-badge final">STEP 13</span> Attach to Monday.com</h2>
+
+        <div class="non-negotiable">
+            <strong>FINAL REQUIRED STEP:</strong> QA documentation must be attached to Monday.com.
+        </div>
+
+        <div class="mermaid">
+flowchart LR
+    A["Open Monday.com<br/>Production Board"] --> B["Find Ticket<br/>for PO"]
+    B --> C["Upload to<br/>QA DOCS Column"]
+    C --> D["Confirm<br/>Attachment Visible"]
+
+    style A fill:#9d50dd,color:#fff
+    style D fill:#9d50dd,color:#fff
+        </div>
+
+        <div class="checklist">
+            <div class="checklist-item">
+                <div class="check-box"></div>
+                <div><strong>Open the Monday.com ticket</strong> for that specific PO</div>
+            </div>
+            <div class="checklist-item">
+                <div class="check-box"></div>
+                <div><strong>Attach the final QA documentation file</strong> to the ticket (QA DOCS column)</div>
+            </div>
+            <div class="checklist-item">
+                <div class="check-box"></div>
+                <div><strong>Confirm attachment is visible and correct</strong></div>
+            </div>
+        </div>
+
+        <div class="subsection" style="border-left-color: var(--blue);">
+            <h4 style="color: var(--blue);">Monday.com Reference</h4>
+            <table>
+                <tbody>
+                    <tr><td>Board</td><td>Production (ID: 9304930311)</td></tr>
+                    <tr><td>Column</td><td>QA DOCS (<code>file_mktcs58s</code>)</td></tr>
+                    <tr><td>URL</td><td><a href="https://earthharbor.monday.com/boards/9304930311" style="color: var(--blue);">earthharbor.monday.com/boards/9304930311</a></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Summary -->
+    <div class="section">
+        <h2>Quick Reference</h2>
+        <div class="phase-overview" style="margin-bottom: 30px;">
+            <div class="phase-box prep">
+                <h4>PREP</h4>
+                <p>Step 0</p>
+            </div>
+            <span class="phase-arrow">→</span>
+            <div class="phase-box prerun">
+                <h4>PRE-RUN</h4>
+                <p>Steps 1-6</p>
+            </div>
+            <span class="phase-arrow">→</span>
+            <div class="phase-box inprocess">
+                <h4>IN-PROCESS</h4>
+                <p>Steps 7-11</p>
+            </div>
+            <span class="phase-arrow">→</span>
+            <div class="phase-box final">
+                <h4>FINAL</h4>
+                <p>Steps 12-13</p>
+            </div>
+        </div>
+        <div class="subsection important">
+            <h4>Non-Negotiables</h4>
+            <ul style="margin: 0;">
+                <li><strong>Step 1:</strong> Spec sheet must be at the line</li>
+                <li><strong>Step 6:</strong> No run starts until MO/batch record/spec/components all match</li>
+                <li><strong>Step 10:</strong> Always compare to retention sample</li>
+                <li><strong>Step 11:</strong> Close-out steps must be completed every time</li>
+                <li><strong>Step 13:</strong> QA docs must be attached to Monday.com</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>QA Manager Procedure | Pure Earth Labs</p>
+        <p>Reference: Loom Training Script | Generated December 8, 2025</p>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+    </script>
+</body>
+</html>

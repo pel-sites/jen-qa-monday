@@ -1,0 +1,730 @@
+/**
+ * Jen QA Monday - Shared Design System
+ *
+ * Design Philosophy: Extravagantly practical
+ * - Content is the hero
+ * - Breathing room, proper typography
+ * - Satisfying but subtle interactions
+ *
+ * See CLAUDE.md for full design principles.
+ */
+
+/* ==========================================================================
+   Design Tokens
+   ========================================================================== */
+
+:root {
+  /* Colors - muted, content-first palette */
+  --color-text: #e8e8e8;
+  --color-text-muted: #a0a0a0;
+  --color-bg: #1a1a2e;
+  --color-surface: #16213e;
+  --color-surface-raised: #1e2a47;
+  --color-border: #2a2a4a;
+  --color-border-light: #3a3a5a;
+
+  /* Semantic colors */
+  --color-accent: #9d50dd;
+  --color-accent-hover: #8040c0;
+  --color-success: #00c875;
+  --color-warning: #fdab3d;
+  --color-critical: #df2f4a;
+  --color-info: #579bfc;
+
+  /* Legacy aliases (for compatibility during transition) */
+  --purple: var(--color-accent);
+  --green: var(--color-success);
+  --orange: var(--color-warning);
+  --red: var(--color-critical);
+  --blue: var(--color-info);
+  --dark-bg: var(--color-bg);
+  --card-bg: var(--color-surface);
+  --darker-bg: #0f0f23;
+
+  /* Typography */
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  --font-mono: 'SF Mono', Monaco, 'Cascadia Code', Consolas, monospace;
+
+  /* Font sizes - modular scale */
+  --text-xs: 0.75rem;    /* 12px */
+  --text-sm: 0.875rem;   /* 14px */
+  --text-base: 1rem;     /* 16px */
+  --text-lg: 1.125rem;   /* 18px */
+  --text-xl: 1.25rem;    /* 20px */
+  --text-2xl: 1.5rem;    /* 24px */
+  --text-3xl: 2rem;      /* 32px */
+  --text-4xl: 2.5rem;    /* 40px */
+
+  /* Spacing scale */
+  --space-1: 0.25rem;    /* 4px */
+  --space-2: 0.5rem;     /* 8px */
+  --space-3: 0.75rem;    /* 12px */
+  --space-4: 1rem;       /* 16px */
+  --space-5: 1.25rem;    /* 20px */
+  --space-6: 1.5rem;     /* 24px */
+  --space-8: 2rem;       /* 32px */
+  --space-10: 2.5rem;    /* 40px */
+  --space-12: 3rem;      /* 48px */
+  --space-16: 4rem;      /* 64px */
+
+  /* Layout */
+  --measure: 65ch;           /* Ideal line length for reading */
+  --content-width: 800px;    /* Narrow content */
+  --wide-width: 1200px;      /* Wide content */
+  --max-width: 1400px;       /* Maximum page width */
+
+  /* Border radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+
+/* ==========================================================================
+   Base Styles
+   ========================================================================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: 1.6;
+  color: var(--color-text);
+  background: linear-gradient(135deg, var(--color-bg) 0%, var(--color-surface) 100%);
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+
+h1, h2, h3, h4, h5, h6 {
+  color: #fff;
+  line-height: 1.3;
+  margin-top: 0;
+}
+
+h1 { font-size: var(--text-3xl); }
+h2 { font-size: var(--text-2xl); }
+h3 { font-size: var(--text-xl); }
+h4 { font-size: var(--text-lg); }
+
+p {
+  margin: 0 0 var(--space-4) 0;
+}
+
+/* Prose container - enforces readable line length */
+.prose {
+  max-width: var(--measure);
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-accent-hover);
+  text-decoration: underline;
+}
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--darker-bg);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+}
+
+ul, ol {
+  margin: var(--space-2) 0;
+  padding-left: var(--space-6);
+}
+
+li {
+  margin: var(--space-2) 0;
+}
+
+
+/* ==========================================================================
+   Layout Components
+   ========================================================================== */
+
+/* Container */
+.container {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-5);
+}
+
+.container--wide {
+  max-width: var(--wide-width);
+}
+
+.container--full {
+  max-width: var(--max-width);
+}
+
+/* Section */
+.section {
+  background: var(--color-surface);
+  padding: var(--space-8);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-8);
+  border: 1px solid var(--color-border);
+}
+
+.section h2 {
+  margin-top: 0;
+  padding-bottom: var(--space-4);
+  border-bottom: 2px solid var(--color-accent);
+}
+
+
+/* ==========================================================================
+   Navigation
+   ========================================================================== */
+
+.nav {
+  background: var(--darker-bg);
+  padding: var(--space-4) var(--space-5);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.nav-container {
+  max-width: var(--wide-width);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-brand {
+  color: var(--color-accent);
+  font-weight: 600;
+  font-size: var(--text-lg);
+  text-decoration: none;
+}
+
+.nav-brand:hover {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: var(--space-5);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  color: var(--color-text);
+  text-decoration: none;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  transition: background var(--transition-fast), color var(--transition-fast);
+  font-size: var(--text-sm);
+}
+
+.nav-links a:hover {
+  background: var(--color-surface);
+  text-decoration: none;
+}
+
+.nav-links a.active {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+/* Hamburger menu */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  padding: var(--space-2);
+  gap: 5px;
+}
+
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background: var(--color-text);
+  border-radius: 3px;
+  transition: all 0.3s;
+}
+
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(6px, 6px);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
+@media (max-width: 768px) {
+  .hamburger {
+    display: flex;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--darker-bg);
+    flex-direction: column;
+    padding: 0;
+    gap: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .nav-links.active {
+    max-height: 400px;
+  }
+
+  .nav-links li {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .nav-links a {
+    display: block;
+    padding: var(--space-4) var(--space-5);
+    border-radius: 0;
+  }
+
+  .nav {
+    position: relative;
+  }
+}
+
+
+/* ==========================================================================
+   Cards
+   ========================================================================== */
+
+.card {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  margin: var(--space-5) 0;
+  border: 1px solid var(--color-border);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.card h2,
+.card h3 {
+  margin: 0 0 var(--space-3) 0;
+  color: var(--color-accent);
+}
+
+.card p {
+  margin: 0 0 var(--space-4) 0;
+  opacity: 0.8;
+}
+
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+
+.btn {
+  display: inline-block;
+  background: var(--color-accent);
+  color: #fff;
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.btn:hover {
+  background: var(--color-accent-hover);
+  text-decoration: none;
+  color: #fff;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn--secondary {
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+}
+
+.btn--secondary:hover {
+  background: var(--color-surface);
+}
+
+
+/* ==========================================================================
+   Badges
+   ========================================================================== */
+
+.badge {
+  display: inline-block;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: 600;
+}
+
+.badge--success { background: var(--color-success); color: #000; }
+.badge--warning { background: var(--color-warning); color: #000; }
+.badge--critical { background: var(--color-critical); color: #fff; }
+.badge--info { background: var(--color-info); color: #fff; }
+.badge--accent { background: var(--color-accent); color: #fff; }
+
+
+/* ==========================================================================
+   Tables
+   ========================================================================== */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: var(--space-5) 0;
+}
+
+th, td {
+  padding: var(--space-4);
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+}
+
+th {
+  background: var(--darker-bg);
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+tr:hover {
+  background: rgba(157, 80, 221, 0.1);
+}
+
+
+/* ==========================================================================
+   Page Headers
+   ========================================================================== */
+
+.header {
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-info) 100%);
+  padding: var(--space-10);
+  border-radius: var(--radius-xl);
+  margin-bottom: var(--space-10);
+  text-align: center;
+}
+
+.header h1 {
+  margin: 0 0 var(--space-3) 0;
+  font-size: var(--text-4xl);
+}
+
+.header .subtitle {
+  font-size: var(--text-xl);
+  opacity: 0.9;
+}
+
+.header .meta {
+  margin-top: var(--space-4);
+  opacity: 0.7;
+  font-size: var(--text-sm);
+}
+
+/* Header color variants */
+.header--critical {
+  background: linear-gradient(135deg, var(--color-critical) 0%, var(--color-warning) 100%);
+}
+
+.header--success {
+  background: linear-gradient(135deg, var(--color-success) 0%, var(--color-info) 100%);
+}
+
+
+/* ==========================================================================
+   Callouts & Alerts
+   ========================================================================== */
+
+.callout {
+  background: var(--darker-bg);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  margin: var(--space-5) 0;
+  border-left: 4px solid var(--color-accent);
+}
+
+.callout h4 {
+  margin: 0 0 var(--space-3) 0;
+  color: var(--color-accent);
+}
+
+.callout--critical {
+  border-left-color: var(--color-critical);
+  background: linear-gradient(135deg, rgba(223, 47, 74, 0.1) 0%, var(--darker-bg) 100%);
+}
+
+.callout--critical h4 {
+  color: var(--color-critical);
+}
+
+.callout--warning {
+  border-left-color: var(--color-warning);
+}
+
+.callout--warning h4 {
+  color: var(--color-warning);
+}
+
+.callout--success {
+  border-left-color: var(--color-success);
+}
+
+.callout--success h4 {
+  color: var(--color-success);
+}
+
+.callout--info {
+  border-left-color: var(--color-info);
+}
+
+.callout--info h4 {
+  color: var(--color-info);
+}
+
+/* Non-negotiable alert */
+.non-negotiable {
+  background: linear-gradient(135deg, rgba(223, 47, 74, 0.2) 0%, rgba(223, 47, 74, 0.1) 100%);
+  border: 1px solid var(--color-critical);
+  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-5);
+  margin: var(--space-4) 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.non-negotiable::before {
+  content: "!";
+  background: var(--color-critical);
+  color: #fff;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+
+/* ==========================================================================
+   Checklists
+   ========================================================================== */
+
+.checklist {
+  background: var(--darker-bg);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  margin: var(--space-4) 0;
+}
+
+.checklist-item {
+  display: flex;
+  align-items: flex-start;
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.checklist-item:last-child {
+  border-bottom: none;
+}
+
+.check-box {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--color-accent);
+  border-radius: var(--radius-sm);
+  margin-right: var(--space-4);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+
+/* ==========================================================================
+   Stats Cards
+   ========================================================================== */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--space-5);
+  margin: var(--space-6) 0;
+}
+
+.stat-card {
+  background: var(--darker-bg);
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+  text-align: center;
+}
+
+.stat-card .value {
+  font-size: var(--text-3xl);
+  font-weight: bold;
+  line-height: 1;
+}
+
+.stat-card .label {
+  font-size: var(--text-sm);
+  opacity: 0.7;
+  margin-top: var(--space-3);
+}
+
+.stat-card.critical { border-top: 4px solid var(--color-critical); }
+.stat-card.critical .value { color: var(--color-critical); }
+
+.stat-card.warning { border-top: 4px solid var(--color-warning); }
+.stat-card.warning .value { color: var(--color-warning); }
+
+.stat-card.success { border-top: 4px solid var(--color-success); }
+.stat-card.success .value { color: var(--color-success); }
+
+.stat-card.info { border-top: 4px solid var(--color-info); }
+.stat-card.info .value { color: var(--color-info); }
+
+
+/* ==========================================================================
+   Mermaid Diagrams
+   ========================================================================== */
+
+.mermaid {
+  background: #fff;
+  padding: var(--space-5);
+  border-radius: var(--radius-md);
+  margin: var(--space-5) 0;
+  overflow-x: auto;
+}
+
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+
+.footer {
+  text-align: center;
+  padding: var(--space-8);
+  margin-top: var(--space-10);
+  font-size: var(--text-sm);
+}
+
+.footer p {
+  margin: var(--space-2) 0;
+  opacity: 0.7;
+}
+
+.footer a {
+  color: var(--color-accent);
+}
+
+
+/* ==========================================================================
+   Utilities
+   ========================================================================== */
+
+.text-center { text-align: center; }
+.text-muted { color: var(--color-text-muted); }
+.mt-0 { margin-top: 0; }
+.mb-0 { margin-bottom: 0; }
+.opacity-80 { opacity: 0.8; }
+
+
+/* ==========================================================================
+   Phase Colors (for QA workflow)
+   ========================================================================== */
+
+.phase-prep { background: var(--color-info); color: #fff; }
+.phase-prerun { background: var(--color-warning); color: #000; }
+.phase-inprocess { background: var(--color-success); color: #000; }
+.phase-final { background: var(--color-accent); color: #fff; }
+
+
+/* ==========================================================================
+   Responsive Adjustments
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  :root {
+    --text-3xl: 1.75rem;
+    --text-4xl: 2rem;
+  }
+
+  .container {
+    padding: var(--space-5) var(--space-4);
+  }
+
+  .section {
+    padding: var(--space-5);
+  }
+
+  .header {
+    padding: var(--space-6);
+  }
+
+  .card {
+    padding: var(--space-5);
+  }
+}
+
+@media (max-width: 480px) {
+  .header h1 {
+    font-size: var(--text-2xl);
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}

@@ -4,229 +4,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jen QA Monday - Documentation</title>
+    <link rel="stylesheet" href="/css/shared.css">
     <style>
-        * { box-sizing: border-box; }
-
-        .nav {
-            background: #0f0f23;
-            padding: 15px 20px;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid #2a2a4a;
-        }
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .nav-brand {
-            color: #9d50dd;
-            font-weight: 600;
-            font-size: 1.1em;
-            text-decoration: none;
-        }
-        .nav-links {
-            display: flex;
-            gap: 20px;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-        .nav-links a {
-            color: #eee;
-            text-decoration: none;
-            padding: 8px 12px;
-            border-radius: 6px;
-            transition: background 0.2s;
-        }
-        .nav-links a:hover {
-            background: #16213e;
-        }
-        .nav-links a.active {
-            background: #9d50dd;
-            color: #fff;
-        }
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            padding: 5px;
-            gap: 5px;
-        }
-        .hamburger span {
-            width: 25px;
-            height: 3px;
-            background: #eee;
-            border-radius: 3px;
-            transition: all 0.3s;
-        }
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
-        }
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(6px, -6px);
-        }
-        @media (max-width: 768px) {
-            .hamburger {
-                display: flex;
-            }
-            .nav-links {
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: #0f0f23;
-                flex-direction: column;
-                padding: 0;
-                gap: 0;
-                max-height: 0;
-                overflow: hidden;
-                transition: max-height 0.3s ease-out;
-                border-bottom: 1px solid #2a2a4a;
-            }
-            .nav-links.active {
-                max-height: 300px;
-            }
-            .nav-links li {
-                border-top: 1px solid #2a2a4a;
-            }
-            .nav-links a {
-                display: block;
-                padding: 15px 20px;
-                border-radius: 0;
-            }
-            .nav {
-                position: relative;
-            }
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: #eee;
-            min-height: 100vh;
-            margin: 0;
-            padding: 40px 20px;
-        }
+        /* Page-specific styles for index */
         .container {
-            max-width: 800px;
-            margin: 0 auto;
+            padding-top: var(--space-10);
         }
+
         h1 {
             text-align: center;
-            margin-bottom: 10px;
+            margin-bottom: var(--space-3);
         }
+
         .subtitle {
             text-align: center;
             opacity: 0.7;
-            margin-bottom: 40px;
+            margin-bottom: var(--space-10);
         }
-        .card {
-            background: #16213e;
-            border-radius: 12px;
-            padding: 25px;
-            margin: 20px 0;
-            border: 1px solid #2a2a4a;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-        }
-        .card h2 {
-            margin: 0 0 10px 0;
-            color: #9d50dd;
-        }
-        .card p {
-            margin: 0 0 15px 0;
-            opacity: 0.8;
-        }
-        .card a {
-            display: inline-block;
-            background: #9d50dd;
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        .card a:hover {
-            background: #7b3aab;
-        }
-        .badge {
-            display: inline-block;
-            background: #28a745;
-            color: #fff;
-            font-size: 0.75em;
-            padding: 4px 10px;
-            border-radius: 4px;
-            margin-left: 10px;
-            vertical-align: middle;
-        }
+
         .intro {
             background: rgba(157, 80, 221, 0.1);
             border: 1px solid rgba(157, 80, 221, 0.3);
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 30px;
+            border-radius: var(--radius-md);
+            padding: var(--space-5);
+            margin-bottom: var(--space-8);
         }
+
         .intro p {
             margin: 0;
             line-height: 1.6;
         }
-        .card.placeholder {
-            opacity: 0.6;
+
+        .card a.btn {
+            display: inline-block;
         }
-        .card.placeholder a {
-            background: #555;
-            cursor: not-allowed;
-        }
-        .coming-soon {
-            font-size: 0.8em;
-            color: #888;
-            margin-left: 10px;
-        }
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            font-size: 0.9em;
-        }
-        .footer p {
-            margin: 5px 0;
-            opacity: 0.7;
-        }
-        .footer a {
-            color: #9d50dd;
-            text-decoration: none;
-        }
-        .footer a:hover {
-            text-decoration: underline;
+
+        .badge--start {
+            background: #28a745;
+            color: #fff;
+            font-size: var(--text-xs);
+            padding: var(--space-1) var(--space-3);
+            border-radius: var(--radius-sm);
+            margin-left: var(--space-3);
+            vertical-align: middle;
         }
 
         @media (max-width: 480px) {
-            body {
-                padding: 20px 10px;
-            }
-
             h1 {
-                font-size: 1.5em;
+                font-size: var(--text-2xl);
             }
 
-            .card {
-                padding: 20px;
-            }
-
-            .card h2 {
-                font-size: 1.2em;
-            }
-
-            .card a {
+            .card a.btn {
                 display: block;
                 text-align: center;
             }
@@ -257,40 +85,40 @@
             <p>Start with the <strong>QA Manager Procedure</strong> for the complete workflow, then review <strong>Team Performance Analysis</strong> for current metrics. Continue through the analysis and roadmap sections, with technical reference and hiring docs at the end.</p>
         </div>
 
-        <div class="card placeholder">
-            <h2>QA Manager Procedure <span class="badge">START HERE</span><span class="coming-soon">(Coming Soon)</span></h2>
+        <div class="card">
+            <h2>QA Manager Procedure <span class="badge--start">START HERE</span></h2>
             <p>Step-by-step operational SOP for the QA Manager role, covering daily procedures and responsibilities.</p>
-            <a href="#">View Procedure</a>
+            <a href="/qa_manager_procedure.html" class="btn">View Procedure</a>
         </div>
 
-        <div class="card placeholder">
-            <h2>Team Performance Analysis<span class="coming-soon">(Coming Soon)</span></h2>
+        <div class="card">
+            <h2>Team Performance Analysis</h2>
             <p>Current metrics and data analysis of team QA performance, identifying trends and areas for improvement.</p>
-            <a href="#">View Analysis</a>
+            <a href="/team_performance_analysis.html" class="btn">View Analysis</a>
         </div>
 
         <div class="card">
             <h2>QA Workflow Analysis</h2>
             <p>Complete analysis of Jen's 13-step QA process mapped to Monday.com, including gap analysis and recommendations.</p>
-            <a href="/qa_workflow_analysis.html">View Analysis</a>
+            <a href="/qa_workflow_analysis.html" class="btn">View Analysis</a>
         </div>
 
-        <div class="card placeholder">
-            <h2>Next Steps Roadmap<span class="coming-soon">(Coming Soon)</span></h2>
+        <div class="card">
+            <h2>Next Steps Roadmap</h2>
             <p>Action plan for implementing QA workflow improvements and addressing identified gaps.</p>
-            <a href="#">View Roadmap</a>
+            <a href="/next_steps_roadmap.html" class="btn">View Roadmap</a>
         </div>
 
         <div class="card">
             <h2>Production Board Structure</h2>
             <p>Technical documentation of the Production board including columns, groups, views, and board relationships.</p>
-            <a href="/production_board_structure.html">View Structure</a>
+            <a href="/production_board_structure.html" class="btn">View Structure</a>
         </div>
 
-        <div class="card placeholder">
-            <h2>Ideal Candidate Profile<span class="coming-soon">(Coming Soon)</span></h2>
+        <div class="card">
+            <h2>Ideal Candidate Profile</h2>
             <p>Profile and requirements for hiring QA team members aligned with Pure Earth Labs' workflow.</p>
-            <a href="#">View Profile</a>
+            <a href="/ideal_candidate_profile.html" class="btn">View Profile</a>
         </div>
 
         <div class="footer">
