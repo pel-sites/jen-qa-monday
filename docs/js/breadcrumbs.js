@@ -335,6 +335,47 @@
                     display: none !important;
                 }
             }
+
+            @media (max-width: 480px) {
+                .breadcrumb-bar {
+                    padding: 6px 12px;
+                }
+
+                .breadcrumb-content {
+                    flex-direction: row;
+                    align-items: center;
+                    gap: 0;
+                }
+
+                .breadcrumb-trail {
+                    display: none;
+                }
+
+                .breadcrumb-progress {
+                    width: 100%;
+                    justify-content: center;
+                    gap: 10px;
+                }
+
+                .phase-indicator {
+                    gap: 4px;
+                }
+
+                .phase-dot {
+                    width: 20px;
+                    height: 20px;
+                    border-width: 2px;
+                }
+
+                .phase-dot-inner {
+                    width: 8px;
+                    height: 8px;
+                }
+
+                .breadcrumb-counter {
+                    font-size: 0.85em;
+                }
+            }
         `;
         document.head.appendChild(style);
     }
