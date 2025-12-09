@@ -3,60 +3,219 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jen QA Monday - Documentation</title>
+    <title>Jen QA Monday - Pure Earth Labs QA Documentation</title>
     <link rel="stylesheet" href="/css/shared.css">
     <style>
-        /* Page-specific styles for index */
-        .container {
-            padding-top: var(--space-10);
-        }
-
-        h1 {
+        .hero {
             text-align: center;
-            margin-bottom: var(--space-3);
-        }
-
-        .subtitle {
-            text-align: center;
-            opacity: 0.7;
+            padding: var(--space-12) var(--space-5);
             margin-bottom: var(--space-10);
         }
 
-        .intro {
-            background: rgba(157, 80, 221, 0.1);
-            border: 1px solid rgba(157, 80, 221, 0.3);
-            border-radius: var(--radius-md);
-            padding: var(--space-5);
+        .hero h1 {
+            font-size: var(--text-4xl);
+            margin-bottom: var(--space-3);
+            color: #fff;
+        }
+
+        .hero-tagline {
+            font-size: var(--text-xl);
+            color: var(--color-text-muted);
             margin-bottom: var(--space-8);
         }
 
-        .intro p {
-            margin: 0;
-            line-height: 1.6;
+        .audience-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-3);
+            max-width: 500px;
+            margin: 0 auto;
         }
 
-        .card a.btn {
-            display: inline-block;
+        .audience-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            padding: var(--space-3) var(--space-5);
+            background: var(--color-surface);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--color-border);
+            font-size: var(--text-sm);
+            color: var(--color-text-muted);
         }
 
-        .badge--start {
-            background: #28a745;
+        .audience-item strong {
+            color: var(--color-text);
+        }
+
+        .section-label {
+            font-size: var(--text-sm);
+            font-weight: 600;
+            color: var(--color-accent);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: var(--space-5);
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+        }
+
+        .section-label::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: var(--color-border);
+        }
+
+        .path-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-5);
+            margin-bottom: var(--space-10);
+        }
+
+        .path-card {
+            background: var(--color-surface);
+            border-radius: var(--radius-lg);
+            padding: var(--space-6);
+            border: 1px solid var(--color-border);
+            transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .path-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .path-card-number {
+            position: absolute;
+            top: var(--space-4);
+            right: var(--space-4);
+            width: 28px;
+            height: 28px;
+            background: var(--color-accent);
             color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: var(--text-sm);
+        }
+
+        .path-card h3 {
+            color: #fff;
+            margin: 0 0 var(--space-2) 0;
+            font-size: var(--text-lg);
+            padding-right: var(--space-8);
+        }
+
+        .path-card p {
+            color: var(--color-text-muted);
+            font-size: var(--text-sm);
+            margin: 0 0 var(--space-4) 0;
+            flex: 1;
+        }
+
+        .path-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        .read-time {
+            font-size: var(--text-xs);
+            color: var(--color-text-muted);
+        }
+
+        .path-card .btn {
+            font-size: var(--text-sm);
+            padding: var(--space-2) var(--space-4);
+        }
+
+        .flow-indicator {
+            display: none;
+        }
+
+        .reference-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-5);
+            margin-bottom: var(--space-8);
+        }
+
+        .ref-card {
+            background: var(--color-surface);
+            border-radius: var(--radius-lg);
+            padding: var(--space-5);
+            border: 1px solid var(--color-border);
+            transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+        }
+
+        .ref-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .ref-card h3 {
+            color: var(--color-text);
+            margin: 0 0 var(--space-2) 0;
+            font-size: var(--text-base);
+        }
+
+        .ref-card p {
+            color: var(--color-text-muted);
+            font-size: var(--text-sm);
+            margin: 0 0 var(--space-3) 0;
+        }
+
+        .ref-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ref-card .btn {
             font-size: var(--text-xs);
             padding: var(--space-1) var(--space-3);
-            border-radius: var(--radius-sm);
-            margin-left: var(--space-3);
-            vertical-align: middle;
+            background: var(--color-surface-raised);
+            border: 1px solid var(--color-border);
         }
 
-        @media (max-width: 480px) {
-            h1 {
+        .ref-card .btn:hover {
+            background: var(--color-border);
+        }
+
+        @media (max-width: 640px) {
+            .hero {
+                padding: var(--space-8) var(--space-4);
+            }
+
+            .hero h1 {
                 font-size: var(--text-2xl);
             }
 
-            .card a.btn {
-                display: block;
-                text-align: center;
+            .hero-tagline {
+                font-size: var(--text-lg);
+            }
+
+            .audience-item {
+                padding: var(--space-2) var(--space-4);
+                font-size: var(--text-xs);
+            }
+
+            .path-grid,
+            .reference-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .path-card,
+            .ref-card {
+                padding: var(--space-5);
             }
         }
     </style>
@@ -82,54 +241,91 @@
         </div>
     </nav>
     <script src="/js/nav.js"></script>
+
     <div class="container">
-        <h1>Jen QA Monday</h1>
-        <p class="subtitle">QA Workflow Documentation for Pure Earth Labs</p>
+        <div class="hero">
+            <h1>Jen QA Monday</h1>
+            <p class="hero-tagline">Everyone aligned on QA. One page.</p>
 
-        <div class="intro">
-            <p>Start with the <strong>QA Manager Procedure</strong> for the complete workflow, then review <strong>Team Performance Analysis</strong> for current metrics. Continue through the analysis and roadmap sections, with technical reference and hiring docs at the end.</p>
+            <div class="audience-list">
+                <div class="audience-item">
+                    <strong>Stakeholders</strong>
+                    <span>Get the big picture in 30 seconds</span>
+                </div>
+                <div class="audience-item">
+                    <strong>Staff</strong>
+                    <span>Reference the process when you need it</span>
+                </div>
+                <div class="audience-item">
+                    <strong>New hires</strong>
+                    <span>Learn what success looks like</span>
+                </div>
+            </div>
         </div>
 
-        <div class="card">
-            <h2>QA Manager Procedure <span class="badge--start">START HERE</span></h2>
-            <p>Step-by-step operational SOP for the QA Manager role, covering daily procedures and responsibilities.</p>
-            <a href="/qa_manager_procedure.html" class="btn">View Procedure</a>
+        <div class="section-label">Start Here</div>
+
+        <div class="path-grid">
+            <a href="/qa_manager_procedure.html" class="path-card">
+                <span class="path-card-number">1</span>
+                <h3>QA Manager Procedure</h3>
+                <p>The complete 14-step SOP. Daily procedures, responsibilities, and how everything fits together.</p>
+                <div class="path-card-footer">
+                    <span class="read-time">15 min read</span>
+                </div>
+            </a>
+
+            <a href="/team_performance_analysis.html" class="path-card">
+                <span class="path-card-number">2</span>
+                <h3>Team Performance</h3>
+                <p>Current metrics and data analysis. What's working, what's not, and where to focus.</p>
+                <div class="path-card-footer">
+                    <span class="read-time">5 min read</span>
+                </div>
+            </a>
+
+            <a href="/qa_workflow_analysis.html" class="path-card">
+                <span class="path-card-number">3</span>
+                <h3>Workflow Analysis</h3>
+                <p>Mapping the 13-step process to Monday.com. Gap analysis and recommendations.</p>
+                <div class="path-card-footer">
+                    <span class="read-time">10 min read</span>
+                </div>
+            </a>
+
+            <a href="/next_steps_roadmap.html" class="path-card">
+                <span class="path-card-number">4</span>
+                <h3>Next Steps</h3>
+                <p>The action plan. What we're doing to improve and when it happens.</p>
+                <div class="path-card-footer">
+                    <span class="read-time">5 min read</span>
+                </div>
+            </a>
         </div>
 
-        <div class="card">
-            <h2>Team Performance Analysis</h2>
-            <p>Current metrics and data analysis of team QA performance, identifying trends and areas for improvement.</p>
-            <a href="/team_performance_analysis.html" class="btn">View Analysis</a>
-        </div>
+        <div class="section-label">Reference</div>
 
-        <div class="card">
-            <h2>QA Workflow Analysis</h2>
-            <p>Complete analysis of Jen's 13-step QA process mapped to Monday.com, including gap analysis and recommendations.</p>
-            <a href="/qa_workflow_analysis.html" class="btn">View Analysis</a>
-        </div>
+        <div class="reference-grid">
+            <a href="/production_board_structure.html" class="ref-card">
+                <h3>Production Board Structure</h3>
+                <p>Technical docs: columns, groups, views, and board relationships in Monday.com.</p>
+                <div class="ref-card-footer">
+                    <span class="read-time">8 min read</span>
+                </div>
+            </a>
 
-        <div class="card">
-            <h2>Next Steps Roadmap</h2>
-            <p>Action plan for implementing QA workflow improvements and addressing identified gaps.</p>
-            <a href="/next_steps_roadmap.html" class="btn">View Roadmap</a>
-        </div>
-
-        <div class="card">
-            <h2>Production Board Structure</h2>
-            <p>Technical documentation of the Production board including columns, groups, views, and board relationships.</p>
-            <a href="/production_board_structure.html" class="btn">View Structure</a>
-        </div>
-
-        <div class="card">
-            <h2>Ideal Candidate Profile</h2>
-            <p>Profile and requirements for hiring QA team members aligned with Pure Earth Labs' workflow.</p>
-            <a href="/ideal_candidate_profile.html" class="btn">View Profile</a>
+            <a href="/ideal_candidate_profile.html" class="ref-card">
+                <h3>Ideal Candidate Profile</h3>
+                <p>Hiring docs: who we need, required skills, and interview questions.</p>
+                <div class="ref-card-footer">
+                    <span class="read-time">7 min read</span>
+                </div>
+            </a>
         </div>
 
         <div class="footer">
             <p>Pure Earth Labs QA Documentation</p>
             <p><a href="https://earthharbor.com" target="_blank" rel="noopener noreferrer">earthharbor.com</a> | Questions? Contact <a href="mailto:qa@pureearthlabs.com">qa@pureearthlabs.com</a></p>
-            <p>Last updated: December 2025</p>
         </div>
     </div>
 </body>
