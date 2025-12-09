@@ -299,6 +299,38 @@
             margin-right: 15px;
             flex-shrink: 0;
             margin-top: 2px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .check-box:hover {
+            background: rgba(157, 80, 221, 0.2);
+        }
+
+        .check-box.checked {
+            background: var(--purple);
+        }
+
+        .check-box.checked::after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 1px;
+            width: 6px;
+            height: 11px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        .checklist-item.completed {
+            opacity: 0.6;
+        }
+
+        .checklist-item.completed > div:last-child {
+            text-decoration: line-through;
+            text-decoration-color: rgba(255,255,255,0.3);
         }
 
         .subsection {
@@ -598,8 +630,12 @@
     </div>
 
     <!-- Table of Contents -->
-    <div class="toc">
-        <h3>Table of Contents</h3>
+    <div class="toc collapsible" id="table-of-contents">
+        <div class="collapsible-header">
+            <h3 style="margin: 0;">Table of Contents</h3>
+            <span class="collapsible-summary">13 steps across 4 phases</span>
+        </div>
+        <div class="collapsible-content">
         <div class="toc-grid">
             <div class="toc-column">
                 <div class="toc-column-header prep">PREPARATION</div>
@@ -628,6 +664,7 @@
                 <a href="#step-13">Step 13: Attach to Monday.com</a>
             </div>
         </div>
+        </div><!-- /.collapsible-content -->
     </div>
 
     <!-- STEP 0 -->
@@ -1422,6 +1459,116 @@ flowchart LR
             backToTop.addEventListener('click', function() {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
+        })();
+
+        // Checkbox persistence
+        (function() {
+            const STORAGE_KEY = 'qa-procedure-checkboxes';
+
+            function getCheckedItems() {
+                try {
+                    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+                } catch (e) {
+                    return [];
+                }
+            }
+
+            function saveCheckedItems(items) {
+                try {
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+                } catch (e) {
+                    console.warn('Could not save checkbox state');
+                }
+            }
+
+            function getCheckboxId(checkbox, index) {
+                // Create stable ID from parent section and content
+                const section = checkbox.closest('.section');
+                const sectionId = section ? section.id : 'unknown';
+                const itemText = checkbox.nextElementSibling?.textContent?.slice(0, 50) || '';
+                return `${sectionId}-${index}-${itemText.replace(/\s+/g, '-').toLowerCase()}`;
+            }
+
+            function initCheckboxes() {
+                const checkboxes = document.querySelectorAll('.check-box');
+                const checkedItems = getCheckedItems();
+
+                checkboxes.forEach((checkbox, index) => {
+                    const id = getCheckboxId(checkbox, index);
+                    checkbox.dataset.checkboxId = id;
+
+                    // Restore state
+                    if (checkedItems.includes(id)) {
+                        checkbox.classList.add('checked');
+                        checkbox.closest('.checklist-item')?.classList.add('completed');
+                    }
+
+                    // Add click handler
+                    checkbox.addEventListener('click', function() {
+                        const isChecked = this.classList.toggle('checked');
+                        this.closest('.checklist-item')?.classList.toggle('completed', isChecked);
+
+                        // Update storage
+                        let items = getCheckedItems();
+                        if (isChecked) {
+                            if (!items.includes(id)) items.push(id);
+                        } else {
+                            items = items.filter(item => item !== id);
+                        }
+                        saveCheckedItems(items);
+                    });
+                });
+
+                // Add reset button if there are checkboxes
+                if (checkboxes.length > 0) {
+                    addResetButton();
+                }
+            }
+
+            function addResetButton() {
+                const tldr = document.querySelector('.tldr');
+                if (!tldr) return;
+
+                const resetBtn = document.createElement('button');
+                resetBtn.className = 'reset-progress-btn';
+                resetBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg> Reset Progress';
+                resetBtn.style.cssText = `
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 6px;
+                    background: transparent;
+                    border: 1px solid rgba(157, 80, 221, 0.5);
+                    color: var(--purple);
+                    padding: 6px 12px;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    font-size: 12px;
+                    margin-top: 12px;
+                    transition: all 0.2s ease;
+                `;
+                resetBtn.addEventListener('mouseenter', function() {
+                    this.style.background = 'rgba(157, 80, 221, 0.2)';
+                });
+                resetBtn.addEventListener('mouseleave', function() {
+                    this.style.background = 'transparent';
+                });
+                resetBtn.addEventListener('click', function() {
+                    if (confirm('Reset all checkbox progress?')) {
+                        localStorage.removeItem(STORAGE_KEY);
+                        document.querySelectorAll('.check-box.checked').forEach(cb => {
+                            cb.classList.remove('checked');
+                            cb.closest('.checklist-item')?.classList.remove('completed');
+                        });
+                    }
+                });
+                tldr.appendChild(resetBtn);
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initCheckboxes);
+            } else {
+                initCheckboxes();
+            }
         })();
     </script>
     <script src="/js/psychedelic.js"></script>
