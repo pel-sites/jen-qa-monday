@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ideal Candidate Profile - QA Compliance Coordinator</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✓</text></svg>">
+    <meta name="description" content="QA Compliance Coordinator role profile: competencies, responsibilities, interview questions, and how they fit into Pure Earth Labs workflow.">
+    <style>
+        :root {
+            --critical: #df2f4a;
+            --warning: #fdab3d;
+            --good: #00c875;
+            --info: #579bfc;
+            --purple: #9d50dd;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #eee;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 { color: #fff; margin-top: 2em; }
+        h1 { margin-top: 0; }
+
+        .header {
+            background: linear-gradient(135deg, #00c875 0%, #579bfc 100%);
+            padding: 40px;
+            border-radius: 16px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .header h1 { margin: 0 0 10px 0; font-size: 2.5em; }
+        .header .subtitle { font-size: 1.2em; opacity: 0.9; }
+        .header .date { margin-top: 15px; opacity: 0.7; font-size: 0.9em; }
+
+        .section {
+            background: #16213e;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border: 1px solid #2a2a4a;
+        }
+
+        .section h2 {
+            margin-top: 0;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--purple);
+        }
+
+        .mermaid {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .stat-card {
+            background: #0f0f23;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-card .value {
+            font-size: 2.5em;
+            font-weight: bold;
+            line-height: 1;
+        }
+
+        .stat-card .label {
+            font-size: 0.9em;
+            opacity: 0.7;
+            margin-top: 10px;
+        }
+
+        .stat-card.critical { border-top: 4px solid var(--critical); }
+        .stat-card.critical .value { color: var(--critical); }
+
+        .stat-card.warning { border-top: 4px solid var(--warning); }
+        .stat-card.warning .value { color: var(--warning); }
+
+        .stat-card.good { border-top: 4px solid var(--good); }
+        .stat-card.good .value { color: var(--good); }
+
+        .stat-card.info { border-top: 4px solid var(--info); }
+        .stat-card.info .value { color: var(--info); }
+
+        .stat-card.purple { border-top: 4px solid var(--purple); }
+        .stat-card.purple .value { color: var(--purple); }
+
+        .insight-card {
+            background: #0f0f23;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid var(--purple);
+        }
+
+        .insight-card h4 {
+            margin: 0 0 10px 0;
+            color: var(--purple);
+        }
+
+        .insight-card.critical { border-left-color: var(--critical); }
+        .insight-card.critical h4 { color: var(--critical); }
+
+        .insight-card.warning { border-left-color: var(--warning); }
+        .insight-card.warning h4 { color: var(--warning); }
+
+        .insight-card.good { border-left-color: var(--good); }
+        .insight-card.good h4 { color: var(--good); }
+
+        .insight-card.info { border-left-color: var(--info); }
+        .insight-card.info h4 { color: var(--info); }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #333;
+        }
+
+        th {
+            background: #0f0f23;
+            font-weight: 600;
+            color: var(--purple);
+        }
+
+        tr:hover { background: #1f1f3a; }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-critical { background: var(--critical); color: #fff; }
+        .badge-warning { background: var(--warning); color: #000; }
+        .badge-good { background: var(--good); color: #000; }
+        .badge-info { background: var(--info); color: #fff; }
+        .badge-purple { background: var(--purple); color: #fff; }
+
+        .competency-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .competency-card {
+            background: #0f0f23;
+            border-radius: 12px;
+            padding: 20px;
+            border-top: 4px solid var(--purple);
+        }
+
+        .competency-card h4 {
+            margin: 0 0 10px 0;
+            color: var(--purple);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .competency-card p {
+            margin: 0;
+            opacity: 0.8;
+            font-size: 0.95em;
+        }
+
+        .competency-card.required { border-top-color: var(--critical); }
+        .competency-card.required h4 { color: var(--critical); }
+
+        .competency-card.preferred { border-top-color: var(--warning); }
+        .competency-card.preferred h4 { color: var(--warning); }
+
+        .timeline-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .timeline-card {
+            background: #0f0f23;
+            border-radius: 12px;
+            padding: 20px;
+            position: relative;
+        }
+
+        .timeline-card h4 {
+            margin: 0 0 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .timeline-card .week-badge {
+            background: var(--purple);
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+        }
+
+        .timeline-card ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .timeline-card li { margin: 8px 0; }
+
+        .timeline-card.phase1 { border-left: 4px solid var(--critical); }
+        .timeline-card.phase1 .week-badge { background: var(--critical); }
+
+        .timeline-card.phase2 { border-left: 4px solid var(--warning); }
+        .timeline-card.phase2 .week-badge { background: var(--warning); color: #000; }
+
+        .timeline-card.phase3 { border-left: 4px solid var(--good); }
+        .timeline-card.phase3 .week-badge { background: var(--good); color: #000; }
+
+        .question-card {
+            background: #0f0f23;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid var(--info);
+        }
+
+        .question-card .question {
+            font-weight: 600;
+            color: var(--info);
+            margin-bottom: 10px;
+        }
+
+        .question-card .purpose {
+            font-size: 0.9em;
+            opacity: 0.7;
+        }
+
+        .title-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .title-option {
+            background: #0f0f23;
+            padding: 15px 20px;
+            border-radius: 8px;
+            border: 2px solid #2a2a4a;
+            transition: border-color 0.2s;
+        }
+
+        .title-option:hover {
+            border-color: var(--purple);
+        }
+
+        .title-option.recommended {
+            border-color: var(--good);
+            background: linear-gradient(135deg, rgba(0, 200, 117, 0.1) 0%, #0f0f23 100%);
+        }
+
+        .title-option h5 {
+            margin: 0 0 5px 0;
+            color: #fff;
+        }
+
+        .title-option p {
+            margin: 0;
+            font-size: 0.85em;
+            opacity: 0.7;
+        }
+
+        code {
+            background: #0f0f23;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'SF Mono', Monaco, monospace;
+            font-size: 0.9em;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            opacity: 0.6;
+            font-size: 0.9em;
+        }
+
+        a { color: #66ccff; }
+
+        .vs-table {
+            margin: 20px 0;
+        }
+
+        .vs-table td {
+            vertical-align: top;
+        }
+
+        .vs-table .role-header {
+            font-weight: bold;
+            color: var(--purple);
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+<nav style="position: sticky; top: 0; z-index: 100; background: #0f0f23; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #2a2a4a;">
+    <a href="/" style="color: #9d50dd; text-decoration: none; font-weight: 500;">← Home</a>
+    <div style="display: flex; gap: 20px; font-size: 0.9em;">
+        <a href="/qa_manager_procedure.html" style="color: #eee; text-decoration: none; opacity: 0.8;">Procedure</a>
+        <a href="/qa_workflow_analysis.html" style="color: #eee; text-decoration: none; opacity: 0.8;">Analysis</a>
+        <a href="/production_board_structure.html" style="color: #eee; text-decoration: none; opacity: 0.8;">Board</a>
+        <a href="/team_performance_analysis.html" style="color: #eee; text-decoration: none; opacity: 0.8;">Performance</a>
+        <a href="/next_steps_roadmap.html" style="color: #eee; text-decoration: none; opacity: 0.8;">Roadmap</a>
+        <a href="/ideal_candidate_profile.html" style="color: #00c875; text-decoration: none; font-weight: 500;">Candidate</a>
+    </div>
+</nav>
+    <div class="header">
+        <h1>Ideal Candidate Profile</h1>
+        <div class="subtitle">QA Compliance Coordinator for Pure Earth Labs</div>
+        <div class="date">Generated: December 8, 2025 | Based on Workflow Gap Analysis</div>
+    </div>
+
+    <!-- The Problem -->
+    <div class="section">
+        <h2>The Problem to Solve</h2>
+        <p>Your documentation reveals a <strong>process enforcement gap</strong>, not a process design gap. Jen's 13-step QA procedure exists on paper but isn't being followed consistently.</p>
+
+        <div class="stats-grid">
+            <div class="stat-card critical">
+                <div class="value">60%</div>
+                <div class="label">Items Missing QA DOCS</div>
+            </div>
+            <div class="stat-card critical">
+                <div class="value">63%</div>
+                <div class="label">No Owner Assigned</div>
+            </div>
+            <div class="stat-card warning">
+                <div class="value">2.7x</div>
+                <div class="label">Better Compliance w/ Owner</div>
+            </div>
+            <div class="stat-card info">
+                <div class="value">13</div>
+                <div class="label">Steps Being Skipped</div>
+            </div>
+        </div>
+
+        <div class="mermaid">
+flowchart LR
+    subgraph Current["Current State"]
+        C1["Jen's 13-Step Process<br/>Well Documented"]
+        C2["Monday.com Board<br/>Has QA DOCS Column"]
+        C3["Production Team<br/>Skips Step 13"]
+    end
+
+    subgraph Gap["The Gap"]
+        G1["No Enforcement"]
+        G2["No Accountability"]
+        G3["No Monitoring"]
+    end
+
+    subgraph Result["Result"]
+        R1["60% Non-Compliance"]
+    end
+
+    C1 --> G1
+    C2 --> G1
+    C3 --> G2
+    G1 --> R1
+    G2 --> R1
+    G3 --> R1
+
+    style C1 fill:#00c875,color:#000
+    style C2 fill:#00c875,color:#000
+    style C3 fill:#df2f4a,color:#fff
+    style R1 fill:#df2f4a,color:#fff
+        </div>
+
+        <div class="insight-card critical">
+            <h4>Root Cause</h4>
+            <p>Items with assigned owners have <strong>67% QA DOCS completion</strong> vs only <strong>25% for unassigned items</strong>. The problem is accountability and enforcement, not the process itself.</p>
+        </div>
+    </div>
+
+    <!-- Role Overview -->
+    <div class="section">
+        <h2>Role Overview</h2>
+        <p>This role is the <strong>enforcement layer</strong> between your well-documented QA process and actual compliance on the production floor.</p>
+
+        <div class="mermaid">
+flowchart TB
+    subgraph Role["QA Compliance Coordinator"]
+        R1["Configure Monday.com<br/>Automations"]
+        R2["Enforce Owner<br/>Assignment"]
+        R3["Block Incomplete<br/>FULFILLED Items"]
+        R4["Run Weekly<br/>Compliance Audits"]
+        R5["Train Team on<br/>Process Requirements"]
+        R6["Backfill Historical<br/>Data Gaps"]
+    end
+
+    subgraph Outcomes["Outcomes"]
+        O1["QA DOCS: 40% to 95%"]
+        O2["Owner Assignment: 37% to 100%"]
+        O3["Complete Audit Trail"]
+    end
+
+    R1 --> O1
+    R2 --> O2
+    R3 --> O1
+    R4 --> O3
+    R5 --> O1
+    R6 --> O3
+
+    style R1 fill:#9d50dd,color:#fff
+    style R2 fill:#9d50dd,color:#fff
+    style R3 fill:#9d50dd,color:#fff
+    style O1 fill:#00c875,color:#000
+    style O2 fill:#00c875,color:#000
+    style O3 fill:#00c875,color:#000
+        </div>
+    </div>
+
+    <!-- Why Not Jen -->
+    <div class="section">
+        <h2>Why This Is a Separate Role</h2>
+        <p>Jen's job is <strong>floor QA</strong> - physically inspecting products. This role is <strong>systems compliance</strong> - configuring tools and enforcing process.</p>
+
+        <div class="mermaid">
+flowchart LR
+    subgraph Jen["Jen: QA Manager"]
+        J1["Physical Inspection"]
+        J2["Measure Tolerances"]
+        J3["Catch Defects"]
+        J4["Fill QA Reports"]
+        J5["Compare to Retention<br/>Samples"]
+    end
+
+    subgraph New["New: Compliance Coordinator"]
+        N1["Configure Automations"]
+        N2["Enforce Owner Rules"]
+        N3["Run Audits"]
+        N4["Train Team"]
+        N5["Track KPIs"]
+    end
+
+    subgraph Location["Work Location"]
+        L1["Production Floor"]
+        L2["Office/Monday.com"]
+    end
+
+    Jen --> L1
+    New --> L2
+
+    style J1 fill:#fdab3d,color:#000
+    style J2 fill:#fdab3d,color:#000
+    style J3 fill:#fdab3d,color:#000
+    style N1 fill:#579bfc,color:#fff
+    style N2 fill:#579bfc,color:#fff
+    style N3 fill:#579bfc,color:#fff
+        </div>
+
+        <table class="vs-table">
+            <thead>
+                <tr>
+                    <th>Aspect</th>
+                    <th>QA Manager (Jen)</th>
+                    <th>Compliance Coordinator (New)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Focus</strong></td>
+                    <td>Product quality on the floor</td>
+                    <td>Process compliance in systems</td>
+                </tr>
+                <tr>
+                    <td><strong>Location</strong></td>
+                    <td>Production floor, at the line</td>
+                    <td>Office, Monday.com admin</td>
+                </tr>
+                <tr>
+                    <td><strong>Tools</strong></td>
+                    <td>Torque meter, scale, spec sheets</td>
+                    <td>Monday.com, reports, dashboards</td>
+                </tr>
+                <tr>
+                    <td><strong>Output</strong></td>
+                    <td>Completed QA Inspection Reports</td>
+                    <td>Enforced uploads, compliance metrics</td>
+                </tr>
+                <tr>
+                    <td><strong>Timing</strong></td>
+                    <td>During production runs</td>
+                    <td>Before/after runs, weekly audits</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Core Competencies -->
+    <div class="section">
+        <h2>Core Competencies Required</h2>
+
+        <div class="competency-grid">
+            <div class="competency-card required">
+                <h4><span class="badge badge-critical">Required</span> Monday.com Administration</h4>
+                <p>Must configure automations to block FULFILLED without QA DOCS, enforce owner assignment, and build compliance dashboards.</p>
+            </div>
+
+            <div class="competency-card required">
+                <h4><span class="badge badge-critical">Required</span> Process Enforcement Mindset</h4>
+                <p>Comfortable being the "gatekeeper" who holds the line on compliance. Won't back down when team pushes back on new rules.</p>
+            </div>
+
+            <div class="competency-card required">
+                <h4><span class="badge badge-critical">Required</span> Data Analysis</h4>
+                <p>Can run queries, identify non-compliant items, track improvement metrics, and present findings to leadership.</p>
+            </div>
+
+            <div class="competency-card preferred">
+                <h4><span class="badge badge-warning">Preferred</span> Change Management</h4>
+                <p>Will face initial resistance. Needs skills to communicate "why" and get buy-in without alienating the team.</p>
+            </div>
+
+            <div class="competency-card preferred">
+                <h4><span class="badge badge-warning">Preferred</span> Manufacturing/QA Background</h4>
+                <p>Understands production workflows, spec sheets, batch records, COAs. Speaks the language of the floor.</p>
+            </div>
+
+            <div class="competency-card">
+                <h4><span class="badge badge-info">Nice to Have</span> Training/Documentation Skills</h4>
+                <p>Can create Loom videos, write clear procedures, and run training sessions for the production team.</p>
+            </div>
+        </div>
+
+        <div class="mermaid">
+mindmap
+    root((Ideal Candidate))
+        Technical Skills
+            Monday.com Admin
+            Data Analysis
+            Report Building
+            Automation Config
+        Soft Skills
+            Assertive
+            Diplomatic
+            Detail-Oriented
+            Persistent
+        Domain Knowledge
+            Manufacturing
+            QA Processes
+            Compliance
+            Documentation
+        </div>
+    </div>
+
+    <!-- Personality Traits -->
+    <div class="section">
+        <h2>Personality Traits</h2>
+
+        <div class="stats-grid">
+            <div class="stat-card purple">
+                <div class="value" style="font-size: 1.5em;">Systematic</div>
+                <div class="label">Can work through 57 backlogged items methodically</div>
+            </div>
+            <div class="stat-card purple">
+                <div class="value" style="font-size: 1.5em;">Assertive</div>
+                <div class="label">Will enforce rules without backing down</div>
+            </div>
+            <div class="stat-card purple">
+                <div class="value" style="font-size: 1.5em;">Diplomatic</div>
+                <div class="label">Can communicate "why" without alienating team</div>
+            </div>
+            <div class="stat-card purple">
+                <div class="value" style="font-size: 1.5em;">Detail-Oriented</div>
+                <div class="label">QA is about catching 2mm label deviations</div>
+            </div>
+        </div>
+
+        <div class="insight-card warning">
+            <h4>Key Trait: Comfortable with Repetition</h4>
+            <p>This role involves auditing compliance weekly, flagging the same types of issues, following up on the same people. The ideal candidate finds satisfaction in systematic enforcement, not novelty.</p>
+        </div>
+    </div>
+
+    <!-- How They Fit -->
+    <div class="section">
+        <h2>How They Fit Into Current Flow</h2>
+
+        <div class="mermaid">
+flowchart TB
+    subgraph Before["CURRENT STATE"]
+        direction TB
+        B1["Jen: QA Manager"]
+        B2["Performs 13-step QA<br/>on production floor"]
+        B3["Production Team"]
+        B4["Marks items FULFILLED<br/>WITHOUT attaching docs"]
+        B5["Nobody"]
+        B6["Verifies compliance"]
+
+        B1 --> B2
+        B3 --> B4
+        B5 --> B6
+    end
+
+    subgraph After["WITH THIS ROLE"]
+        direction TB
+        A1["Jen: QA Manager"]
+        A2["Performs 13-step QA<br/>on production floor"]
+        A3["QA Compliance Coordinator"]
+        A4["Owns Monday.com enforcement<br/>Ensures owner assignment<br/>Blocks incomplete items<br/>Runs weekly audits"]
+        A5["Production Team"]
+        A6["Must attach docs before FULFILLED<br/>Must have owner assigned"]
+
+        A1 --> A2
+        A3 --> A4
+        A5 --> A6
+    end
+
+    Before -->|"Add New Role"| After
+
+    style B5 fill:#df2f4a,color:#fff
+    style B6 fill:#df2f4a,color:#fff
+    style A3 fill:#00c875,color:#000
+    style A4 fill:#00c875,color:#000
+        </div>
+    </div>
+
+    <!-- Responsibilities Timeline -->
+    <div class="section">
+        <h2>Onboarding & Responsibilities Timeline</h2>
+
+        <div class="mermaid">
+gantt
+    title First 90 Days
+    dateFormat  YYYY-MM-DD
+
+    section Week 1-2
+    Learn current systems           :w1, 2025-01-01, 5d
+    Audit all active items          :w2, after w1, 5d
+
+    section Week 3-4
+    Assign owners to 60 items       :w3, after w2, 5d
+    Configure owner automation      :w4, after w3, 3d
+
+    section Week 5-6
+    Configure FULFILLED blocker     :w5, after w4, 3d
+    Create QA template link         :w6, after w5, 2d
+    Team communication              :w7, after w6, 5d
+
+    section Week 7-8
+    Build compliance dashboard      :w8, after w7, 5d
+    Setup weekly report             :w9, after w8, 3d
+
+    section Week 9-12
+    Backfill historical data        :w10, after w9, 10d
+    Iterate and improve             :w11, after w10, 10d
+        </div>
+
+        <div class="timeline-grid">
+            <div class="timeline-card phase1">
+                <h4><span class="week-badge">Week 1-2</span> Foundation</h4>
+                <ul>
+                    <li>Learn Monday.com board structure</li>
+                    <li>Understand Jen's 13-step QA process</li>
+                    <li>Audit all active production items</li>
+                    <li>Identify the 60 unassigned items</li>
+                </ul>
+            </div>
+
+            <div class="timeline-card phase1">
+                <h4><span class="week-badge">Week 3-4</span> Accountability</h4>
+                <ul>
+                    <li>Assign owners to all active items</li>
+                    <li>Configure automation: block status changes without owner</li>
+                    <li>Set up auto-assignment rules by LINE or product type</li>
+                </ul>
+            </div>
+
+            <div class="timeline-card phase2">
+                <h4><span class="week-badge">Week 5-6</span> Enforcement</h4>
+                <ul>
+                    <li>Configure automation: block FULFILLED without QA DOCS</li>
+                    <li>Create QA Template link column</li>
+                    <li>Send team communication explaining new requirements</li>
+                    <li>Hold Q&A session for questions</li>
+                </ul>
+            </div>
+
+            <div class="timeline-card phase3">
+                <h4><span class="week-badge">Week 7+</span> Ongoing</h4>
+                <ul>
+                    <li>Build compliance dashboard</li>
+                    <li>Run weekly audits</li>
+                    <li>Backfill historical data</li>
+                    <li>Track KPIs and report improvements</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Job Titles -->
+    <div class="section">
+        <h2>Suggested Job Titles</h2>
+        <p>Choose based on scope and how you want the role perceived:</p>
+
+        <div class="title-options">
+            <div class="title-option recommended">
+                <h5>QA Compliance Coordinator</h5>
+                <p>Emphasizes compliance/enforcement. Clear and specific.</p>
+                <span class="badge badge-good">Recommended</span>
+            </div>
+
+            <div class="title-option">
+                <h5>Operations Process Manager</h5>
+                <p>Broader title if they'll own other workflows beyond QA.</p>
+            </div>
+
+            <div class="title-option">
+                <h5>QA Systems Administrator</h5>
+                <p>Emphasizes the Monday.com/tooling side of the role.</p>
+            </div>
+
+            <div class="title-option">
+                <h5>Production Compliance Specialist</h5>
+                <p>Emphasizes manufacturing context and specialization.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interview Questions -->
+    <div class="section">
+        <h2>Interview Questions</h2>
+        <p>Questions designed to assess fit for this specific role:</p>
+
+        <div class="question-card">
+            <div class="question">"Tell me about a time you implemented a process change that faced initial resistance. How did you handle it?"</div>
+            <div class="purpose"><strong>Assesses:</strong> Change management skills, persistence, communication ability</div>
+        </div>
+
+        <div class="question-card">
+            <div class="question">"How would you handle a team member who repeatedly forgets to attach documentation before marking items complete?"</div>
+            <div class="purpose"><strong>Assesses:</strong> Enforcement mindset, balance of assertiveness and diplomacy</div>
+        </div>
+
+        <div class="question-card">
+            <div class="question">"Walk me through how you'd set up a Monday.com automation to block incomplete items from changing status."</div>
+            <div class="purpose"><strong>Assesses:</strong> Technical Monday.com skills, problem-solving approach</div>
+        </div>
+
+        <div class="question-card">
+            <div class="question">"What metrics would you track to show QA compliance is improving? How would you present this to leadership?"</div>
+            <div class="purpose"><strong>Assesses:</strong> Data analysis skills, business communication, KPI thinking</div>
+        </div>
+
+        <div class="question-card">
+            <div class="question">"You discover that 60% of completed items are missing required documentation. What's your action plan for the first 30 days?"</div>
+            <div class="purpose"><strong>Assesses:</strong> Strategic thinking, prioritization, systematic approach</div>
+        </div>
+
+        <div class="question-card">
+            <div class="question">"How do you stay organized when tracking compliance across hundreds of items and multiple team members?"</div>
+            <div class="purpose"><strong>Assesses:</strong> Organization skills, comfort with repetitive detail work</div>
+        </div>
+    </div>
+
+    <!-- Success Metrics -->
+    <div class="section">
+        <h2>Success Metrics for This Role</h2>
+        <p>How you'll know the hire is working:</p>
+
+        <div class="mermaid">
+xychart-beta
+    title "Expected Improvement Trajectory"
+    x-axis ["Hire Date", "30 Days", "60 Days", "90 Days", "6 Months"]
+    y-axis "Completion %" 0 --> 100
+    line "QA DOCS" [40, 55, 75, 90, 95]
+    line "Owner Assigned" [37, 70, 90, 100, 100]
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Metric</th>
+                    <th>Current</th>
+                    <th>30-Day Target</th>
+                    <th>90-Day Target</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>QA DOCS Completion Rate</strong></td>
+                    <td><span class="badge badge-critical">40%</span></td>
+                    <td><span class="badge badge-warning">55%</span></td>
+                    <td><span class="badge badge-good">90%</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Owner Assignment Rate</strong></td>
+                    <td><span class="badge badge-critical">37%</span></td>
+                    <td><span class="badge badge-warning">70%</span></td>
+                    <td><span class="badge badge-good">100%</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Automations Configured</strong></td>
+                    <td><span class="badge badge-critical">0</span></td>
+                    <td><span class="badge badge-warning">1</span></td>
+                    <td><span class="badge badge-good">3+</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Weekly Audits Running</strong></td>
+                    <td><span class="badge badge-critical">No</span></td>
+                    <td><span class="badge badge-warning">Manual</span></td>
+                    <td><span class="badge badge-good">Automated</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Summary -->
+    <div class="section">
+        <h2>Summary</h2>
+
+        <div class="insight-card good">
+            <h4>Bottom Line</h4>
+            <p>You need someone who will <strong>enforce the process that already exists</strong>. Jen built great documentation. This role makes sure people actually follow it by configuring Monday.com to block shortcuts and running audits to catch non-compliance.</p>
+        </div>
+
+        <div class="mermaid">
+flowchart LR
+    subgraph Candidate["Ideal Candidate"]
+        C1["Monday.com Admin Skills"]
+        C2["Enforcement Mindset"]
+        C3["Data Analysis"]
+        C4["Change Management"]
+    end
+
+    subgraph Outcome["Will Deliver"]
+        O1["95% QA DOCS Compliance"]
+        O2["100% Owner Assignment"]
+        O3["Complete Audit Trail"]
+        O4["Sustainable Process"]
+    end
+
+    Candidate --> Outcome
+
+    style C1 fill:#9d50dd,color:#fff
+    style C2 fill:#9d50dd,color:#fff
+    style O1 fill:#00c875,color:#000
+    style O2 fill:#00c875,color:#000
+        </div>
+
+        <h3>Related Documentation</h3>
+        <ul>
+            <li><a href="/qa_manager_procedure.html">QA Manager Procedure (Steps 0-13)</a> - The process this role will enforce</li>
+            <li><a href="/team_performance_analysis.html">Team Performance Analysis</a> - The data showing the compliance gap</li>
+            <li><a href="/next_steps_roadmap.html">Next Steps Roadmap</a> - Implementation plan for the new hire</li>
+            <li><a href="/qa_workflow_analysis.html">QA Workflow Analysis</a> - System architecture and gaps</li>
+        </ul>
+    </div>
+
+    <div class="footer">
+        <p>Ideal Candidate Profile | Generated December 8, 2025</p>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            },
+            gantt: {
+                useMaxWidth: true
+            }
+        });
+    </script>
+</body>
+</html>
