@@ -1325,16 +1325,78 @@ flowchart LR
             }
         });
 
-        // Re-render Mermaid diagram when modal opens (fixes hidden element rendering)
-        function openFlowModal() {
+        // Diagram definition for modal (rendered on-demand to avoid hidden element sizing issues)
+        const modalDiagramDef = `flowchart LR
+    subgraph Prep["Step 0: Preparation"]
+        P1["Open Sprint/Bulk<br/>Weekly Sheet"]
+        P2["Find Today's Run"]
+        P3["Open Spec Sheet"]
+        P4["Open QA Report<br/>Template"]
+    end
+
+    subgraph PreRun["Steps 1-6: Pre-Run"]
+        PR1["1. Spec at Line"]
+        PR2["2. Components"]
+        PR3["3. Batch Code"]
+        PR4["4. Equipment"]
+        PR5["5. Line Config"]
+        PR6["6. MO Verify"]
+    end
+
+    subgraph InProcess["Steps 7-11: In-Process"]
+        IP1["7. Start Docs"]
+        IP2["8. QA Checks"]
+        IP3["9. Defects"]
+        IP4["10. Standards"]
+        IP5["11. Close-out"]
+    end
+
+    subgraph Final["Steps 12-13: Final"]
+        F1["12. Save to Drive"]
+        F2["13. Attach to<br/>Monday.com"]
+    end
+
+    P1 --> P2 --> P3 --> P4
+    P4 --> PR1 --> PR2 --> PR3 --> PR4 --> PR5 --> PR6
+    PR6 --> IP1 --> IP2 --> IP3 --> IP4 --> IP5
+    IP5 --> F1 --> F2
+
+    style P1 fill:#579bfc,color:#fff
+    style P2 fill:#579bfc,color:#fff
+    style P3 fill:#579bfc,color:#fff
+    style P4 fill:#579bfc,color:#fff
+    style PR1 fill:#fdab3d,color:#000
+    style PR2 fill:#fdab3d,color:#000
+    style PR3 fill:#fdab3d,color:#000
+    style PR4 fill:#fdab3d,color:#000
+    style PR5 fill:#fdab3d,color:#000
+    style PR6 fill:#fdab3d,color:#000
+    style IP1 fill:#00c875,color:#000
+    style IP2 fill:#00c875,color:#000
+    style IP3 fill:#00c875,color:#000
+    style IP4 fill:#00c875,color:#000
+    style IP5 fill:#00c875,color:#000
+    style F1 fill:#9d50dd,color:#fff
+    style F2 fill:#9d50dd,color:#fff`;
+
+        let modalDiagramRendered = false;
+
+        // Render Mermaid diagram when modal opens (fixes hidden element sizing issues)
+        async function openFlowModal() {
             const modal = document.getElementById('flowModal');
             modal.classList.add('active');
 
-            // Re-render the mermaid diagram inside the modal
-            const mermaidEl = modal.querySelector('.mermaid');
-            if (mermaidEl && !mermaidEl.querySelector('svg')) {
-                // Diagram hasn't rendered yet - trigger render
-                mermaid.run({ nodes: [mermaidEl] });
+            // Only render once, after modal is visible
+            if (!modalDiagramRendered) {
+                const container = document.getElementById('modalMermaid');
+                try {
+                    const { svg } = await mermaid.render('modal-diagram', modalDiagramDef);
+                    container.innerHTML = svg;
+                    modalDiagramRendered = true;
+                } catch (e) {
+                    console.error('Mermaid render error:', e);
+                    container.innerHTML = '<p style="color: #666;">Diagram failed to load. Please refresh the page.</p>';
+                }
             }
         }
     </script>
