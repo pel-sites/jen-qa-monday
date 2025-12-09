@@ -63,20 +63,25 @@
 </head>
 <body>
     <nav class="nav">
-        <div class="nav-container">
+        <div class="nav-inner">
             <a href="/" class="nav-brand">Jen QA Monday</a>
-            <div class="hamburger" onclick="this.classList.toggle('active'); document.querySelector('.nav-links').classList.toggle('active');">
+            <button class="nav-toggle" aria-label="Toggle menu">
                 <span></span>
                 <span></span>
                 <span></span>
-            </div>
+            </button>
             <ul class="nav-links">
                 <li><a href="/" class="active">Home</a></li>
+                <li><a href="/qa_manager_procedure.html">Procedure</a></li>
                 <li><a href="/qa_workflow_analysis.html">Workflow</a></li>
-                <li><a href="/production_board_structure.html">Board Structure</a></li>
+                <li><a href="/team_performance_analysis.html">Performance</a></li>
+                <li><a href="/next_steps_roadmap.html">Roadmap</a></li>
+                <li><a href="/production_board_structure.html">Board</a></li>
+                <li><a href="/ideal_candidate_profile.html">Candidate</a></li>
             </ul>
         </div>
     </nav>
+    <script src="/js/nav.js"></script>
     <div class="container">
         <h1>Jen QA Monday</h1>
         <p class="subtitle">QA Workflow Documentation for Pure Earth Labs</p>
