@@ -139,3 +139,41 @@ h3:hover .copy-link-btn {
         padding-right: 1rem;
     }
 }
+
+/* ===========================================
+   MOBILE NAV SCROLL AFFORDANCE
+   Visual indicator for horizontally scrollable nav
+   =========================================== */
+
+.nav-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    position: relative;
+}
+
+.nav-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.nav-scroll-container {
+    position: relative;
+}
+
+.nav-scroll-container::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 40px;
+    background: linear-gradient(to right, transparent, #0f0f23);
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 0.2s ease;
+}
+
+.nav-scroll-container.scrolled-end::after {
+    opacity: 0;
+}

@@ -114,9 +114,27 @@
         }, 2000);
     }
 
+    function setupNavScrollAffordance() {
+        var scrollContainers = document.querySelectorAll('.nav-scroll-container');
+        scrollContainers.forEach(function(container) {
+            var scrollArea = container.querySelector('.nav-scroll');
+            if (!scrollArea) return;
+
+            function checkScrollEnd() {
+                var isAtEnd = scrollArea.scrollLeft + scrollArea.clientWidth >= scrollArea.scrollWidth - 5;
+                container.classList.toggle('scrolled-end', isAtEnd);
+            }
+
+            checkScrollEnd();
+            scrollArea.addEventListener('scroll', checkScrollEnd);
+            window.addEventListener('resize', checkScrollEnd);
+        });
+    }
+
     function init() {
         setupCopyButtons();
         highlightAnchor();
+        setupNavScrollAffordance();
 
         window.addEventListener('hashchange', highlightAnchor);
     }
